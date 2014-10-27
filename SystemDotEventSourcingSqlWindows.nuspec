@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SystemDotEventSourcing.Sql.Windows</id>
+    <version>1.0.1</version>
+    <title>SystemDotEventSourcing.Sql.Windows</title>
+    <authors>Chris Sampson,James Goodenough</authors>
+    <owners>Chris Sampson,James Goodenough</owners>
+    <projectUrl>https://github.com/SystemDot/SystemDotCore</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Event sourcing for Windows SqlServer</description>
+    <summary>Event sourcing for Windows SqlServer</summary>
+    <copyright>SystemDot 2014</copyright>
+    <language>en-GB</language>
+    <tags>Event Sourcing, SqlServer</tags>
+    <dependencies>
+      <dependency id="SystemDotBootstrapping" version="1.0.3" />
+      <dependency id="SystemDotIoc" version="1.0.2" />
+      <dependency id="SystemDotCore" version="1.0.2" />
+      <dependency id="SystemDotMessaging" version="1.0.1" />
+      <dependency id="SystemDotDomain" version="3.0.0" />
+      <dependency id="SystemDotEventSourcing" version="1.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Build\SystemDot.EventSourcing.Sql.Windows.dll" target="lib\net\SystemDot.EventSourcing.Sql.Windows.dll" />
+    <file src="Build\SystemDot.EventSourcing.Sql.Windows.pdb" target="lib\net\SystemDot.EventSourcing.Sql.Windows.pdb" />
+    <file src="Build\EventStore.dll" target="lib\net\EventStore.dll" />
+    <file src="Build\EventStore.Serialization.Json.dll" target="lib\net\EventStore.Serialization.Json.dll" />
+  </files>
+</package>
