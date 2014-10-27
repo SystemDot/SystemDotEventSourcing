@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Sql.Windows</id>
-    <version>1.0.1</version>
-    <title>SystemDotEventSourcing.Sql.Windows</title>
+    <version>1.0.2</version>
+    <title>SystemDot.EventSourcing.Sql.Windows</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>
     <projectUrl>https://github.com/SystemDot/SystemDotCore</projectUrl>
