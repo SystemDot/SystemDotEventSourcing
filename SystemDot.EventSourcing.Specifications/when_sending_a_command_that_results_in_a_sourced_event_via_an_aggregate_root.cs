@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using SystemDot.Bootstrapping;
-using SystemDot.Core;
 using SystemDot.Domain;
 using SystemDot.Domain.Bootstrapping;
 using SystemDot.Domain.Commands;
@@ -12,6 +11,7 @@ using SystemDot.EventSourcing.Sessions;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Simple;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.EventSourcing.Specifications
 {
@@ -43,13 +43,13 @@ namespace SystemDot.EventSourcing.Specifications
 
         It should_put_the_sourced_event_in_the_session_with_the_event_as_its_session = async () =>
              EventSessionProvider.Session.GetEventsAsync(Id).Result.Single()
-                .Body.As<TestAggregateRootCreatedEvent>().Id.ShouldEqual(Id);
+                .Body.As<TestAggregateRootCreatedEvent>().Id.Should().Be(Id);
 
-        It should_send_the_event = () => handledEvent.Id.ShouldEqual(Id);
+        It should_send_the_event = () => handledEvent.Id.Should().Be(Id);
         
         It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = async () =>
             EventSessionProvider.Session.GetEventsAsync(Id).Result.Single()
                 .GetHeader<Type>(EventHeaderKeys.AggregateType)
-                .ShouldEqual(typeof(TestAggregateRoot));
+                .Should().Be(typeof(TestAggregateRoot));
     }
 }

@@ -5,6 +5,7 @@ using SystemDot.Domain.Bootstrapping;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.Ioc;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.EventSourcing.Specifications.configuring
@@ -22,6 +23,6 @@ namespace SystemDot.EventSourcing.Specifications.configuring
                 .Initialise());
 
         It should_verify_that_all_in_memory_event_sourcing_are_setup = () =>
-            exception.ShouldBeNull();
+            exception.Should().BeNull();
     }
 }

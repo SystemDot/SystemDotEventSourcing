@@ -5,6 +5,7 @@ using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.Ioc;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.EventSourcing.Specifications
@@ -44,8 +45,8 @@ namespace SystemDot.EventSourcing.Specifications
                 root = repository.GetAsync<TestAggregateRoot>(Id).Result;
         };
 
-        It should_have_hydrated_the_root_with_the_first_event = () => root.Id.ShouldEqual(Id);
+        It should_have_hydrated_the_root_with_the_first_event = () => root.Id.Should().Be(Id);
 
-        It should_have_hydrated_the_root_with_the_state_from_the_second_event = () => root.State.ShouldBeTrue();
+        It should_have_hydrated_the_root_with_the_state_from_the_second_event = () => root.State.Should().BeTrue();
     }
 }
