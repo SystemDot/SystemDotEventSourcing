@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing", "SystemDot.EventSourcing\SystemDot.EventSourcing.csproj", "{44526A4F-ABB1-47D4-99A6-3ADF373E09B2}"
 EndProject
@@ -19,7 +19,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B424F717-1DAB-41C2-84B5-6D67F8A89555}"
 	ProjectSection(SolutionItems) = preProject
 		SystemDotEventSourcing.nuspec = SystemDotEventSourcing.nuspec
+		SystemDotEventSourcingSqlWindows.nuspec = SystemDotEventSourcingSqlWindows.nuspec
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Sql.Windows.Specifications", "SystemDot.EventSourcing.Sql.Windows.Specifications\SystemDot.EventSourcing.Sql.Windows.Specifications.csproj", "{6D971F04-E1B3-47EF-AF64-F9709173AD75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Sql.Windows", "SystemDot.EventSourcing.Sql.Windows\SystemDot.EventSourcing.Sql.Windows.csproj", "{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,14 @@ Global
 		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D971F04-E1B3-47EF-AF64-F9709173AD75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D971F04-E1B3-47EF-AF64-F9709173AD75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D971F04-E1B3-47EF-AF64-F9709173AD75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D971F04-E1B3-47EF-AF64-F9709173AD75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

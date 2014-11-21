@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EventStore">
-      <HintPath>..\packages\EventStore\v3.0\EventStore.dll</HintPath>
+      <HintPath>..\Dependencies\EventStore\v3.0\EventStore.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Serialization.Json">
-      <HintPath>..\packages\EventStore\v3.0\EventStore.Serialization.Json.dll</HintPath>
+      <HintPath>..\Dependencies\EventStore\v3.0\EventStore.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
