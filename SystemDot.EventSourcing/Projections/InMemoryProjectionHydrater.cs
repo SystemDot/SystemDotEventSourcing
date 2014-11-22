@@ -20,7 +20,8 @@ namespace SystemDot.EventSourcing.Projections
         public async Task HydrateProjectionsAsync(IEnumerable projections)
         {
             MessageHandlerRouter router = PopulateHandlerRouter(projections);
-            IEnumerable<SourcedEvent> sourcedEvents = await eventSessionFactory.Create().AllEventsAsync();
+            var session = await eventSessionFactory.CreateAsync();
+            IEnumerable<SourcedEvent> sourcedEvents = await session.AllEventsAsync();
 
             foreach (var @event in sourcedEvents.Select(s => s.Body))
             {
@@ -31,9 +32,7 @@ namespace SystemDot.EventSourcing.Projections
         MessageHandlerRouter PopulateHandlerRouter(IEnumerable projections)
         {
             var router = new MessageHandlerRouter();
-
             projections.ForEach(router.RegisterHandler);
-
             return router;
         }
     }

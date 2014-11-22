@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.InMemory
@@ -11,11 +12,10 @@ namespace SystemDot.EventSourcing.InMemory
             this.eventSession = eventSession;
         }
 
-        public IEventSession Create()
+        public async Task<IEventSession> CreateAsync()
         {
             EventSessionProvider.Session = eventSession;
-
-            return eventSession;
+            return await Task.FromResult(eventSession);
         }
     }
 }

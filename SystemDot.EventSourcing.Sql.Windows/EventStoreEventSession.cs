@@ -25,7 +25,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
 
         public async Task<IEnumerable<SourcedEvent>> AllEventsAsync()
         {
-            return await Task.Run(() =>
+            return await Task.FromResult(
                 eventStore
                     .Advanced
                     .GetFrom(DateTime.MinValue)
@@ -37,7 +37,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
         {
             IEventStream stream = GetStream(GetInternalAggregateRootId(streamId));
 
-            return await Task.Run(() =>
+            return await Task.FromResult(
                 stream.CommittedEvents
                     .Select(CreateSourcedEvent)
                     .Concat(stream.UncommittedEvents
@@ -94,7 +94,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
         {
             try
             {
-                await Task.Run(() => toCommit.CommitChanges(commandId));
+                toCommit.CommitChanges(commandId);
             }
             catch (DuplicateCommitException)
             {
@@ -105,6 +105,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
                 toCommit.ClearChanges();
                 throw;
             }
+            await Task.FromResult(false);
         }
 
         protected override void DisposeOfManagedResources()

@@ -43,32 +43,53 @@
     <Reference Include="System.Data" />
     <Reference Include="SystemDot.Bootstrapping, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.3\lib\net\SystemDot.Bootstrapping.dll</HintPath>
+      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Bootstrapping.Windows">
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.3\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Bootstrapping.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotCore.3.0.0\lib\net\SystemDot.Core.dll</HintPath>
+      <HintPath>..\packages\SystemDotCore.3.0.1\lib\net\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.0.0\lib\net\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.2.0\lib\net\SystemDot.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Domain.Windows">
+      <HintPath>..\packages\SystemDotDomain.3.2.0\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.1.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.2.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotEventSourcing.2.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotIoc.1.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\packages\SystemDotIoc.1.1.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.2\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotMessaging.1.0.2\lib\net\SystemDot.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling.Windows">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.2\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Reflection.Windows">
+      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -19,9 +19,6 @@ namespace SystemDot.EventSourcing
             where TAggregateRoot : AggregateRoot, new()
         {
             List<SourcedEvent> events = await GetEventsAsync(aggregateRootId);
-
-            if (events.Count == 0)
-                throw new AggregateRootDoesNotExistException();
             
             var aggregateRoot = new TAggregateRoot();
 

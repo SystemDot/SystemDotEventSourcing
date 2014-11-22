@@ -16,8 +16,9 @@ namespace SystemDot.EventSourcing
 
         public async Task<IEnumerable<SourcedEvent>> GetAllEventsAsync()
         {
-            var allEvents = await factory.Create().AllEventsAsync();
-            return allEvents.ToList();
+            var session = await factory.CreateAsync();
+            var allEvents = await session.AllEventsAsync();
+            return await Task.FromResult(allEvents.ToList());
         }
     }
 }

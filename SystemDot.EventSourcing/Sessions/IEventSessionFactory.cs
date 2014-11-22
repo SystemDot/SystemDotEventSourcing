@@ -4,6 +4,6 @@ namespace SystemDot.EventSourcing.Sessions
 {
     public interface IEventSessionFactory
     {
-        IEventSession Create();
+        Task<IEventSession> CreateAsync();
     }
 }

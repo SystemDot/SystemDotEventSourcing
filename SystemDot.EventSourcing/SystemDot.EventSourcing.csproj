@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="Aggregation\AggregateEntity.cs" />
     <Compile Include="Aggregation\AggregateRoot.cs" />
-    <Compile Include="Aggregation\AggregateRootDoesNotExistException.cs" />
     <Compile Include="Aggregation\ConventionEventToHandlerRouter.cs" />
     <Compile Include="Aggregation\EventHeaderKeys.cs" />
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />

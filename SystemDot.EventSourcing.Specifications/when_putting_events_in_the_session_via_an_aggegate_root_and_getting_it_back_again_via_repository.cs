@@ -1,4 +1,5 @@
-﻿using SystemDot.Bootstrapping;
+﻿using System.Threading.Tasks;
+using SystemDot.Bootstrapping;
 using SystemDot.Domain;
 using SystemDot.Domain.Bootstrapping;
 using SystemDot.EventSourcing.Bootstrapping;
@@ -18,7 +19,7 @@ namespace SystemDot.EventSourcing.Specifications
         static TestAggregateRoot root;
         static IEventSessionFactory eventSessionFactory;
 
-        Establish context = () =>
+        Establish context = async () =>
         {
             IIocContainer container = new IocContainer();
 
@@ -31,7 +32,7 @@ namespace SystemDot.EventSourcing.Specifications
             repository = container.Resolve<IDomainRepository>();
             eventSessionFactory = container.Resolve<IEventSessionFactory>();
 
-            using (var session = eventSessionFactory.Create())
+            using (var session = await eventSessionFactory.CreateAsync())
             {
                 var root = TestAggregateRoot.Create(Id);
                 root.SetSomeMoreStateResultingInEvent();
@@ -39,9 +40,9 @@ namespace SystemDot.EventSourcing.Specifications
             }   
         };
 
-        Because of = () =>
+        Because of = async () =>
         {
-            using (eventSessionFactory.Create()) 
+            using (await eventSessionFactory.CreateAsync()) 
                 root = repository.GetAsync<TestAggregateRoot>(Id).Result;
         };
 

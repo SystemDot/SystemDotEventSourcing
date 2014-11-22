@@ -19,7 +19,7 @@ namespace SystemDot.EventSourcing
 
         public async Task Handle(T message)
         {
-            using (var session = eventSessionFactory.Create())
+            using (var session = await eventSessionFactory.CreateAsync())
             {
                 await decorated.Handle(message);
                 await session.CommitAsync();

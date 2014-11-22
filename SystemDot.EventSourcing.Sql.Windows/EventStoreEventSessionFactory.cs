@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Sql.Windows.Lookups;
 using EventStore;
@@ -15,12 +16,12 @@ namespace SystemDot.EventSourcing.Sql.Windows
             this.lookup = lookup;
         }
 
-        public IEventSession Create()
+        public async Task<IEventSession> CreateAsync()
         {
             var session = new EventStoreEventSession(eventStore, lookup);
             EventSessionProvider.Session = session;
 
-            return session;
+            return await Task.FromResult(session);
         }
     }
 }
