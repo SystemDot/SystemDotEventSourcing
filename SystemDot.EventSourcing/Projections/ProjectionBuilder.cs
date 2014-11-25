@@ -5,21 +5,21 @@ using SystemDot.Messaging.Handling;
 
 namespace SystemDot.EventSourcing.Projections
 {
-    public class ReadModelBuilder
+    public class ProjectionBuilder
     {
         readonly MessageHandlerRouter eventRouter;
         readonly EventRetreiver eventRetreiver;
 
-        public ReadModelBuilder(EventRetreiver eventRetreiver)
+        public ProjectionBuilder(EventRetreiver eventRetreiver)
         {
             this.eventRetreiver = eventRetreiver;
 
             eventRouter = new MessageHandlerRouter();
         }
 
-        public async Task BuildAsync(IEnumerable mappers)
+        public async Task BuildAsync(IEnumerable projections)
         {
-            PopulateRouter(mappers);
+            PopulateRouter(projections);
             var allEvents = await eventRetreiver.GetAllEventsAsync();
             foreach (var sourcedEvent in allEvents)
             {

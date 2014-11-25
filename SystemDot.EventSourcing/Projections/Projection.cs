@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
-namespace SystemDot.EventSourcing.Projections.Mapping
+namespace SystemDot.EventSourcing.Projections
 {
-    public abstract class ReadModelMapper<T> : IReadModelMapper<T>
+    public abstract class Projection<T> : IProjection<T>
     {
         public async Task Handle(T @event)
         {

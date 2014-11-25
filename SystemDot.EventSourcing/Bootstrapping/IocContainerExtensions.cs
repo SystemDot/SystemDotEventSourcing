@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Threading.Tasks;
 using SystemDot.EventSourcing.Projections;
-using SystemDot.EventSourcing.Projections.Mapping;
 using SystemDot.Ioc;
 
 namespace SystemDot.EventSourcing.Bootstrapping
@@ -15,14 +14,14 @@ namespace SystemDot.EventSourcing.Bootstrapping
 
         public static async Task BuildReadModel(this IIocContainer container)
         {
-            await container.Resolve<ReadModelBuilder>().BuildAsync(container.ResolveMappers());
+            await container.Resolve<ProjectionBuilder>().BuildAsync(container.ResolveProjections());
         }
 
-        static IEnumerable ResolveMappers(this IIocContainer container)
+        static IEnumerable ResolveProjections(this IIocContainer container)
         {
             return container
                 .ResolveMutipleTypes()
-                .ThatImplementOpenType(typeof(IReadModelMapper<>));
+                .ThatImplementOpenType(typeof(IProjection<>));
         }
     }
 }
