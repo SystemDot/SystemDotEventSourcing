@@ -12,16 +12,17 @@ namespace SystemDot.EventSourcing.Bootstrapping
             container.RegisterInstance<IDomainRepository, DomainRepository>();
         }
 
-        public static async Task BuildReadModel(this IIocContainer container)
+        public static async Task HydrateInMemoryProjections(this IIocContainer container)
         {
-            await container.Resolve<ProjectionBuilder>().BuildAsync(container.ResolveProjections());
+            await container.Resolve<InMemoryProjectionHydrater>()
+                .HydrateAsync(container.ResolveInMemoryProjections());
         }
 
-        static IEnumerable ResolveProjections(this IIocContainer container)
+        static IEnumerable ResolveInMemoryProjections(this IIocContainer container)
         {
             return container
                 .ResolveMutipleTypes()
-                .ThatImplementOpenType(typeof(IProjection<>));
+                .ThatImplementOpenType(typeof(InMemoryProjection<>));
         }
     }
 }

@@ -5,25 +5,25 @@ using SystemDot.Messaging.Handling;
 
 namespace SystemDot.EventSourcing.Projections
 {
-    public class ProjectionBuilder
+    public class InMemoryProjectionHydrater
     {
         readonly MessageHandlerRouter eventRouter;
         readonly EventRetreiver eventRetreiver;
 
-        public ProjectionBuilder(EventRetreiver eventRetreiver)
+        public InMemoryProjectionHydrater(EventRetreiver eventRetreiver)
         {
             this.eventRetreiver = eventRetreiver;
 
             eventRouter = new MessageHandlerRouter();
         }
 
-        public async Task BuildAsync(IEnumerable projections)
+        public async Task HydrateAsync(IEnumerable projections)
         {
             PopulateRouter(projections);
             var allEvents = await eventRetreiver.GetAllEventsAsync();
             foreach (var sourcedEvent in allEvents)
             {
-                await BuildFromEventAsync(sourcedEvent);
+                await BuildFromEventAsync(sourcedEvent.Body);
             }
         }
 

@@ -46,9 +46,10 @@
     <Compile Include="EventRetreiver.cs" />
     <Compile Include="EventSessionAsyncCommandHandler.cs" />
     <Compile Include="IDomainRepository.cs" />
+    <Compile Include="Projections\InMemoryProjection.cs" />
     <Compile Include="Projections\IProjection.cs" />
     <Compile Include="Projections\Projection.cs" />
-    <Compile Include="Projections\ProjectionBuilder.cs" />
+    <Compile Include="Projections\InMemoryProjectionHydrater.cs" />
     <Compile Include="Sessions\EventContainer.cs" />
     <Compile Include="Sessions\EventSession.cs" />
     <Compile Include="Sessions\EventSessionProvider.cs" />
