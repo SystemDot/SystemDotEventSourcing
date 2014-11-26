@@ -11,6 +11,9 @@ using Machine.Specifications;
 
 namespace SystemDot.EventSourcing.Specifications
 {
+    using SystemDot.Domain.Events;
+    using SystemDot.EventSourcing.Specifications.Annotations;
+
     public class when_putting_events_in_the_session_via_an_aggegate_root_and_getting_it_back_again_via_repository
     {
         const string Id = "Id";
@@ -42,8 +45,10 @@ namespace SystemDot.EventSourcing.Specifications
 
         Because of = async () =>
         {
-            using (await eventSessionFactory.CreateAsync()) 
+            using (await eventSessionFactory.CreateAsync())
+            {
                 root = repository.GetAsync<TestAggregateRoot>(Id).Result;
+            }
         };
 
         It should_have_hydrated_the_root_with_the_first_event = () => root.Id.Should().Be(Id);

@@ -5,12 +5,12 @@ using SystemDot.Messaging.Handling;
 
 namespace SystemDot.EventSourcing.Projections
 {
-    public class InMemoryProjectionHydrater
+    public class ProjectionHydrater
     {
         readonly MessageHandlerRouter eventRouter;
         readonly EventRetreiver eventRetreiver;
 
-        public InMemoryProjectionHydrater(EventRetreiver eventRetreiver)
+        public ProjectionHydrater(EventRetreiver eventRetreiver)
         {
             this.eventRetreiver = eventRetreiver;
 
@@ -32,9 +32,9 @@ namespace SystemDot.EventSourcing.Projections
             await eventRouter.RouteMessageToHandlersAsync(@event);
         }
 
-        void PopulateRouter(IEnumerable mappers)
+        void PopulateRouter(IEnumerable projections)
         {
-            mappers.ForEach(eventRouter.RegisterHandler);
+            projections.ForEach(eventRouter.RegisterHandler);
         }
     }
 }

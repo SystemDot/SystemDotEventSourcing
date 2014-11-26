@@ -2,6 +2,8 @@ using SystemDot.EventSourcing.Aggregation;
 
 namespace SystemDot.EventSourcing.Specifications
 {
+    using System.Security.Principal;
+
     public class TestAggregateRoot : AggregateRoot
     {
         public bool State { private set; get; }

@@ -42,14 +42,14 @@
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />
     <Compile Include="Aggregation\SourcedEventHandler.cs" />
     <Compile Include="Bootstrapping\BootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
     <Compile Include="DomainRepository.cs" />
     <Compile Include="EventRetreiver.cs" />
     <Compile Include="EventSessionAsyncCommandHandler.cs" />
     <Compile Include="IDomainRepository.cs" />
-    <Compile Include="Projections\InMemoryProjection.cs" />
+    <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />
     <Compile Include="Projections\IProjection.cs" />
-    <Compile Include="Projections\Projection.cs" />
-    <Compile Include="Projections\InMemoryProjectionHydrater.cs" />
+    <Compile Include="Projections\ProjectionHydrater.cs" />
     <Compile Include="Sessions\EventContainer.cs" />
     <Compile Include="Sessions\EventSession.cs" />
     <Compile Include="Sessions\EventSessionProvider.cs" />

@@ -14,7 +14,7 @@ namespace SystemDot.EventSourcing.Bootstrapping
 
         public static async Task HydrateInMemoryProjections(this IIocContainer container)
         {
-            await container.Resolve<InMemoryProjectionHydrater>()
+            await container.Resolve<ProjectionHydrater>()
                 .HydrateAsync(container.ResolveInMemoryProjections());
         }
 
@@ -22,7 +22,8 @@ namespace SystemDot.EventSourcing.Bootstrapping
         {
             return container
                 .ResolveMutipleTypes()
-                .ThatImplementOpenType(typeof(InMemoryProjection<>));
+                .ThatImplementOpenType(typeof(IProjection<>))
+                .ThatHaveAttribute<HydrateProjectionAtStartupAttribute>();
         }
     }
 }
