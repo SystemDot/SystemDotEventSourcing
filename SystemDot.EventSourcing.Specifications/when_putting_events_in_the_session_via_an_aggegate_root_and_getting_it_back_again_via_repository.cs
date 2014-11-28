@@ -12,7 +12,6 @@ using Machine.Specifications;
 namespace SystemDot.EventSourcing.Specifications
 {
     using SystemDot.Domain.Events;
-    using SystemDot.EventSourcing.Specifications.Annotations;
 
     public class when_putting_events_in_the_session_via_an_aggegate_root_and_getting_it_back_again_via_repository
     {
