@@ -56,6 +56,7 @@
     <Compile Include="Sessions\EventSessionProvider.cs" />
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfiguration.cs" />
     <Compile Include="Sessions\IEventSession.cs" />
+    <Compile Include="Sessions\IEventSessionExtensions.cs" />
     <Compile Include="Sessions\IEventSessionFactory.cs" />
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
