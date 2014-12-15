@@ -48,6 +48,7 @@
     <Compile Include="EventSessionAsyncCommandHandler.cs" />
     <Compile Include="IDomainRepository.cs" />
     <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />
+    <Compile Include="Projections\IocContainerExtensions.cs" />
     <Compile Include="Projections\IProjection.cs" />
     <Compile Include="Projections\ProjectionHydrater.cs" />
     <Compile Include="Sessions\EventContainer.cs" />
@@ -65,13 +66,13 @@
       <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core">
-      <HintPath>..\packages\SystemDotCore.3.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
+      <HintPath>..\packages\SystemDotCore.3.1.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain">
-      <HintPath>..\packages\SystemDotDomain.3.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.5.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\packages\SystemDotIoc.1.1.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging">
       <HintPath>..\packages\SystemDotMessaging.1.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll</HintPath>
