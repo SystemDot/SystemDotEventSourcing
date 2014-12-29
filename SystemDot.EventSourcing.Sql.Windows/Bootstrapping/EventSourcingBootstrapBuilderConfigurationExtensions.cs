@@ -2,10 +2,11 @@
 using SystemDot.Domain.Events.Dispatching;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.Ioc;
-using EventStore;
 
 namespace SystemDot.EventSourcing.Sql.Windows.Bootstrapping
 {
+    using NEventStore;
+
     public static class EventSourcingBootstrapBuilderConfigurationExtensions
     {
         public static BootstrapBuilderConfiguration PersistToSql(this EventSourcingBootstrapBuilderConfiguration config, string connectionString)

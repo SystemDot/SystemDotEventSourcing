@@ -2,11 +2,12 @@
 using SystemDot.Core;
 using SystemDot.Core.Collections;
 using SystemDot.Domain.Events.Dispatching;
-using EventStore;
-using EventStore.Dispatcher;
+using NEventStore.Dispatcher;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
+    using NEventStore;
+
     public class MessageBusCommitDispatcher : Disposable, IDispatchCommits
     {
         readonly IEventDispatcher innerDispatcher;
@@ -16,9 +17,9 @@ namespace SystemDot.EventSourcing.Sql.Windows
             this.innerDispatcher = innerDispatcher;
         }
 
-        public void Dispatch(Commit commit)
+        public void Dispatch(ICommit commit)
         {
-            commit.Events.Select(m => m.Body).ForEach(e => innerDispatcher.Dispatch(e));
+           commit.Events.Select(m => m.Body).ForEach(e => innerDispatcher.Dispatch(e));
         }
     }
 }

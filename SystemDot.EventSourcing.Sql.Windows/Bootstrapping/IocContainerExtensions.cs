@@ -1,5 +1,4 @@
-﻿using SystemDot.EventSourcing.Sql.Windows.Lookups;
-using SystemDot.Ioc;
+﻿using SystemDot.Ioc;
 
 namespace SystemDot.EventSourcing.Sql.Windows.Bootstrapping
 {
@@ -9,9 +8,6 @@ namespace SystemDot.EventSourcing.Sql.Windows.Bootstrapping
     {
         internal static void RegisterSqlWindowsEventSourcing(this IIocContainer container)
         {
-            container.RegisterInstance<IAggregateLookup, AggregateLookup>();
-            container.RegisterInstance<IAggregateLookupDataEngine, SqlEventStoreAggregateLookupDataEngine>();
-            container.RegisterInstance<ILookupIdCache, LookupIdCache>();
             container.RegisterInstance<IEventSessionFactory, EventStoreEventSessionFactory>();
         }
     }

@@ -5,22 +5,21 @@ using System.Threading.Tasks;
 using SystemDot.Core;
 using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Sql.Windows.Lookups;
-using EventStore;
+using NEventStore;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
+    using NEventStore.Persistence;
+
     public class EventStoreEventSession : Disposable, IEventSession
     {
         readonly IStoreEvents eventStore;
-        readonly IAggregateLookup lookup;
-        readonly Dictionary<Guid, IEventStream> streams;
+        readonly Dictionary<string, IEventStream> streams;
 
-        public EventStoreEventSession(IStoreEvents eventStore, IAggregateLookup lookup)
+        public EventStoreEventSession(IStoreEvents eventStore)
         {
             this.eventStore = eventStore;
-            this.lookup = lookup;
-            streams = new Dictionary<Guid, IEventStream>();
+            streams = new Dictionary<string, IEventStream>();
         }
 
         public async Task<IEnumerable<SourcedEvent>> AllEventsAsync()
@@ -28,14 +27,14 @@ namespace SystemDot.EventSourcing.Sql.Windows
             return await Task.FromResult(
                 eventStore
                     .Advanced
-                    .GetFrom(DateTime.MinValue)
+                    .GetFromStart()
                     .SelectMany(e => e.Events)
                     .Select(CreateSourcedEvent));
         }
 
         public async Task<IEnumerable<SourcedEvent>> GetEventsAsync(string streamId)
         {
-            IEventStream stream = GetStream(GetInternalAggregateRootId(streamId));
+            IEventStream stream = GetStream(streamId);
 
             return await Task.FromResult(
                 stream.CommittedEvents
@@ -65,12 +64,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
 
             @event.Headers.ForEach(h => uncommittedEvent.Headers.Add(h.Key, h.Value));
 
-            GetStream(GetInternalAggregateRootId(aggregateRootId)).Add(uncommittedEvent);
-        }
-
-        Guid GetInternalAggregateRootId(string aggregateRootId)
-        {
-            return lookup.LookupId<string>(aggregateRootId);
+            GetStream(aggregateRootId).Add(uncommittedEvent);
         }
 
         public async Task CommitAsync()
@@ -81,11 +75,11 @@ namespace SystemDot.EventSourcing.Sql.Windows
             }
         }
 
-        IEventStream GetStream(Guid aggregateRootId)
+        IEventStream GetStream(string aggregateRootId)
         {
             IEventStream stream;
 
-            if (!streams.TryGetValue(aggregateRootId, out stream)) streams[aggregateRootId] = stream = eventStore.OpenStream(aggregateRootId, 0, int.MaxValue);
+            if (!streams.TryGetValue(aggregateRootId, out stream)) streams[aggregateRootId] = stream = eventStore.OpenStream(aggregateRootId, 0);
 
             return stream;
         }

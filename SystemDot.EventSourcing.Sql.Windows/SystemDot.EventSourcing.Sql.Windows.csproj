@@ -32,11 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore">
-      <HintPath>..\Dependencies\EventStore\v3.0\EventStore.dll</HintPath>
-    </Reference>
-    <Reference Include="EventStore.Serialization.Json">
-      <HintPath>..\Dependencies\EventStore\v3.0\EventStore.Serialization.Json.dll</HintPath>
+    <Reference Include="NEventStore">
+      <HintPath>..\packages\NEventStore.5.1.0\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,26 +48,27 @@
     </Reference>
     <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotCore.3.0.1\lib\net\SystemDot.Core.dll</HintPath>
+      <HintPath>..\packages\SystemDotCore.3.1.2\lib\net\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.2.0\lib\net\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Domain.Windows">
-      <HintPath>..\packages\SystemDotDomain.3.2.0\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Domain.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.2.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.3.2.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.2.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.3.2.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotIoc.1.1.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,13 +95,6 @@
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="EventStoreEventSession.cs" />
     <Compile Include="EventStoreEventSessionFactory.cs" />
-    <Compile Include="Lookups\AggregateLookup.cs" />
-    <Compile Include="Lookups\IAggregateLookup.cs" />
-    <Compile Include="Lookups\IAggregateLookupDataEngine.cs" />
-    <Compile Include="Lookups\ILookupIdCache.cs" />
-    <Compile Include="Lookups\LookupIdCache.cs" />
-    <Compile Include="Lookups\NullLookupIdCache.cs" />
-    <Compile Include="Lookups\SqlEventStoreAggregateLookupDataEngine.cs" />
     <Compile Include="MessageBusCommitDispatcher.cs" />
     <Compile Include="NullCommitDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

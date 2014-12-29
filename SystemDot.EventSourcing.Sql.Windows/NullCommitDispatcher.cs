@@ -1,12 +1,13 @@
 using SystemDot.Core;
-using EventStore;
-using EventStore.Dispatcher;
+using NEventStore;
+using NEventStore.Dispatcher;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
+    
     public class NullCommitDispatcher : Disposable, IDispatchCommits
     {
-        public void Dispatch(Commit commit)
+        public void Dispatch(ICommit commit)
         {
         }
     }
