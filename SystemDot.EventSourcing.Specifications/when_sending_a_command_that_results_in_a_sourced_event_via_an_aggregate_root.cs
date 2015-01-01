@@ -17,13 +17,13 @@ namespace SystemDot.EventSourcing.Specifications
 {
     public class when_sending_a_command_that_results_in_a_sourced_event_via_an_aggregate_root
     {
-        static TestAggregateRootCreatedEvent handledEvent; 
-        static ICommandBus commandBus;
+        static TestAggregateRootCreatedEvent handledEvent;
+        static IIocContainer container;
         const string Id = "Id";
 
         Establish context = () =>
         {
-            IIocContainer container = new IocContainer();
+            container = new IocContainer();
             container.RegisterInstance<IAsyncCommandHandler<TestCommand>, TestCommandHandler>();
             container.RegisterDecorator<EventSessionAsyncCommandHandler<TestCommand>, IAsyncCommandHandler<TestCommand>>();
 
@@ -32,23 +32,20 @@ namespace SystemDot.EventSourcing.Specifications
                 .UseDomain().WithSimpleMessaging()
                 .UseEventSourcing().PersistToMemory()
                 .Initialise();
-
-            commandBus = container.Resolve<ICommandBus>();
-
+            
             Messenger.RegisterHandler<TestAggregateRootCreatedEvent>(e => handledEvent = e);
         };
 
-        Because of = () => commandBus.SendCommandAsync<TestCommand>(c => c.Id = Id).Wait();
-
-
-        It should_put_the_sourced_event_in_the_session_with_the_event_as_its_session = async () =>
-             EventSessionProvider.Session.GetEventsAsync(Id).Result.Single()
+        Because of = () => container.Resolve<IAsyncCommandHandler<TestCommand>>().Handle(new TestCommand { Id = Id }).Wait();
+        
+        It should_put_the_sourced_event_in_the_session_with_the_event_as_its_session = () =>
+             EventSessionProvider.Session.GetEvents(Id).Single()
                 .Body.As<TestAggregateRootCreatedEvent>().Id.Should().Be(Id);
 
         It should_send_the_event = () => handledEvent.Id.Should().Be(Id);
         
-        It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = async () =>
-            EventSessionProvider.Session.GetEventsAsync(Id).Result.Single()
+        It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = () =>
+            EventSessionProvider.Session.GetEvents(Id).Single()
                 .GetHeader<Type>(EventHeaderKeys.AggregateType)
                 .Should().Be(typeof(TestAggregateRoot));
     }

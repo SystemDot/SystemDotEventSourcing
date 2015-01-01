@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using SystemDot.Domain.Commands;
 using SystemDot.EventSourcing.Sessions;
@@ -19,10 +20,10 @@ namespace SystemDot.EventSourcing
 
         public async Task Handle(T message)
         {
-            using (var session = await eventSessionFactory.CreateAsync())
+            using (var session = eventSessionFactory.Create())
             {
                 await decorated.Handle(message);
-                await session.CommitAsync();
+                session.Commit(Guid.NewGuid());
             } 
         }
     }

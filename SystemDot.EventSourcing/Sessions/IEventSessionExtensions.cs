@@ -1,4 +1,5 @@
 using System;
+using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Sessions
 {

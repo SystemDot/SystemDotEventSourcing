@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using SystemDot.Bootstrapping;
 using SystemDot.Domain;
 using SystemDot.Domain.Bootstrapping;
@@ -11,8 +11,6 @@ using Machine.Specifications;
 
 namespace SystemDot.EventSourcing.Specifications
 {
-    using SystemDot.Domain.Events;
-
     public class when_putting_events_in_the_session_via_an_aggegate_root_and_getting_it_back_again_via_repository
     {
         const string Id = "Id";
@@ -21,7 +19,7 @@ namespace SystemDot.EventSourcing.Specifications
         static TestAggregateRoot root;
         static IEventSessionFactory eventSessionFactory;
 
-        Establish context = async () =>
+        Establish context = () =>
         {
             IIocContainer container = new IocContainer();
 
@@ -34,19 +32,19 @@ namespace SystemDot.EventSourcing.Specifications
             repository = container.Resolve<IDomainRepository>();
             eventSessionFactory = container.Resolve<IEventSessionFactory>();
 
-            using (var session = await eventSessionFactory.CreateAsync())
+            using (var session = eventSessionFactory.Create())
             {
                 var root = TestAggregateRoot.Create(Id);
                 root.SetSomeMoreStateResultingInEvent();
-                session.CommitAsync().Wait();
+                session.Commit(Guid.NewGuid());
             }   
         };
 
-        Because of = async () =>
+        Because of = () =>
         {
-            using (await eventSessionFactory.CreateAsync())
+            using (eventSessionFactory.Create())
             {
-                root = repository.GetAsync<TestAggregateRoot>(Id).Result;
+                root = repository.Get<TestAggregateRoot>(Id);
             }
         };
 

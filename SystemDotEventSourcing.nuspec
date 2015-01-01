@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SystemDotEventSourcing</id>
-        <version>3.2.0</version>
+        <version>4.0.0</version>
         <title>SystemDot.EventSourcing</title>
         <authors>Chris Sampson,James Goodenough</authors>
         <owners>Chris Sampson,James Goodenough</owners>
@@ -18,7 +18,7 @@
           <dependency id="SystemDotIoc" version="1.2.0" />
           <dependency id="SystemDotThreadMarshalling" version="1.0.3" />
           <dependency id="SystemDotMessaging" version="1.0.2" />
-          <dependency id="SystemDotDomain" version="3.5.1" />
+          <dependency id="SystemDotDomain" version="3.6.3" />
         </dependencies>
     </metadata>
     <files>

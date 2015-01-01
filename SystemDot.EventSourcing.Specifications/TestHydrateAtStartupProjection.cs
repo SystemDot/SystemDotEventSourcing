@@ -1,12 +1,12 @@
+using System.Threading.Tasks;
+using SystemDot.EventSourcing.Projections;
+
 namespace SystemDot.EventSourcing.Specifications
 {
-    using System.Threading.Tasks;
-    using SystemDot.EventSourcing.Projections;
-
     [HydrateProjectionAtStartup]
     public class TestHydrateAtStartupProjection : IProjection<TestAggregateRootCreatedEvent>
     {
-        public string IdFromEvent { get; set; }
+        public string IdFromEvent { get; private set; }
 
         public Task Handle(TestAggregateRootCreatedEvent message)
         {

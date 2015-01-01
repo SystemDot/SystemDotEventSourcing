@@ -2,6 +2,7 @@
 using SystemDot.Domain.Events.Dispatching;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.Ioc;
+using NEventStore.Persistence.Sql.SqlDialects;
 
 namespace SystemDot.EventSourcing.Sql.Windows.Bootstrapping
 {
@@ -21,6 +22,7 @@ namespace SystemDot.EventSourcing.Sql.Windows.Bootstrapping
             container.RegisterInstance<IStoreEvents>(() =>
                 Wireup.Init()
                     .UsingSqlPersistence(connectionString)
+                    .WithDialect(new MsSqlDialect())
                     .PageEvery(int.MaxValue)
                     .InitializeStorageEngine()
                     .UsingJsonSerialization()

@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SystemDot.EventSourcing.Sessions;
+using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing
 {
@@ -14,11 +15,12 @@ namespace SystemDot.EventSourcing
             this.factory = factory;
         }
 
-        public async Task<IEnumerable<SourcedEvent>> GetAllEventsAsync()
+        public IEnumerable<SourcedEvent> GetAllEvents()
         {
-            var session = await factory.CreateAsync();
-            var allEvents = await session.AllEventsAsync();
-            return await Task.FromResult(allEvents.ToList());
+            return factory.Create()
+                .AllCommitsFrom(DateTime.MinValue)
+                .SelectMany(c => c.Events)
+                .ToList();
         }
     }
 }

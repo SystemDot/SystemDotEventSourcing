@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using SystemDot.Core;
 
-namespace SystemDot.EventSourcing.Sessions
+namespace SystemDot.EventSourcing.Streams
 {
     public class SourcedEvent
     {

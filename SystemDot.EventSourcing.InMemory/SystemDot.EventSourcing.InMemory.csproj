@@ -37,8 +37,8 @@
   <ItemGroup>
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
-    <Compile Include="InMemoryEventSession.cs" />
-    <Compile Include="InMemoryEventSessionFactory.cs" />
+    <Compile Include="InMemoryEventStore.cs" />
+    <Compile Include="InMemoryEventStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +55,7 @@
       <HintPath>..\packages\SystemDotCore.3.1.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain">
-      <HintPath>..\packages\SystemDotDomain.3.5.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>

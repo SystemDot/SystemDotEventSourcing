@@ -20,8 +20,8 @@ namespace SystemDot.EventSourcing.Projections
         public async Task HydrateAsync(IEnumerable projections)
         {
             PopulateRouter(projections);
-            var allEvents = await eventRetreiver.GetAllEventsAsync();
-            foreach (var sourcedEvent in allEvents)
+
+            foreach (var sourcedEvent in eventRetreiver.GetAllEvents())
             {
                 await BuildFromEventAsync(sourcedEvent.Body);
             }

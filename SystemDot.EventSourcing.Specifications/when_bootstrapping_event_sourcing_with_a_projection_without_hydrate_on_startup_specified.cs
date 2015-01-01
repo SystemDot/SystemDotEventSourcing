@@ -1,34 +1,32 @@
-﻿namespace SystemDot.EventSourcing.Specifications
-{
-    using SystemDot.Bootstrapping;
-    using SystemDot.Domain;
-    using SystemDot.Domain.Bootstrapping;
-    using SystemDot.EventSourcing.Bootstrapping;
-    using SystemDot.EventSourcing.InMemory;
-    using SystemDot.EventSourcing.InMemory.Bootstrapping;
-    using SystemDot.EventSourcing.Sessions;
-    using SystemDot.Ioc;
-    using FluentAssertions;
-    using Machine.Specifications;
+﻿using System;
+using SystemDot.Domain.Events.Dispatching;
+using SystemDot.EventSourcing.Streams;
+using SystemDot.Bootstrapping;
+using SystemDot.Domain;
+using SystemDot.Domain.Bootstrapping;
+using SystemDot.EventSourcing.Bootstrapping;
+using SystemDot.EventSourcing.InMemory;
+using SystemDot.EventSourcing.InMemory.Bootstrapping;
+using SystemDot.EventSourcing.Sessions;
+using SystemDot.Ioc;
+using FluentAssertions;
+using Machine.Specifications;
 
+namespace SystemDot.EventSourcing.Specifications
+{
     public class when_bootstrapping_event_sourcing_with_a_projection_without_hydrate_on_startup_specified
     {
         private const string Id = "Id";
         private static IIocContainer container;
-        private static TestProjection projection;
 
-        private Establish context = async () =>
+        private Establish context = () =>
         {
             container = new IocContainer();
+            container.RegisterInstance<IEventSessionFactory>(() => new EventSessionFactory(new InMemoryEventStore(new NullEventDispatcher())));
 
-            projection = new TestProjection();
-            container.RegisterInstance(() => projection);
-
-            var session = new InMemoryEventSession(new NullEventDispatcher());
-            container.RegisterInstance(() => session);
-
+            IEventSession session = container.Resolve<IEventSessionFactory>().Create();
             session.StoreEvent(new SourcedEvent { Body = new TestAggregateRootCreatedEvent { Id = Id }, }, Id);
-            await session.CommitAsync();
+            session.Commit(Guid.NewGuid());
         };
 
         Because of = async () =>
@@ -40,6 +38,6 @@
                 .InitialiseAsync();
         };
 
-        It should_have_hydrated_the_projection = () => projection.IdFromEvent.Should().Be(null);
+        It should_have_hydrated_the_projection = () => container.Resolve<TestProjection>().IdFromEvent.Should().Be(null);
     }
 }

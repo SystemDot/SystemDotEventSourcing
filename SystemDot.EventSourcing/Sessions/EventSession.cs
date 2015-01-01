@@ -1,49 +1,81 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using SystemDot.Core;
 using SystemDot.Core.Collections;
-using SystemDot.Domain.Events.Dispatching;
+using SystemDot.EventSourcing.Commits;
+using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Sessions
 {
-    public abstract class EventSession : Disposable, IEventSession
+    public class EventSession : Disposable, IEventSession
     {
-        readonly IEventDispatcher eventDispatcher;
-        readonly List<EventContainer> eventsToCommit;
+        readonly IEventStore eventStore;
+        readonly Dictionary<string, IEventStream> streams;
 
-        protected EventSession(IEventDispatcher eventDispatcher)
+        public EventSession(IEventStore eventStore)
         {
-            this.eventDispatcher = eventDispatcher;
-            eventsToCommit = new List<EventContainer>();
+            this.eventStore = eventStore;
+            streams = new Dictionary<string, IEventStream>();
         }
 
-        public abstract Task<IEnumerable<SourcedEvent>> GetEventsAsync(string streamId);
+        public IEnumerable<SourcedEvent> GetEvents(string streamId)
+        {
+            IEventStream stream = GetStream(streamId);
+            return stream.CommittedEvents.Concat(stream.UncommittedEvents);
+        }
 
         public void StoreEvent(SourcedEvent @event, string aggregateRootId)
         {
-            eventsToCommit.Add(new EventContainer(aggregateRootId, @event));
+            GetStream(aggregateRootId).Add(@event);
         }
 
-        public async Task CommitAsync()
+        public IEnumerable<Commit> AllCommitsFrom(DateTime @from)
         {
-            eventsToCommit.ForEach(CommitEvent);
-                OnEventsCommitted();
-                eventsToCommit.Clear();
-
-            await Task.FromResult(false);
+            return eventStore.GetCommitsFrom(@from);
         }
 
-        void CommitEvent(EventContainer @event)
+        IEventStream GetStream(string aggregateRootId)
         {
-            eventDispatcher.Dispatch(@event.Event.Body);
-            OnEventCommitting(@event);
+            IEventStream stream;
+
+            if (!streams.TryGetValue(aggregateRootId, out stream)) 
+                streams[aggregateRootId] = stream = eventStore.OpenStream(aggregateRootId);
+
+            return stream;
         }
 
-        protected abstract void OnEventsCommitted();
+        public void Commit(Guid commitId)
+        {
+            foreach (var stream in streams)
+            {
+                CommitStream(commitId, stream.Value);
+            }
+        }
 
-        protected abstract void OnEventCommitting(EventContainer eventContainer);
+        void CommitStream(Guid commitId, IEventStream toCommit)
+        {
+            try
+            {
+                toCommit.CommitChanges(commitId);
+            }
+            catch (DuplicateCommitException)
+            {
+                toCommit.ClearChanges();
+            }
+            catch (ConcurrencyException)
+            {
+                toCommit.ClearChanges();
+                throw;
+            }
+        }
 
-        public abstract Task<IEnumerable<SourcedEvent>> AllEventsAsync();
+        protected override void DisposeOfManagedResources()
+        {
+            streams.ForEach(s => s.Value.Dispose());
+            streams.Clear();
+
+            base.DisposeOfManagedResources();
+        }
     }
 }

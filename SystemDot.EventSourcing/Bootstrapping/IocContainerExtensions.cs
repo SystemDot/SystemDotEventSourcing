@@ -14,8 +14,7 @@ namespace SystemDot.EventSourcing.Bootstrapping
 
         public static async Task HydrateInMemoryProjections(this IIocContainer container)
         {
-            await container.Resolve<ProjectionHydrater>()
-                .HydrateAsync(container.ResolveInMemoryProjections());
+            await container.Resolve<ProjectionHydrater>().HydrateAsync(container.ResolveInMemoryProjections());
         }
 
         static IEnumerable ResolveInMemoryProjections(this IIocContainer container)

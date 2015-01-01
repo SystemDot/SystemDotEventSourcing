@@ -1,5 +1,6 @@
 using System;
 using SystemDot.EventSourcing.Sessions;
+using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Aggregation
 {

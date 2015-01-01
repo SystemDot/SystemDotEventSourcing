@@ -1,49 +1,43 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SystemDot.Core;
 using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Sessions;
-using NEventStore;
+using SystemDot.EventSourcing.Streams;
+using SystemDot.EventSourcing.Commits;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
-    using NEventStore.Persistence;
-
     public class EventStoreEventSession : Disposable, IEventSession
     {
-        readonly IStoreEvents eventStore;
-        readonly Dictionary<string, IEventStream> streams;
+        readonly NEventStore.IStoreEvents eventStore;
+        readonly Dictionary<string, NEventStore.IEventStream> streams;
 
-        public EventStoreEventSession(IStoreEvents eventStore)
+        public EventStoreEventSession(NEventStore.IStoreEvents eventStore)
         {
             this.eventStore = eventStore;
-            streams = new Dictionary<string, IEventStream>();
+            streams = new Dictionary<string, NEventStore.IEventStream>();
         }
 
-        public async Task<IEnumerable<SourcedEvent>> AllEventsAsync()
+        public IEnumerable<Commit> AllCommitsFrom(DateTime @from)
         {
-            return await Task.FromResult(
-                eventStore
-                    .Advanced
-                    .GetFromStart()
-                    .SelectMany(e => e.Events)
-                    .Select(CreateSourcedEvent));
+            return eventStore.Advanced
+                .GetFrom("default", @from)
+                .Select(c => new Commit(c.CommitId, c.StreamId, c.Events.Select(CreateSourcedEvent).ToList()));
         }
 
-        public async Task<IEnumerable<SourcedEvent>> GetEventsAsync(string streamId)
+        public IEnumerable<SourcedEvent> GetEvents(string streamId)
         {
-            IEventStream stream = GetStream(streamId);
+            NEventStore.IEventStream stream = GetStream(streamId);
 
-            return await Task.FromResult(
-                stream.CommittedEvents
-                    .Select(CreateSourcedEvent)
-                    .Concat(stream.UncommittedEvents
-                    .Select(CreateSourcedEvent)));
+            return stream.CommittedEvents
+                .Select(CreateSourcedEvent)
+                .Concat(stream.UncommittedEvents
+                .Select(CreateSourcedEvent));
         }
 
-        SourcedEvent CreateSourcedEvent(EventMessage @from)
+        SourcedEvent CreateSourcedEvent(NEventStore.EventMessage @from)
         {
             var @event = new SourcedEvent
             {
@@ -57,7 +51,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
 
         public void StoreEvent(SourcedEvent @event, string aggregateRootId)
         {
-            var uncommittedEvent = new EventMessage
+            var uncommittedEvent = new NEventStore.EventMessage
             {
                 Body = @event.Body
             };
@@ -67,46 +61,44 @@ namespace SystemDot.EventSourcing.Sql.Windows
             GetStream(aggregateRootId).Add(uncommittedEvent);
         }
 
-        public async Task CommitAsync()
+        public void Commit(Guid commitId)
         {
             foreach (var stream in streams)
             {
-                await CommitStreamAsync(Guid.NewGuid(), stream.Value);
+                CommitStream(commitId, stream.Value);
             }
         }
 
-        IEventStream GetStream(string aggregateRootId)
+        NEventStore.IEventStream GetStream(string aggregateRootId)
         {
-            IEventStream stream;
+            NEventStore.IEventStream stream;
 
-            if (!streams.TryGetValue(aggregateRootId, out stream)) streams[aggregateRootId] = stream = eventStore.OpenStream(aggregateRootId, 0);
+            if (!streams.TryGetValue(aggregateRootId, out stream)) streams[aggregateRootId] = stream = eventStore.OpenStream("default", aggregateRootId, 0, int.MaxValue);
 
             return stream;
         }
 
-        async Task CommitStreamAsync(Guid commandId, IEventStream toCommit)
+        void CommitStream(Guid commitId, NEventStore.IEventStream toCommit)
         {
             try
             {
-                toCommit.CommitChanges(commandId);
+                toCommit.CommitChanges(commitId);
             }
-            catch (DuplicateCommitException)
+            catch (NEventStore.DuplicateCommitException)
             {
                 toCommit.ClearChanges();
             }
-            catch (ConcurrencyException)
+            catch (NEventStore.ConcurrencyException)
             {
                 toCommit.ClearChanges();
                 throw;
             }
-            await Task.FromResult(false);
         }
 
         protected override void DisposeOfManagedResources()
         {
             streams.ForEach(s => s.Value.Dispose());
             streams.Clear();
-
             base.DisposeOfManagedResources();
         }
     }

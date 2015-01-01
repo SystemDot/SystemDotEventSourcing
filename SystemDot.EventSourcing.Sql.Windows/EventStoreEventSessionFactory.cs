@@ -3,23 +3,22 @@ using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
-    using NEventStore;
-
+ 
     public class EventStoreEventSessionFactory : IEventSessionFactory
     {
-        readonly IStoreEvents eventStore;
+        readonly NEventStore.IStoreEvents eventStore;
 
-        public EventStoreEventSessionFactory(IStoreEvents eventStore)
+        public EventStoreEventSessionFactory(NEventStore.IStoreEvents eventStore)
         {
             this.eventStore = eventStore;
         }
 
-        public async Task<IEventSession> CreateAsync()
+        public IEventSession Create()
         {
             var session = new EventStoreEventSession(eventStore);
             EventSessionProvider.Session = session;
 
-            return await Task.FromResult(session);
+            return session;
         }
     }
 }
