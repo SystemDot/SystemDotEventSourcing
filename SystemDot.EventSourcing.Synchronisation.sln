@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation", "SystemDot.EventSourcing.Synchronisation\SystemDot.EventSourcing.Synchronisation.csproj", "{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4FC2D1A6-8FA2-4B93-B9E9-66655099F1BE}"
+	ProjectSection(SolutionItems) = preProject
+		SystemDotEventSourcingSynchronisation.nuspec = SystemDotEventSourcingSynchronisation.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Specifications", "SystemDot.EventSourcing.Synchronisation.Specifications\SystemDot.EventSourcing.Synchronisation.Specifications.csproj", "{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
