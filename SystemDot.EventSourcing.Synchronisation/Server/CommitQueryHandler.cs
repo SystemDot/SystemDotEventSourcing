@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SystemDot.Domain.Queries;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.Serialisation;
 
-namespace SystemDot.EventSourcing.Synchronisation
+namespace SystemDot.EventSourcing.Synchronisation.Server
 {
     public class CommitQueryHandler : IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>>
     {

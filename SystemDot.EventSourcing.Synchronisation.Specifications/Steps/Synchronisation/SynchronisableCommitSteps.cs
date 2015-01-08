@@ -2,28 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Domain.Queries;
+using SystemDot.Domain.Synchronisation.Specifications.Steps.Commits;
 using SystemDot.EventSourcing.Synchronisation;
+using SystemDot.EventSourcing.Synchronisation.Server;
 using SystemDot.Serialisation;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace SystemDot.Domain.Synchronisation.Specifications
+namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Synchronisation
 {
     [Binding]
-    public class Synchronisation
+    public class SynchronisableCommitSteps
     {
         readonly IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>> handler;
+        readonly SynchronisableCommitContext context;
         readonly CommitContext commitContext;
-        readonly ISerialiser serialiser;
         IEnumerable<SynchronisableCommit> commits;
-        SynchronisableCommit commitInUse;
+        
         IEnumerable<object> events;
 
-        public Synchronisation(CommitQueryHandler handler, CommitContext commitContext)
+        public SynchronisableCommitSteps(CommitQueryHandler handler, SynchronisableCommitContext context, CommitContext commitContext)
         {
             this.handler = handler;
+            this.context = context;
             this.commitContext = commitContext;
-            serialiser = new JsonSerialiser();
+        }
+
+        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)'")]
+        public void GivenIHaveCreatedASynchronisableCommitWithAnIdOfAndStreamIdentifiedAs(Guid id, string streamId)
+        {
+            context.CommitInUse = new SynchronisableCommit
+            {
+                CommitId = id, 
+                StreamId = streamId, 
+                CreatedOn = DateTime.Now,
+                Events = new List<SynchronisableSourcedEvent>()
+            };
+        }
+
+        [Given(@"I add a serialised event with an id of (.*) to the commit")]
+        public void GivenIAddASerialisedEventWithAnIdOfToTheCommit(Guid id)
+        {
+            context.CommitInUse.Events.Add(new SynchronisableSourcedEvent { Body = new JsonSerialiser().Serialise(new TestEvent { Id = id }) });
         }
 
         [When(@"I request events for synchronisation")]
@@ -35,37 +55,37 @@ namespace SystemDot.Domain.Synchronisation.Specifications
         [When(@"I use the first synchronisable commit requested")]
         public void WhenIUseTheFirstSynchronisableCommitRequested()
         {
-            commitInUse = commits.First();
+            context.CommitInUse = commits.First();
         }
         
         [When(@"I use the second synchronisable commit requested")]
         public void WhenIUseTheSecondSynchronisableCommitRequested()
         {
-            commitInUse = commits.ElementAt(1);
+            context.CommitInUse = commits.ElementAt(1);
         }
 
         [When(@"I deserialise the synchronisable commit events")]
         public void WhenIDeserialiseTheSynchronisableCommitEvents()
         {
-            events = commitInUse.Events.Select(e => serialiser.Deserialise(e.Body));
+            events = context.CommitInUse.Events.Select(e => new JsonSerialiser().Deserialise(e.Body));
         }
 
         [Then(@"the synchronisable commit should have the same id as the commit")]
         public void ThenTheSynchronisableCommitShouldHaveTheSameIdAsTheCommit()
         {
-            commitInUse.CommitId.Should().Be(commitContext.CommitInUse.CommitId);
+            context.CommitInUse.CommitId.Should().Be(commitContext.CommitInUse.CommitId);
         }
 
         [Then(@"the synchronisable commit should be for the same stream as the commit")]
         public void ThenTheSynchronisableCommitShouldBeForTheSameStreamAsTheCommit()
         {
-            commitInUse.StreamId.Should().Be(commitContext.CommitInUse.StreamId);
+            context.CommitInUse.StreamId.Should().Be(commitContext.CommitInUse.StreamId);
         }
 
         [Then(@"the synchronisable commit should be for the same date and time as the commit")]
         public void ThenTheSynchronisableCommitShouldBeForTheSameDateAndTimeAsTheCommit()
         {
-            commitInUse.CreatedOn.Should().Be(commitContext.CommitInUse.CreatedOn);
+            context.CommitInUse.CreatedOn.Should().Be(commitContext.CommitInUse.CreatedOn);
         }
 
         [Then(@"the deserialised events should contain an event an id of (.*)")]

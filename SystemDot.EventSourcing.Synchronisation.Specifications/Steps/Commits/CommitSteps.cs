@@ -2,18 +2,19 @@
 using System.Linq;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Streams;
+using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace SystemDot.Domain.Synchronisation.Specifications
+namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Commits
 {
     [Binding]
-    public class Events
+    public class CommitSteps
     {
         readonly IEventSessionFactory sessionFactory;
         readonly CommitContext context;
         IEventSession session;
         
-        public Events(IEventSessionFactory sessionFactory, CommitContext context)
+        public CommitSteps(IEventSessionFactory sessionFactory, CommitContext context)
         {
             this.sessionFactory = sessionFactory;
             this.context = context;
@@ -47,6 +48,24 @@ namespace SystemDot.Domain.Synchronisation.Specifications
         public void WhenIUseTheSecondCommitInTheEventSession()
         {
             context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(1);
+        }
+
+        [Then(@"the commit should have an id of (.*)")]
+        public void ThenTheCommitShouldHaveAnIdOf(Guid id)
+        {
+            context.CommitInUse.CommitId.Should().Be(id);
+        }
+
+        [Then(@"the commit should be for a stream identified as '(.*)'")]
+        public void ThenTheCommitShouldBeForAStreamIdentifiedAs(string id)
+        {
+            context.CommitInUse.StreamId.Should().Be(id);
+        }
+
+        [Then(@"the commit should contain an event with an id of (.*)")]
+        public void ThenTheCommitShouldContainAnEventWithAnIdOf(Guid id)
+        {
+            context.CommitInUse.Events.Should().Contain(e => e.Body.As<TestEvent>().Id == id);
         }
     }
 }

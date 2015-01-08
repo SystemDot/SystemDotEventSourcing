@@ -38,13 +38,30 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Testing">
+      <HintPath>..\packages\Microsoft.Owin.Testing.3.0.0\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="SystemDot.Bootstrapping">
@@ -94,29 +111,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
-    <Compile Include="CommitContext.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Bootstrapping\Bootstrapper.cs" />
+    <Compile Include="Steps\Client\ClientSteps.cs" />
+    <Compile Include="Steps\Commits\CommitContext.cs" />
+    <Compile Include="Steps\Commits\CommitSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerRetrieve.feature.cs">
+    <Compile Include="Features\RetrieveEvents.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ServerRetrieve.feature</DependentUpon>
+      <DependentUpon>RetrieveEvents.feature</DependentUpon>
     </Compile>
-    <Compile Include="Synchronisation.cs" />
+    <Compile Include="Steps\Server\ServerSteps.cs" />
+    <Compile Include="Steps\Synchronisation\SynchronisableCommitContext.cs" />
+    <Compile Include="Steps\Synchronisation\SynchronisableCommitSteps.cs" />
     <Compile Include="TestEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="ServerRetrieve.feature">
+    <None Include="Features\RetrieveEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ServerRetrieve.feature.cs</LastGenOutput>
+      <LastGenOutput>RetrieveEvents.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SystemDot.EventSourcing.Synchronisation.Testing\SystemDot.EventSourcing.Synchronisation.Testing.csproj">
+      <Project>{0c2dfc27-3e6b-41d4-9199-a83a6c0d0348}</Project>
+      <Name>SystemDot.EventSourcing.Synchronisation.Testing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.EventSourcing.Synchronisation\SystemDot.EventSourcing.Synchronisation.csproj">
-      <Project>{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}</Project>
+      <Project>{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}</Project>
       <Name>SystemDot.EventSourcing.Synchronisation</Name>
     </ProjectReference>
   </ItemGroup>

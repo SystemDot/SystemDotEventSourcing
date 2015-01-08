@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.Serialisation;
 
-namespace SystemDot.EventSourcing.Synchronisation
+namespace SystemDot.EventSourcing.Synchronisation.Server
 {
     public static class IEventSessionExtensions
     {

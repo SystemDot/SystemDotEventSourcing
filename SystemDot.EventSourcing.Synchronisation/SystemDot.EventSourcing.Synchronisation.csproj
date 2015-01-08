@@ -1,17 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}</ProjectGuid>
+    <ProjectGuid>{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SystemDot.EventSourcing.Synchronisation</RootNamespace>
     <AssemblyName>SystemDot.EventSourcing.Synchronisation</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Solutions\</SolutionDir>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,84 +36,68 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Client\Http\HttpClientFactory.cs" />
+    <Compile Include="Client\Http\HttpContentExtensions.cs" />
+    <Compile Include="Client\Http\IHttpClientFactory.cs" />
+    <Compile Include="Client\SynchronisableSourcedEventExtensions.cs" />
+    <Compile Include="Client\SynchroniseCommits.cs" />
+    <Compile Include="Client\SynchroniseCommitsHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\CommitExtensions.cs" />
+    <Compile Include="Server\CommitQuery.cs" />
+    <Compile Include="Server\CommitQueryHandler.cs" />
+    <Compile Include="Server\IEventSessionExtensions.cs" />
+    <Compile Include="Client\CommitRetrievalClient.cs" />
+    <Compile Include="SynchronisableCommit.cs" />
+    <Compile Include="SynchronisableSourcedEvent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="SystemDot.Bootstrapping, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.dll</HintPath>
+    <Reference Include="SystemDot.Bootstrapping">
+      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Bootstrapping.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Core">
+      <HintPath>..\packages\SystemDotCore.3.1.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotCore.3.1.2\lib\net\SystemDot.Core.dll</HintPath>
+    <Reference Include="SystemDot.Domain">
+      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Domain.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SystemDot.EventSourcing">
       <HintPath>..\packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SystemDot.EventSourcing.InMemory">
       <HintPath>..\packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SystemDot.Ioc">
       <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotMessaging.1.0.2\lib\net\SystemDot.Messaging.dll</HintPath>
+    <Reference Include="SystemDot.Messaging">
+      <HintPath>..\packages\SystemDotMessaging.1.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Reflection.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Reflection">
+      <HintPath>..\packages\SystemDotReflection.1.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation">
       <HintPath>..\packages\SystemDotSerialisation.1.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Serialisation.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    <Reference Include="SystemDot.ThreadMarshalling">
+      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CommitExtensions.cs" />
-    <Compile Include="CommitQuery.cs" />
-    <Compile Include="CommitQueryHandler.cs" />
-    <Compile Include="EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
-    <Compile Include="IEventSessionExtensions.cs" />
-    <Compile Include="SynchronisableSourcedEvent.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SynchronisableCommit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,4 +1,5 @@
-﻿using SystemDot.Bootstrapping;
+﻿using System;
+using SystemDot.Bootstrapping;
 using SystemDot.Core.Collections;
 using SystemDot.Domain.Bootstrapping;
 using SystemDot.Domain.Commands;
@@ -6,13 +7,17 @@ using SystemDot.Domain.Queries;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation;
+using SystemDot.EventSourcing.Synchronisation.Bootstrapping;
+using SystemDot.EventSourcing.Synchronisation.Client;
+using SystemDot.EventSourcing.Synchronisation.Client.Http;
+using SystemDot.EventSourcing.Synchronisation.Server;
+using SystemDot.EventSourcing.Synchronisation.Testing;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Simple;
 using BoDi;
 using TechTalk.SpecFlow;
 
-namespace SystemDot.Domain.Synchronisation.Specifications
+namespace SystemDot.Domain.Synchronisation.Specifications.Bootstrapping
 {
     [Binding]
     public class Bootstrapper
@@ -30,16 +35,29 @@ namespace SystemDot.Domain.Synchronisation.Specifications
         {
             Reset();
             
+            container.RegisterInstance<IHttpClientFactory, TestHttpClientFactory>();
+            RegisterInSpecFlow<IHttpClientFactory>();
+            
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
                 .UseDomain().DispatchEventsOnUiThread().WithSimpleMessaging()
                 .UseEventSourcing().WithSynchronisation().PersistToMemory()
                 .Initialise();
 
-            specFlowContainer.RegisterInstanceAs<IEventSessionFactory>(container.Resolve<IEventSessionFactory>());
-            
+            RegisterInSpecFlow<IEventSessionFactory>();
+            RegisterOpenTypeInSpecFlow(typeof(IAsyncQueryHandler<,>));
+            RegisterOpenTypeInSpecFlow(typeof(IAsyncCommandHandler<>));
+        }
+
+        void RegisterInSpecFlow<T>() where T : class
+        {
+            specFlowContainer.RegisterInstanceAs<T>(container.Resolve<T>());
+        }
+
+        void RegisterOpenTypeInSpecFlow(Type openType)
+        {
             container.ResolveMutipleTypes()
-                .ThatImplementOpenType(typeof(IAsyncQueryHandler<,>))
+                .ThatImplementOpenType(openType)
                 .ForEach(h => specFlowContainer.RegisterInstanceAs(h));
         }
 
