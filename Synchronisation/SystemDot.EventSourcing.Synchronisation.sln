@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4FC2D1A6-8FA2-4B93-B9E9-66655099F1BE}"
+	ProjectSection(SolutionItems) = preProject
+		SystemDotEventSourcingSynchronisation.nuspec = SystemDotEventSourcingSynchronisation.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7C2B57CE-5792-4471-ADE5-7320727E813C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation", "SystemDot.EventSourcing.Synchronisation.csproj", "{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Specifications", "Specifications\SystemDot.EventSourcing.Synchronisation.Specifications.csproj", "{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222E0EC1-3438-46E3-B5E4-BB5316C8BFB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

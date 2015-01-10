@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38D275E8-2428-4275-9AC6-1BF5DA234E23}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SystemDot.EventSourcing.Esent.Windows</RootNamespace>
+    <AssemblyName>SystemDot.EventSourcing.Esent.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="SystemDot.Bootstrapping">
+      <HintPath>packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Bootstrapping.Windows">
+      <HintPath>packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core">
+      <HintPath>packages\SystemDotCore.3.1.2\lib\net\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Domain">
+      <HintPath>packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Domain.Windows">
+      <HintPath>packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.EventSourcing">
+      <HintPath>packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.EventSourcing.InMemory">
+      <HintPath>packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc">
+      <HintPath>packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging">
+      <HintPath>packages\SystemDotMessaging.1.0.2\lib\net\SystemDot.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Reflection">
+      <HintPath>packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Reflection.Windows">
+      <HintPath>packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling">
+      <HintPath>packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.Windows">
+      <HintPath>packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\IocContainerExtensions.cs" />
+    <Compile Include="EsentEventSession.cs" />
+    <Compile Include="EsentEventSessionFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

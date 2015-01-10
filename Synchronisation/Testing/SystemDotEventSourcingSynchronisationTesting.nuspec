@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SystemDotEventSourcingSynchronisationTesting</id>
+    <version>1.0.0</version>
+    <title>SystemDot.EventSourcing.Synchronisation.Testing</title>
+    <authors>Chris Sampson,James Goodenough</authors>
+    <owners>Chris Sampson,James Goodenough</owners>
+    <projectUrl>https://github.com/SystemDot/SystemDotCore</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Testing library for event sourcing synchronisation</description>
+    <summary>Testing library for event sourcing synchronisation</summary>
+    <copyright>SystemDot 2015</copyright>
+    <language>en-GB</language>
+    <tags>Event Sourcing, Azure, Synchronisation</tags>
+    <dependencies>
+      <dependency id="SpecFlow" version="1.9.0" />
+      <dependency id="Microsoft.AspNet.WebApi.OwinSelfHost" version="5.2.2" />
+      <dependency id="Microsoft.Owin.Testing" version="3.0.0" />
+      <dependency id="SystemDotEventSourcing.Synchronisation" version="1.1.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Testing.dll" target="lib\net\SystemDot.EventSourcing.Synchronisation.Testing.dll" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Testing.pdb" target="lib\net\SystemDot.EventSourcing.Synchronisation.Testing.pdb" />
+  </files>
+</package>
