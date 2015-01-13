@@ -67,7 +67,7 @@
       <HintPath>packages\SystemDotCore.3.1.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain">
-      <HintPath>packages\SystemDotDomain.3.6.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
+      <HintPath>packages\SystemDotDomain.3.6.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing">
       <HintPath>packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
