@@ -77,13 +77,13 @@
       <HintPath>packages\SystemDotCore.3.1.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain">
-      <HintPath>packages\SystemDotDomain.3.6.3\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
+      <HintPath>packages\SystemDotDomain.3.6.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging">
-      <HintPath>packages\SystemDotMessaging.1.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll</HintPath>
+      <HintPath>packages\SystemDotMessaging.2.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Reflection">
       <HintPath>packages\SystemDotReflection.1.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Reflection.dll</HintPath>

@@ -8,12 +8,9 @@ using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Synchronisation.Bootstrapping;
-using SystemDot.EventSourcing.Synchronisation.Client;
 using SystemDot.EventSourcing.Synchronisation.Client.Http;
-using SystemDot.EventSourcing.Synchronisation.Server;
 using SystemDot.EventSourcing.Synchronisation.Testing;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Simple;
 using BoDi;
 using TechTalk.SpecFlow;
 
@@ -63,7 +60,6 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Bootstrapping
 
         static void Reset()
         {
-            Messenger.Reset();
             container = new IocContainer();
         }
     }

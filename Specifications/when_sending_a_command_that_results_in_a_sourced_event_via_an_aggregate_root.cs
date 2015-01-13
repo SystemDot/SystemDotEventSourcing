@@ -33,7 +33,7 @@ namespace SystemDot.EventSourcing.Specifications
                 .UseEventSourcing().PersistToMemory()
                 .Initialise();
             
-            Messenger.RegisterHandler<TestAggregateRootCreatedEvent>(e => handledEvent = e);
+            container.Resolve<Dispatcher>().RegisterHandler<TestAggregateRootCreatedEvent>(e => handledEvent = e);
         };
 
         Because of = () => container.Resolve<IAsyncCommandHandler<TestCommand>>().Handle(new TestCommand { Id = Id }).Wait();

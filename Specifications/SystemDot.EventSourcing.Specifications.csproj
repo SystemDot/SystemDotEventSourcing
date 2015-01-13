@@ -70,11 +70,11 @@
     </Reference>
     <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.4\lib\net\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.3\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.4\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,7 +82,7 @@
     </Reference>
     <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotMessaging.1.0.2\lib\net\SystemDot.Messaging.dll</HintPath>
+      <HintPath>..\packages\SystemDotMessaging.2.0.0\lib\net\SystemDot.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
