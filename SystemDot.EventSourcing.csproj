@@ -45,7 +45,6 @@
     <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
     <Compile Include="DomainRepository.cs" />
     <Compile Include="EventRetreiver.cs" />
-    <Compile Include="EventSessionAsyncCommandHandler.cs" />
     <Compile Include="IDomainRepository.cs" />
     <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />
     <Compile Include="Projections\IocContainerExtensions.cs" />
@@ -54,9 +53,9 @@
     <Compile Include="Commits\Commit.cs" />
     <Compile Include="Commits\ConcurrencyException.cs" />
     <Compile Include="Commits\DuplicateCommitException.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Sessions\EventSession.cs" />
     <Compile Include="Sessions\EventSessionFactory.cs" />
-    <Compile Include="Sessions\EventSessionProvider.cs" />
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfiguration.cs" />
     <Compile Include="Sessions\IEventSession.cs">
       <SubType>Code</SubType>

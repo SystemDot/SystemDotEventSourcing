@@ -13,8 +13,7 @@ namespace SystemDot.EventSourcing.Sessions
 
         public IEventSession Create()
         {
-            EventSessionProvider.Session = new EventSession(store);
-            return EventSessionProvider.Session;
+            return new EventSession(store);
         }
     }
 }

@@ -1,24 +1,27 @@
 using System;
-using SystemDot.EventSourcing.Sessions;
+using System.Collections.Generic;
+using System.Linq;
+using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Aggregation
 {
     public abstract class AggregateRoot
     {
-        public static EventHandler<EventSourceEventArgs> EventAdded;
-        public EventHandler<EventSourceEventArgs> EventReplayed;
-        
         readonly ConventionEventToHandlerRouter eventRouter;
+        public EventHandler<EventSourceEventArgs> EventReplayed;
 
+        internal List<SourcedEvent> EventsAdded { get; private set; }
         public string Id { get; private set; }
-
+        
         protected AggregateRoot()
         {
+            EventsAdded = new List<SourcedEvent>();
             eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected AggregateRoot(string id) : this()
+        protected AggregateRoot(string id)
+            : this()
         {
             Id = id;
         }
@@ -26,7 +29,12 @@ namespace SystemDot.EventSourcing.Aggregation
         protected internal void AddEvent(object @event)
         {
             ReplayEvent(@event);
-            EventSessionProvider.Session.StoreEvent(CreateSourcedEvent(@event), Id);
+            StoreEvent(CreateSourcedEvent(@event));
+        }
+
+        void StoreEvent(SourcedEvent @event)
+        {
+            EventsAdded.Add(@event);
         }
 
         SourcedEvent CreateSourcedEvent(object body)
@@ -41,17 +49,17 @@ namespace SystemDot.EventSourcing.Aggregation
             return sourcedEvent;
         }
 
-        protected internal void AddEvent<T>(Action<T> initaliseEvent) where T : new()
+        internal void Rehydrate(string id, IEnumerable<SourcedEvent> events)
         {
-            var @event = new T();
-            initaliseEvent(@event);
-            AddEvent(@event);
+            Id = id;
+            events
+                .Select(e => e.Body)
+                .ForEach(ReplayEvent);
         }
 
-        public void ReplayEvent(object toReplay)
+        void ReplayEvent(object toReplay)
         {
             eventRouter.RouteEventToHandlers(toReplay);
-
             OnEventReplayed(toReplay);
         }
 
@@ -63,9 +71,11 @@ namespace SystemDot.EventSourcing.Aggregation
             }
         }
 
-        internal static void SetId(AggregateRoot aggregateRoot, string id)
+        protected internal void AddEvent<T>(Action<T> initaliseEvent) where T : new()
         {
-            aggregateRoot.Id = id;
+            var @event = new T();
+            initaliseEvent(@event);
+            AddEvent(@event);
         }
     }
 }

@@ -32,12 +32,9 @@ namespace SystemDot.EventSourcing.Specifications
             repository = container.Resolve<IDomainRepository>();
             eventSessionFactory = container.Resolve<IEventSessionFactory>();
 
-            using (var session = eventSessionFactory.Create())
-            {
-                var root = TestAggregateRoot.Create(Id);
-                root.SetSomeMoreStateResultingInEvent();
-                session.Commit(Guid.NewGuid());
-            }   
+            var root = TestAggregateRoot.Create(Id);
+            root.SetSomeMoreStateResultingInEvent();
+            repository.Save(root);
         };
 
         Because of = () =>

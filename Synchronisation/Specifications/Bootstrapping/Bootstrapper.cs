@@ -11,6 +11,7 @@ using SystemDot.EventSourcing.Synchronisation.Bootstrapping;
 using SystemDot.EventSourcing.Synchronisation.Client.Http;
 using SystemDot.EventSourcing.Synchronisation.Testing;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Simple;
 using BoDi;
 using TechTalk.SpecFlow;
 
@@ -42,6 +43,7 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Bootstrapping
                 .Initialise();
 
             RegisterInSpecFlow<IEventSessionFactory>();
+            RegisterInSpecFlow<Dispatcher>();
             RegisterOpenTypeInSpecFlow(typeof(IAsyncQueryHandler<,>));
             RegisterOpenTypeInSpecFlow(typeof(IAsyncCommandHandler<>));
         }

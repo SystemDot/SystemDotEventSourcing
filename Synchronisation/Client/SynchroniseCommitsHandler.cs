@@ -1,37 +1,27 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using SystemDot.Core.Collections;
 using SystemDot.Domain.Commands;
-using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation.Server;
+using SystemDot.EventSourcing.Synchronisation.Messages;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {
     public class SynchroniseCommitsHandler : IAsyncCommandHandler<SynchroniseCommits>
     {
-        readonly CommitRetrievalClient commitRetrievalClient;
-        readonly IEventSessionFactory sessionFactory;
+        readonly CommitSynchroniser commitSynchroniser;
+        readonly IDomainRepository domainRepository;
 
-        public SynchroniseCommitsHandler(CommitRetrievalClient commitRetrievalClient, IEventSessionFactory sessionFactory)
+        public SynchroniseCommitsHandler(
+            CommitSynchroniser commitSynchroniser, 
+            IDomainRepository domainRepository)
         {
-            this.commitRetrievalClient = commitRetrievalClient;
-            this.sessionFactory = sessionFactory;
+            this.commitSynchroniser = commitSynchroniser;
+            this.domainRepository = domainRepository;
         }
 
         public async Task Handle(SynchroniseCommits message)
         {
-            IEnumerable<SynchronisableCommit> commits = await commitRetrievalClient.GetCommitsAsync(new Uri(message.ServerUri));
-            commits.ForEach(SynchroniseCommit);
-        }
-
-        void SynchroniseCommit(SynchronisableCommit toSynchronise)
-        {
-            using (var session = sessionFactory.Create())
-            {
-                toSynchronise.Events.ForEach(e => session.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId));
-                session.Commit(toSynchronise.CommitId);
-            }
+            var clientSynchronisationProcess = domainRepository.Get<ClientSynchronisationProcess>(message.ClientId);
+            await clientSynchronisationProcess.Synchronise(commitSynchroniser);
+            domainRepository.Save(clientSynchronisationProcess);
         }
     }
 }

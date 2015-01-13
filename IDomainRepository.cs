@@ -8,5 +8,8 @@ namespace SystemDot.EventSourcing
             where TAggregateRoot : AggregateRoot, new();
 
         bool Exists(string aggregateRootId);
+
+        void Save<TAggregateRoot>(TAggregateRoot aggregateRoot)
+            where TAggregateRoot : AggregateRoot;
     }
 }

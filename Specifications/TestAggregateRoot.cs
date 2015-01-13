@@ -1,4 +1,5 @@
 using SystemDot.EventSourcing.Aggregation;
+using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.Specifications
 {

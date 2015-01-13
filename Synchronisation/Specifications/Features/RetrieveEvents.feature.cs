@@ -31,9 +31,9 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RetrieveEvents", "In order to ensure devices synchronise events from the server\nI want to make even" +
-                    "ts from the server available for synchronisation with devices and update the dev" +
-                    "ices with those events", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RetrieveEvents", "In order to ensure devices synchronise events from the server\r\nI want to make eve" +
+                    "nts from the server available for synchronisation with devices and update the de" +
+                    "vices with those events", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -135,55 +135,60 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Features
 #line 27
  this.ScenarioSetup(scenarioInfo);
 #line 28
-  testRunner.Given("I have created a synchronisable commit with an id of E261A67D-2C00-4854-A0FF-6DEF" +
-                    "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("I have initialised the client synchronisation process with the server address and" +
+                    " client id of \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 29
+  testRunner.And("I have created a synchronisable commit with an id of E261A67D-2C00-4854-A0FF-6DEF" +
+                    "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 30
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 30
+#line 31
   testRunner.And("I add a serialised event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
-  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 32
+  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 33
   testRunner.Given("I have created a synchronisable commit with an id of F261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 and stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 33
+#line 34
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4278 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 34
+#line 35
   testRunner.And("I add a serialised event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4278 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 35
-  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
-  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
-  testRunner.When("I synchronise the client with the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 38
-  testRunner.And("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.When("I synchronise the client with the server with client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 39
-  testRunner.Then("the commit should have an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.And("I use the second commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 40
+  testRunner.Then("the end of the synchronisation should be signalled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 41
+  testRunner.And("the commit should have an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 42
   testRunner.And("the commit should be for a stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
+#line 43
   testRunner.And("the commit should contain an event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 42
+#line 44
   testRunner.And("the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
-  testRunner.When("I use the second commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 44
-  testRunner.Then("the commit should have an id of F261A67D-2C00-4854-A0FF-6DEFA84A4276", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 45
+  testRunner.When("I use the third commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 46
+  testRunner.Then("the commit should have an id of F261A67D-2C00-4854-A0FF-6DEFA84A4276", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 47
   testRunner.And("the commit should be for a stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 46
+#line 48
   testRunner.And("the commit should contain an event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4278", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 47
+#line 49
   testRunner.And("the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4278", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

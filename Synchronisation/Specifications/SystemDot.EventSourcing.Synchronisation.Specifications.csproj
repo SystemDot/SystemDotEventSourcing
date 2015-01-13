@@ -93,19 +93,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SystemDotDomain.3.6.4\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing">
-      <HintPath>..\packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.EventSourcing.InMemory">
-      <HintPath>..\packages\SystemDotEventSourcing.4.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.EventSourcing.Synchronisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.Synchronisation.1.1.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing.Synchronisation.Testing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcingSynchronisationTesting.1.0.0\lib\net\SystemDot.EventSourcing.Synchronisation.Testing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
@@ -152,12 +146,31 @@
     <Compile Include="TestEvent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Features\RetrieveEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RetrieveEvents.feature.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Messages\SystemDot.EventSourcing.Synchronisation.Messages.csproj">
+      <Project>{78D85BB6-985C-489C-8278-8F6384C6CEC0}</Project>
+      <Name>SystemDot.EventSourcing.Synchronisation.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.EventSourcing.Synchronisation.csproj">
+      <Project>{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}</Project>
+      <Name>SystemDot.EventSourcing.Synchronisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testing\SystemDot.EventSourcing.Synchronisation.Testing.csproj">
+      <Project>{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}</Project>
+      <Name>SystemDot.EventSourcing.Synchronisation.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -25,8 +25,7 @@ namespace SystemDot.EventSourcing.Specifications
         {
             container = new IocContainer();
             container.RegisterInstance<IAsyncCommandHandler<TestCommand>, TestCommandHandler>();
-            container.RegisterDecorator<EventSessionAsyncCommandHandler<TestCommand>, IAsyncCommandHandler<TestCommand>>();
-
+            
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
                 .UseDomain().WithSimpleMessaging()
@@ -39,13 +38,13 @@ namespace SystemDot.EventSourcing.Specifications
         Because of = () => container.Resolve<IAsyncCommandHandler<TestCommand>>().Handle(new TestCommand { Id = Id }).Wait();
         
         It should_put_the_sourced_event_in_the_session_with_the_event_as_its_session = () =>
-             EventSessionProvider.Session.GetEvents(Id).Single()
+             container.Resolve<IEventSessionFactory>().Create().GetEvents(Id).Single()
                 .Body.As<TestAggregateRootCreatedEvent>().Id.Should().Be(Id);
 
         It should_send_the_event = () => handledEvent.Id.Should().Be(Id);
         
         It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = () =>
-            EventSessionProvider.Session.GetEvents(Id).Single()
+            container.Resolve<IEventSessionFactory>().Create().GetEvents(Id).Single()
                 .GetHeader<Type>(EventHeaderKeys.AggregateType)
                 .Should().Be(typeof(TestAggregateRoot));
     }

@@ -41,13 +41,19 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Commits
         [When(@"I use the first commit in the event session")]
         public void WhenIUseTheFirstCommitInTheEventSession()
         {
-            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).First();
+            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(0);
         }
 
         [When(@"I use the second commit in the event session")]
         public void WhenIUseTheSecondCommitInTheEventSession()
         {
             context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(1);
+        }
+
+        [When(@"I use the third commit in the event session")]
+        public void WhenIUseTheThirdCommitInTheEventSession()
+        {
+            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(2);
         }
 
         [Then(@"the commit should have an id of (.*)")]
