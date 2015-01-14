@@ -18,5 +18,12 @@ namespace SystemDot.EventSourcing.Sessions
         {
             session.StoreEvent(new SourcedEvent { Body = @event }, id);
         }
+
+        public static void StoreEventAndCommit<TEvent>(this IEventSession session, TEvent @event, string id)
+            where TEvent : new()
+        {
+            session.StoreEvent(@event, id);
+            session.Commit(Guid.NewGuid());
+        }
     }
 }
