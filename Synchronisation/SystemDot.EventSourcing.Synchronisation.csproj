@@ -70,10 +70,10 @@
       <HintPath>packages\SystemDotDomain.3.6.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing">
-      <HintPath>packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.5.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory">
-      <HintPath>packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.5.0.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
