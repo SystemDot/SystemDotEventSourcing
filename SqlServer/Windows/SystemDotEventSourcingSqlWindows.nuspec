@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SystemDotEventSourcing.Sql.Windows</id>
+    <version>3.0.7</version>
+    <title>SystemDot.EventSourcing.Sql.Windows</title>
+    <authors>Chris Sampson,James Goodenough</authors>
+    <owners>Chris Sampson,James Goodenough</owners>
+    <projectUrl>https://github.com/SystemDot/SystemDotCore</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Event sourcing for Windows SqlServer</description>
+    <summary>Event sourcing for Windows SqlServer</summary>
+    <copyright>SystemDot 2014</copyright>
+    <language>en-GB</language>
+    <tags>Event Sourcing, SqlServer</tags>
+    <dependencies>
+      <dependency id="NEventStore" version="5.1.0" />
+      <dependency id="SystemDotBootstrapping" version="1.0.4" />
+      <dependency id="SystemDotIoc" version="1.2.0" />
+      <dependency id="SystemDotCore" version="3.1.2" />
+      <dependency id="SystemDotMessaging" version="2.0.0" />
+      <dependency id="SystemDotDomain" version="3.6.5" />
+      <dependency id="SystemDotEventSourcing" version="5.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Build\SystemDot.EventSourcing.Sql.Windows.dll" target="lib\net\SystemDot.EventSourcing.Sql.Windows.dll" />
+    <file src="Build\SystemDot.EventSourcing.Sql.Windows.pdb" target="lib\net\SystemDot.EventSourcing.Sql.Windows.pdb" />
+  </files>
+</package>
