@@ -45,6 +45,7 @@
     <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
     <Compile Include="DomainRepository.cs" />
     <Compile Include="EventRetreiver.cs" />
+    <Compile Include="Handlers\StoreAndCommitEventCommandHandler.cs" />
     <Compile Include="Headers\EventOriginHeader.cs" />
     <Compile Include="IDomainRepository.cs" />
     <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />

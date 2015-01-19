@@ -113,6 +113,7 @@
     <Compile Include="configuring\when_using_domain_with_simple_messaging.cs" />
     <Compile Include="NullEventDispatcher.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="StoreAndCommitTestCommandHandler.cs" />
     <Compile Include="TestAggregateRoot.cs" />
     <Compile Include="TestAggregateRootCreatedEvent.cs" />
     <Compile Include="TestAggregateRootStateEvent.cs" />
@@ -121,8 +122,10 @@
     <Compile Include="TestCommandHandler.cs" />
     <Compile Include="TestHydrateAtStartupProjection.cs" />
     <Compile Include="TestProjection.cs" />
+    <Compile Include="TestStoreAndCommitEvent.cs" />
     <Compile Include="when_bootstrapping_event_sourcing_with_a_projection_for_an_event_existent_in_the_session.cs" />
     <Compile Include="when_bootstrapping_event_sourcing_with_a_projection_without_hydrate_on_startup_specified.cs" />
+    <Compile Include="when_directly_storing_and_committing_an_event_from_command_handler.cs" />
     <Compile Include="when_saving_an_aggregate_root_and_getting_it_back_again_via_repository.cs" />
     <Compile Include="when_saving_an_aggregate_root_via_the_repository.cs" />
     <Compile Include="when_sending_a_command_that_results_in_a_sourced_event_via_an_aggregate_root.cs" />
