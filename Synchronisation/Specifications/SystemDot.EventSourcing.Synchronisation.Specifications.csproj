@@ -87,26 +87,32 @@
     </Reference>
     <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.5\lib\net\SystemDot.Domain.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.5\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+      <HintPath>..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Windows">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.5.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.5.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.5.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotMessaging.2.0.0\lib\net\SystemDot.Messaging.dll</HintPath>
+      <HintPath>..\packages\SystemDotMessaging.2.1.0\lib\net\SystemDot.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
