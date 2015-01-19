@@ -19,11 +19,11 @@ namespace SystemDot.EventSourcing.Specifications.configuring
         Establish context = () =>
         {
             var container = new IocContainer();
-            container.RegisterInstance<ILocalMachine, LocalMachine>();
 
             exception = Catch.Exception(() => 
                 Bootstrap.Application()
                     .ResolveReferencesWith(container)
+                    .UseEnvironment()
                     .UseDomain()
                     .WithSimpleMessaging()
                     .UseEventSourcing().PersistToMemory()

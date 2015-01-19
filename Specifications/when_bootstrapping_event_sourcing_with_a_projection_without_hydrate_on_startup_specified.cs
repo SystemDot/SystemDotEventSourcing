@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Domain.Events.Dispatching;
+using SystemDot.Environment;
 using SystemDot.EventSourcing.Streams;
 using SystemDot.Bootstrapping;
 using SystemDot.Domain;
@@ -33,6 +34,7 @@ namespace SystemDot.EventSourcing.Specifications
         {
             await Bootstrap.Application()
                 .ResolveReferencesWith(container)
+                .UseEnvironment()
                 .UseDomain().WithSimpleMessaging()
                 .UseEventSourcing().PersistToMemory()
                 .InitialiseAsync();

@@ -27,10 +27,10 @@ namespace SystemDot.EventSourcing.Specifications
         {
             container = new IocContainer();
             container.RegisterInstance<IAsyncCommandHandler<TestCommand>, TestCommandHandler>();
-            container.RegisterInstance<ILocalMachine, LocalMachine>();
-
+            
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
+                .UseEnvironment()
                 .UseDomain().WithSimpleMessaging()
                 .UseEventSourcing().PersistToMemory()
                 .Initialise();

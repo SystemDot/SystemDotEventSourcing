@@ -29,6 +29,7 @@ namespace SystemDot.EventSourcing.Specifications
 
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
+                .UseEnvironment()
                 .UseDomain().WithSimpleMessaging()
                 .UseEventSourcing().PersistToMemory()
                 .Initialise();

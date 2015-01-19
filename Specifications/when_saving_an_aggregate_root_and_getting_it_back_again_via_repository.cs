@@ -23,10 +23,10 @@ namespace SystemDot.EventSourcing.Specifications
         Establish context = () =>
         {
             IIocContainer container = new IocContainer();
-            container.RegisterInstance<ILocalMachine, LocalMachine>();
 
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
+                .UseEnvironment()
                 .UseDomain().WithSimpleMessaging()
                 .UseEventSourcing().PersistToMemory()
                 .Initialise();
