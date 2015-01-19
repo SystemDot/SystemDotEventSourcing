@@ -14,5 +14,7 @@ namespace SystemDot.EventSourcing.Sessions
         void Commit(Guid commitId);
 
         IEnumerable<Commit> AllCommitsFrom(DateTime from);
+
+        void StoreHeader(string id, string key, object value);
     }
 }

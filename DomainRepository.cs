@@ -7,13 +7,18 @@ using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing
 {
+    using SystemDot.Environment;
+    using SystemDot.EventSourcing.Headers;
+
     public class DomainRepository : IDomainRepository
     {
         readonly IEventSessionFactory eventSessionFactory;
+        private readonly ILocalMachine localMachine;
 
-        public DomainRepository(IEventSessionFactory eventSessionFactory)
+        public DomainRepository(IEventSessionFactory eventSessionFactory, ILocalMachine localMachine)
         {
             this.eventSessionFactory = eventSessionFactory;
+            this.localMachine = localMachine;
         }
 
         public bool Exists(string aggregateRootId)
@@ -37,6 +42,8 @@ namespace SystemDot.EventSourcing
                 foreach (SourcedEvent @event in aggregateRoot.EventsAdded)
                 {
                     eventSession.StoreEvent(@event, aggregateRoot.Id);
+                    eventSession.StoreHeader(aggregateRoot.Id, EventOriginHeader.Key, EventOriginHeader.ForMachine(localMachine));
+                    eventSession.StoreHeader(aggregateRoot.Id, AggregateHeader.Key, AggregateHeader.FromType(aggregateRoot.GetType()));
                 }
 
                 eventSession.Commit(Guid.NewGuid());

@@ -12,6 +12,7 @@ namespace SystemDot.EventSourcing.InMemory
         readonly List<SourcedEvent> uncommittedEvents;
         readonly List<SourcedEvent> committedEvents;
         readonly Action<Commit> addCommit;
+        readonly IDictionary<string, object> uncommittedHeaders;
 
         public InMemoryEventStream(string streamId, List<SourcedEvent> committedEvents, Action<Commit> addCommit)
         {
@@ -19,6 +20,7 @@ namespace SystemDot.EventSourcing.InMemory
             this.committedEvents = committedEvents;
             this.addCommit = addCommit;
             uncommittedEvents = new List<SourcedEvent>();
+            uncommittedHeaders = new Dictionary<string, object>();
         }
 
         public void Dispose()
@@ -35,6 +37,11 @@ namespace SystemDot.EventSourcing.InMemory
             get { return uncommittedEvents; }
         }
 
+        public IDictionary<string, object> UncommittedHeaders
+        {
+            get { return uncommittedHeaders; }
+        }
+
         public void Add(SourcedEvent @event)
         {
             uncommittedEvents.Add(@event);
@@ -42,7 +49,7 @@ namespace SystemDot.EventSourcing.InMemory
 
         public void CommitChanges(Guid commitId)
         {
-            addCommit(new Commit(commitId, streamId, uncommittedEvents.ToList()));
+            addCommit(new Commit(commitId, streamId, uncommittedEvents.ToList(), uncommittedHeaders));
             committedEvents.AddRange(uncommittedEvents);
             ClearChanges();
         }

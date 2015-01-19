@@ -7,6 +7,8 @@ namespace SystemDot.EventSourcing.Streams
     {
         IEnumerable<SourcedEvent> CommittedEvents { get; }
         IEnumerable<SourcedEvent> UncommittedEvents { get; }
+        IDictionary<string, object> UncommittedHeaders { get; }
+
         void Add(SourcedEvent @event);
         void CommitChanges(Guid commitId);
         void ClearChanges();

@@ -15,6 +15,8 @@ using FluentAssertions;
 
 namespace SystemDot.EventSourcing.Specifications
 {
+    using SystemDot.Environment;
+
     public class when_sending_a_command_that_results_in_a_sourced_event_via_an_aggregate_root
     {
         static TestAggregateRootCreatedEvent handledEvent;
@@ -25,7 +27,8 @@ namespace SystemDot.EventSourcing.Specifications
         {
             container = new IocContainer();
             container.RegisterInstance<IAsyncCommandHandler<TestCommand>, TestCommandHandler>();
-            
+            container.RegisterInstance<ILocalMachine, LocalMachine>();
+
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
                 .UseDomain().WithSimpleMessaging()
@@ -44,9 +47,9 @@ namespace SystemDot.EventSourcing.Specifications
         It should_send_the_event = () => handledEvent.Id.Should().Be(Id);
         
         It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = () =>
-            container.Resolve<IEventSessionFactory>().Create().GetEvents(Id).Single()
-                .GetHeader<Type>(AggregateHeader.Key)
-                .As<AggregateHeader>()
+            container.Resolve<IEventSessionFactory>().Create()
+                .AllCommitsFrom(DateTime.MinValue).Single()
+                .GetHeader<AggregateHeader>(AggregateHeader.Key)
                 .Type.Should().Be(typeof(TestAggregateRoot));
     }
 }

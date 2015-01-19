@@ -35,6 +35,11 @@ namespace SystemDot.EventSourcing.Sessions
             return eventStore.GetCommitsFrom(@from);
         }
 
+        public void StoreHeader(string id, string key, object value)
+        {
+            GetStream(id).UncommittedHeaders[key] = value;
+        }
+
         IEventStream GetStream(string aggregateRootId)
         {
             IEventStream stream;

@@ -25,7 +25,6 @@ namespace SystemDot.EventSourcing.Specifications
         Establish context = () =>
         {
             IIocContainer container = new IocContainer();
-
             container.RegisterInstance<ILocalMachine, LocalMachine>();
 
             Bootstrap.Application()
@@ -46,7 +45,8 @@ namespace SystemDot.EventSourcing.Specifications
             using (var eventSession = eventSessionFactory.Create())
             {
                 eventSession.AllCommitsFrom(DateTime.MinValue)
-                    .Single().Events.Single().Headers["Origin"]
+                    .Single()
+                    .Headers["Origin"]
                     .As<EventOriginHeader>().MachineName.Should().Be(localMachine.GetName());
             }
         };

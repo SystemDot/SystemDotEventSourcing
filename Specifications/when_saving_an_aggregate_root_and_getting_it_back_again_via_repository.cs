@@ -10,6 +10,8 @@ using Machine.Specifications;
 
 namespace SystemDot.EventSourcing.Specifications
 {
+    using SystemDot.Environment;
+
     public class when_saving_an_aggregate_root_and_getting_it_back_again_via_repository
     {
         const string Id = "Id";
@@ -21,6 +23,7 @@ namespace SystemDot.EventSourcing.Specifications
         Establish context = () =>
         {
             IIocContainer container = new IocContainer();
+            container.RegisterInstance<ILocalMachine, LocalMachine>();
 
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
