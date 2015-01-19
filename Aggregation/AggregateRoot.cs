@@ -44,7 +44,7 @@ namespace SystemDot.EventSourcing.Aggregation
                 Body = body
             };
 
-            sourcedEvent.AddHeader(EventHeaderKeys.AggregateType, GetType());
+            sourcedEvent.AddHeader(AggregateHeader.Key, AggregateHeader.FromType(GetType()));
 
             return sourcedEvent;
         }

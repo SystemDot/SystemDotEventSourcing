@@ -38,13 +38,14 @@
     <Compile Include="Aggregation\AggregateEntity.cs" />
     <Compile Include="Aggregation\AggregateRoot.cs" />
     <Compile Include="Aggregation\ConventionEventToHandlerRouter.cs" />
-    <Compile Include="Aggregation\EventHeaderKeys.cs" />
+    <Compile Include="Aggregation\AggregateHeader.cs" />
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />
     <Compile Include="Aggregation\SourcedEventHandler.cs" />
     <Compile Include="Bootstrapping\BootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
     <Compile Include="DomainRepository.cs" />
     <Compile Include="EventRetreiver.cs" />
+    <Compile Include="Headers\EventOriginHeader.cs" />
     <Compile Include="IDomainRepository.cs" />
     <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />
     <Compile Include="Projections\IocContainerExtensions.cs" />
@@ -77,6 +78,9 @@
     </Reference>
     <Reference Include="SystemDot.Domain">
       <HintPath>packages\SystemDotDomain.3.6.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>packages\SystemDotEnvironment.1.0.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>

@@ -45,7 +45,8 @@ namespace SystemDot.EventSourcing.Specifications
         
         It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = () =>
             container.Resolve<IEventSessionFactory>().Create().GetEvents(Id).Single()
-                .GetHeader<Type>(EventHeaderKeys.AggregateType)
-                .Should().Be(typeof(TestAggregateRoot));
+                .GetHeader<Type>(AggregateHeader.Key)
+                .As<AggregateHeader>()
+                .Type.Should().Be(typeof(TestAggregateRoot));
     }
 }

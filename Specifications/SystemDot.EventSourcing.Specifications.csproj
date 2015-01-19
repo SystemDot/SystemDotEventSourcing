@@ -76,6 +76,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SystemDotDomain.3.6.5\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.0\lib\net\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Windows">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.0\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
@@ -117,7 +123,8 @@
     <Compile Include="TestProjection.cs" />
     <Compile Include="when_bootstrapping_event_sourcing_with_a_projection_for_an_event_existent_in_the_session.cs" />
     <Compile Include="when_bootstrapping_event_sourcing_with_a_projection_without_hydrate_on_startup_specified.cs" />
-    <Compile Include="when_putting_events_in_the_session_via_an_aggegate_root_and_getting_it_back_again_via_repository.cs" />
+    <Compile Include="when_saving_an_aggregate_root_and_getting_it_back_again_via_repository.cs" />
+    <Compile Include="when_saving_an_aggregate_root_via_the_repository.cs" />
     <Compile Include="when_sending_a_command_that_results_in_a_sourced_event_via_an_aggregate_root.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Streams;
