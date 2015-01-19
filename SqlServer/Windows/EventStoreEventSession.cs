@@ -24,7 +24,12 @@ namespace SystemDot.EventSourcing.Sql.Windows
         {
             return eventStore.Advanced
                 .GetFrom("default", @from)
-                .Select(c => new Commit(c.CommitId, c.StreamId, c.Events.Select(CreateSourcedEvent).ToList()));
+                .Select(c => new Commit(c.CommitId, c.StreamId, c.Events.Select(CreateSourcedEvent).ToList(), c.Headers));
+        }
+
+        public void StoreHeader(string id, string key, object value)
+        {
+            GetStream(id).UncommittedHeaders[key] = value;
         }
 
         public IEnumerable<SourcedEvent> GetEvents(string streamId)
