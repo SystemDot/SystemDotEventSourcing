@@ -4,6 +4,7 @@ using SystemDot.Core.Collections;
 using SystemDot.Domain.Bootstrapping;
 using SystemDot.Domain.Commands;
 using SystemDot.Domain.Queries;
+using SystemDot.Environment;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
@@ -38,6 +39,7 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Bootstrapping
             
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
+                .UseEnvironment()
                 .UseDomain().DispatchEventsOnUiThread().WithSimpleMessaging()
                 .UseEventSourcing().WithSynchronisation().PersistToMemory()
                 .Initialise();
