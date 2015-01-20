@@ -19,10 +19,20 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             this.eventSessionFactory = eventSessionFactory;
         }
 
-        public async Task Synchronise(Uri serverUri)
+        public async Task<DateTime> Synchronise(Uri serverUri, DateTime commitsStartFrom)
         {
+            DateTime lastCommitDate = DateTime.MinValue;
+
             IEnumerable<SynchronisableCommit> commits = await commitRetrievalClient.GetCommitsAsync(serverUri);
-            commits.ForEach(SynchroniseCommit);
+
+            commits.ForEach(c =>
+            {
+                if (c.CreatedOn <= commitsStartFrom) return;
+                lastCommitDate = c.CreatedOn;
+                SynchroniseCommit(c);
+            });
+
+            return lastCommitDate;
         }
 
         void SynchroniseCommit(SynchronisableCommit toSynchronise)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Domain.Queries;
 using SystemDot.Domain.Synchronisation.Specifications.Steps.Commits;
+using SystemDot.Domain.Synchronisation.Specifications.Steps.Temporal;
 using SystemDot.EventSourcing.Synchronisation;
 using SystemDot.EventSourcing.Synchronisation.Server;
 using SystemDot.Serialisation;
@@ -17,25 +18,27 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Synchronisation
         readonly IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>> handler;
         readonly SynchronisableCommitContext context;
         readonly CommitContext commitContext;
+        DateTimeContext dateTimeContext;
         IEnumerable<SynchronisableCommit> commits;
         
         IEnumerable<object> events;
 
-        public SynchronisableCommitSteps(CommitQueryHandler handler, SynchronisableCommitContext context, CommitContext commitContext)
+        public SynchronisableCommitSteps(CommitQueryHandler handler, SynchronisableCommitContext context, CommitContext commitContext, DateTimeContext dateTimeContext)
         {
             this.handler = handler;
             this.context = context;
             this.commitContext = commitContext;
+            this.dateTimeContext = dateTimeContext;
         }
 
-        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)'")]
+        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)' for the current date and time")]
         public void GivenIHaveCreatedASynchronisableCommitWithAnIdOfAndStreamIdentifiedAs(Guid id, string streamId)
         {
             context.CommitInUse = new SynchronisableCommit
             {
                 CommitId = id, 
                 StreamId = streamId, 
-                CreatedOn = DateTime.Now,
+                CreatedOn = dateTimeContext.Current,
                 Events = new List<SynchronisableSourcedEvent>()
             };
         }

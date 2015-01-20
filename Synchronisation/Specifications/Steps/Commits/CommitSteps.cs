@@ -73,5 +73,11 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Commits
         {
             context.CommitInUse.Events.Should().Contain(e => e.Body.As<TestEvent>().Id == id);
         }
+
+        [Then(@"there should only be (.*) commits in the event session")]
+        public void ThenThereShouldOnlyBeCommitsInTheEventSession(int count)
+        {
+            session.AllCommitsFrom(DateTime.MinValue).Count().Should().Be(count);
+        }
     }
 }

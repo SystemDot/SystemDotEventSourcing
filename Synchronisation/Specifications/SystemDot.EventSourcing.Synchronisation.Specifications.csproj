@@ -149,6 +149,8 @@
     <Compile Include="Steps\Server\ServerSteps.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitContext.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitSteps.cs" />
+    <Compile Include="Steps\Temporal\DateTimeContext.cs" />
+    <Compile Include="Steps\Temporal\DateTimeSteps.cs" />
     <Compile Include="TestEvent.cs" />
   </ItemGroup>
   <ItemGroup>

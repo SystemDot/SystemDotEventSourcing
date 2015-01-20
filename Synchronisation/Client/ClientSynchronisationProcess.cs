@@ -8,6 +8,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
     public class ClientSynchronisationProcess : AggregateRoot
     {
         Uri serverUri;
+        DateTime previousCommitDate;
 
         public static ClientSynchronisationProcess Initialise(string clientId, string serverUri)
         {
@@ -30,13 +31,21 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
         public async Task Synchronise(CommitSynchroniser commitSynchroniser)
         {
-            await commitSynchroniser.Synchronise(serverUri);
-            Complete();
+            DateTime commitDate = await commitSynchroniser.Synchronise(serverUri, previousCommitDate);
+            Complete(commitDate);
         }
 
-        void Complete()
+        void Complete(DateTime lastCommitDate)
         {
-            AddEvent(new ClientSynchronisationCompleted());
+            AddEvent(new ClientSynchronisationCompleted
+            {
+                LastCommitDate = lastCommitDate
+            });
+        }
+
+        void ApplyEvent(ClientSynchronisationCompleted @event)
+        {
+            previousCommitDate = @event.LastCommitDate;
         }
     }
 }
