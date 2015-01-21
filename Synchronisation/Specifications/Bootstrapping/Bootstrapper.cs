@@ -8,7 +8,7 @@ using SystemDot.Environment;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation.Bootstrapping;
+using SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping;
 using SystemDot.EventSourcing.Synchronisation.Client.Http;
 using SystemDot.EventSourcing.Synchronisation.Testing;
 using SystemDot.Ioc;

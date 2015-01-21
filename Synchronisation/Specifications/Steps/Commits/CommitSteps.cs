@@ -50,18 +50,24 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Commits
             context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(1);
         }
 
-        [When(@"I use the third commit in the event session")]
-        public void WhenIUseTheThirdCommitInTheEventSession()
+        [When(@"I use the commit in the session with an id of (.*)")]
+        public void WhenIUseTheCommitInTheSessionWithAnIdOf(Guid commitId)
         {
-            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(2);
+            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).Single(c => c.CommitId == commitId);
         }
 
-        [Then(@"the commit should have an id of (.*)")]
-        public void ThenTheCommitShouldHaveAnIdOf(Guid id)
+        [Then(@"there should be a commit in the session with an id of (.*)")]
+        public void ThenThereShouldBeACommitInTheSessionWithAnIdOf(Guid commitId)
         {
-            context.CommitInUse.CommitId.Should().Be(id);
+            session.AllCommitsFrom(DateTime.MinValue).Should().Contain(c => c.CommitId == commitId);
         }
 
+        [Then(@"there should not be a commit in the session with an id of (.*)")]
+        public void ThenThereShouldNotBeACommitInTheSessionWithAnIdOf(Guid commitId)
+        {
+            session.AllCommitsFrom(DateTime.MinValue).Should().NotContain(c => c.CommitId == commitId);
+        }
+        
         [Then(@"the commit should be for a stream identified as '(.*)'")]
         public void ThenTheCommitShouldBeForAStreamIdentifiedAs(string id)
         {
@@ -72,12 +78,6 @@ namespace SystemDot.Domain.Synchronisation.Specifications.Steps.Commits
         public void ThenTheCommitShouldContainAnEventWithAnIdOf(Guid id)
         {
             context.CommitInUse.Events.Should().Contain(e => e.Body.As<TestEvent>().Id == id);
-        }
-
-        [Then(@"there should only be (.*) commits in the event session")]
-        public void ThenThereShouldOnlyBeCommitsInTheEventSession(int count)
-        {
-            session.AllCommitsFrom(DateTime.MinValue).Count().Should().Be(count);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using SystemDot.Domain.Synchronisation.Specifications.Steps.Synchronisation;
-using SystemDot.EventSourcing.Synchronisation.Server;
 using Microsoft.Owin.Testing;
 using TechTalk.SpecFlow;
 

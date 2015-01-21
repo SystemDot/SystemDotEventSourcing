@@ -151,6 +151,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\SystemDot.EventSourcing.Synchronisation.Client.csproj">
+      <Project>{BE28B99E-FF4A-4535-9C73-688738E707A0}</Project>
+      <Name>SystemDot.EventSourcing.Synchronisation.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.EventSourcing.Synchronisation.csproj">
       <Project>{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}</Project>
       <Name>SystemDot.EventSourcing.Synchronisation</Name>
