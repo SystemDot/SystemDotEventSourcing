@@ -40,20 +40,12 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Bootstra
                 .Initialise();
 
             RegisterInSpecFlow<IEventSessionFactory>();
-            RegisterOpenTypeInSpecFlow(typeof(IAsyncQueryHandler<,>));
-            RegisterOpenTypeInSpecFlow(typeof(IAsyncCommandHandler<>));
+            RegisterInSpecFlow<SynchronisationController>();
         }
 
         void RegisterInSpecFlow<T>() where T : class
         {
             specFlowContainer.RegisterInstanceAs<T>(container.Resolve<T>());
-        }
-
-        void RegisterOpenTypeInSpecFlow(Type openType)
-        {
-            container.ResolveMutipleTypes()
-                .ThatImplementOpenType(openType)
-                .ForEach(h => specFlowContainer.RegisterInstanceAs(h));
         }
 
         static void Reset()

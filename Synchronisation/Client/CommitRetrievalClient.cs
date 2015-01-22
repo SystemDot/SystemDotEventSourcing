@@ -14,11 +14,11 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             httpClient = new HttpClient(); 
         }
 
-        public async Task<IEnumerable<SynchronisableCommit>> GetCommitsAsync(Uri serverUri)
+        public async Task<IEnumerable<SynchronisableCommit>> GetCommitsAsync(Uri serverUri, DateTime @from)
         {
             HttpResponseMessage response = await httpClient
-                .GetAsync(new Uri(serverUri, "Synchronisation"));
-           
+                .GetAsync(new Uri(serverUri, string.Format("Synchronisation/{0}", @from)));
+
             return await response
                 .Content
                 .ReadAsAsync<IEnumerable<SynchronisableCommit>>();

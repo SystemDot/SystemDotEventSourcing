@@ -7,10 +7,12 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
 {
     public static class IEventSessionExtensions
     {
-        public static IEnumerable<SynchronisableCommit> GetSynchronisableCommits(this IEventSession session)
+        public static IEnumerable<SynchronisableCommit> GetSynchronisableCommits(
+            this IEventSession session, 
+            DateTime @from)
         {
             return session
-                .AllCommitsFrom(DateTime.MinValue)
+                .AllCommitsFrom(@from)
                 .Select(commit => new SynchronisableCommit
                 {
                     CommitId = commit.CommitId,

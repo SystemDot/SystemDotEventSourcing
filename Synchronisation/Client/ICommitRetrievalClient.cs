@@ -6,6 +6,6 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 {
     public interface ICommitRetrievalClient
     {
-        Task<IEnumerable<SynchronisableCommit>> GetCommitsAsync(Uri serverUri);
+        Task<IEnumerable<SynchronisableCommit>> GetCommitsAsync(Uri serverUri, DateTime from);
     }
 }

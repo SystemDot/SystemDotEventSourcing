@@ -2,19 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Synchronisation</id>
-    <version>2.0.3</version>
-    <title>SystemDot.EventSourcing.Synchronisation</title>
+    <version>3.0.0</version>
+    <title>SystemDot.EventSourcing.Synchronisation.Client</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>
     <projectUrl>https://github.com/SystemDot/SystemDotCore</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Event sourcing synchronisation between machines / mobile devices </description>
-    <summary>Event sourcing synchronisation between machines / mobile devices</summary>
+    <description>Event sourcing client side synchronisation between machines / mobile devices </description>
+    <summary>Event sourcing client side synchronisation between machines / mobile devices</summary>
     <copyright>SystemDot 2015</copyright>
     <language>en-GB</language>
     <tags>Event Sourcing, Azure, Synchronisation</tags>
     <dependencies>
-      <dependency id="SystemDotEventSourcing" version="5.2.0" />
+      <dependency id="SystemDotEnvironment" version="1.0.1" />
+      <dependency id="SystemDotEventSourcing" version="5.3.0" />
       <dependency id="SystemDotDomain" version="3.6.6" />
       <dependency id="SystemDotSerialisation" version="1.0.1" />
       <dependency id="SystemDotIoc" version="1.2.0" />
@@ -24,7 +25,9 @@
   <files>
     <file src="Build\SystemDot.EventSourcing.Synchronisation.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.dll" />
     <file src="Build\SystemDot.EventSourcing.Synchronisation.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.pdb" />
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Messages.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Messages.dll" />
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Messages.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Messages.pdb" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Client.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Client.Synchronisation.dll" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Client.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Client.Synchronisation.pdb" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Client.Messages.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Client.Messages.dll" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Client.Messages.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Client.Messages.pdb" />
   </files>
 </package>

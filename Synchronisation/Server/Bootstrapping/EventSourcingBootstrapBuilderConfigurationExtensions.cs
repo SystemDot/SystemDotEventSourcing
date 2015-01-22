@@ -1,5 +1,4 @@
-﻿using SystemDot.Domain.Commands;
-using SystemDot.Domain.Queries;
+﻿using SystemDot.Domain.Queries;
 using SystemDot.EventSourcing.Bootstrapping;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping
@@ -8,7 +7,10 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping
     {
         public static EventSourcingBootstrapBuilderConfiguration WithSynchronisation(this EventSourcingBootstrapBuilderConfiguration config)
         {
-            config.GetBootstrapBuilderConfiguration().RegisterBuildAction(c => c.RegisterQueryHandlersFromAssemblyOf<CommitQuery>());
+            config.GetBootstrapBuilderConfiguration()
+                .RegisterBuildAction(c => c.RegisterControllers())
+                .RegisterBuildAction(c => c.RegisterQueryHandlersFromAssemblyOf<CommitQuery>());
+
             return config;
         }
     }

@@ -22,3 +22,12 @@
 		And the synchronisable commit should be for the same stream as the commit
 		And the synchronisable commit should be for the same date and time as the commit
 		And the deserialised events should contain an event an id of F261A67D-2C00-4854-A0FF-6DEFA84A4276
+
+	Scenario: Retrieving commits from the server for a date after the available commit
+		Given I have created a new event session
+		And I have created an event in the session with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9
+		And I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B
+		When I use the first commit in the event session
+		And I request events for synchronisation created after the date of the commit
+		Then the returned commits should be empty
+		

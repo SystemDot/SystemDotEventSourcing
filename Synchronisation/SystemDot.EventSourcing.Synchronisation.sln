@@ -1,11 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4FC2D1A6-8FA2-4B93-B9E9-66655099F1BE}"
 	ProjectSection(SolutionItems) = preProject
-		SystemDotEventSourcingSynchronisation.nuspec = SystemDotEventSourcingSynchronisation.nuspec
+		SystemDotEventSourcingClientSynchronisation.nuspec = SystemDotEventSourcingClientSynchronisation.nuspec
+		SystemDotEventSourcingServerSynchronisation.nuspec = SystemDotEventSourcingServerSynchronisation.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7C2B57CE-5792-4471-ADE5-7320727E813C}"
@@ -16,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7C2B57
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation", "SystemDot.EventSourcing.Synchronisation.csproj", "{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Testing", "Testing\SystemDot.EventSourcing.Synchronisation.Testing.csproj", "{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Server", "Server\SystemDot.EventSourcing.Synchronisation.Server.csproj", "{374AA691-FA00-4218-886F-9E679CE86BA6}"
 EndProject
@@ -39,10 +38,6 @@ Global
 		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}.Release|Any CPU.Build.0 = Release|Any CPU
 		{374AA691-FA00-4218-886F-9E679CE86BA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{374AA691-FA00-4218-886F-9E679CE86BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{374AA691-FA00-4218-886F-9E679CE86BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU

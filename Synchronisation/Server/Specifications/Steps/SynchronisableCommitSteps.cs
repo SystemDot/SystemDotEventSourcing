@@ -1,25 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Domain.Queries;
 using SystemDot.Serialisation;
 using FluentAssertions;
 using TechTalk.SpecFlow;
+using System.Web.Http.Results;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
-{
+{   
     [Binding]
     public class SynchronisableCommitSteps
     {
         IEnumerable<SynchronisableCommit> commits;
-        readonly IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>> handler;
+        readonly SynchronisationController controller;
         readonly SynchronisableCommitContext context;
         IEnumerable<object> events;
-        CommitContext commitContext;
-
-        public SynchronisableCommitSteps(CommitQueryHandler handler, SynchronisableCommitContext context, CommitContext commitContext)
+        readonly CommitContext commitContext;
+        
+        public SynchronisableCommitSteps(SynchronisationController controller, SynchronisableCommitContext context, CommitContext commitContext)
         {
-            this.handler = handler;
+            this.controller = controller;
             this.context = context;
             this.commitContext = commitContext;
         }
@@ -27,8 +27,21 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         [When(@"I request events for synchronisation")]
         public void WhenIRequestEventsForSynchronisation()
         {
-            commits = handler.Handle(new CommitQuery()).Result;
+            commits = controller
+                .GetAsync(DateTime.MinValue)
+                .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
+                .Content;
         }
+
+        [When(@"I request events for synchronisation created after the date of the commit")]
+        public void WhenIRequestEventsForSynchronisationCreatedAfterTheDateOfTheCommit()
+        {
+            commits = controller
+                .GetAsync(commitContext.CommitInUse.CreatedOn.AddMilliseconds(1))
+                .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
+                .Content;
+        }
+
 
         [When(@"I use the first synchronisable commit requested")]
         public void WhenIUseTheFirstSynchronisableCommitRequested()
@@ -54,6 +67,12 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
             events.OfType<TestEvent>().Should().Contain(a => a.Id == id);
         }
 
+        [Then(@"the returned commits should be empty")]
+        public void ThenTheReturnedCommitsShouldBeEmpty()
+        {
+            commits.Should().BeEmpty();
+        }
+        
         [Then(@"the synchronisable commit should have the same id as the commit")]
         public void ThenTheSynchronisableCommitShouldHaveTheSameIdAsTheCommit()
         {

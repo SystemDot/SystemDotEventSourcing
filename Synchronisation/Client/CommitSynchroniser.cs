@@ -23,11 +23,10 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
         {
             DateTime lastCommitDate = DateTime.MinValue;
 
-            IEnumerable<SynchronisableCommit> commits = await commitRetrievalClient.GetCommitsAsync(serverUri);
+            IEnumerable<SynchronisableCommit> commits = await commitRetrievalClient.GetCommitsAsync(serverUri, commitsStartFrom);
 
             commits.ForEach(c =>
             {
-                if (c.CreatedOn <= commitsStartFrom) return;
                 lastCommitDate = c.CreatedOn;
                 SynchroniseCommit(c);
             });
