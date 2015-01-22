@@ -70,9 +70,18 @@
     <Reference Include="SystemDot.Domain.Windows">
       <HintPath>..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Windows">
+      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.5.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.EventSourcing.InMemory">
+      <HintPath>..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,10 +93,11 @@
     </Reference>
     <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.dll</HintPath>
+      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Reflection.Windows">
-      <HintPath>..\packages\SystemDotReflection.1.0.1\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Reflection.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,11 +113,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="CommitExtensions.cs" />
     <Compile Include="CommitQuery.cs" />
     <Compile Include="CommitQueryHandler.cs" />
     <Compile Include="IEventSessionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SynchronisationController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

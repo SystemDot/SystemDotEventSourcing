@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions.Core">
-      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -49,63 +49,55 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="SystemDot.Bootstrapping">
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Bootstrapping.Windows">
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotBootstrapping.1.0.4\lib\net\SystemDot.Bootstrapping.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core">
-      <HintPath>..\packages\SystemDotCore.3.1.2\lib\net\SystemDot.Core.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotCore.3.1.2\lib\net\SystemDot.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.dll</HintPath>
+    <Reference Include="SystemDot.Domain">
+      <HintPath>..\..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Domain.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Domain.Windows">
+      <HintPath>..\..\packages\SystemDotDomain.3.6.6\lib\net\SystemDot.Domain.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment">
-      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment.Windows">
-      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.5.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+    <Reference Include="SystemDot.EventSourcing">
+      <HintPath>..\..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotEventSourcing.5.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+    <Reference Include="SystemDot.EventSourcing.InMemory">
+      <HintPath>..\..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotMessaging.2.1.0\lib\net\SystemDot.Messaging.dll</HintPath>
+    <Reference Include="SystemDot.Messaging">
+      <HintPath>..\..\packages\SystemDotMessaging.2.1.0\lib\net\SystemDot.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.dll</HintPath>
+    <Reference Include="SystemDot.Reflection">
+      <HintPath>..\..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Reflection.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Reflection.Windows">
+      <HintPath>..\..\packages\SystemDotReflection.1.0.2\lib\net\SystemDot.Reflection.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SystemDot.Serialisation">
       <HintPath>..\..\packages\SystemDotSerialisation.1.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Serialisation.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling.Windows">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+      <HintPath>..\..\packages\SystemDotThreadMarshalling.1.0.3\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
     </Reference>
     <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+      <HintPath>..\..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -122,19 +114,18 @@
     <Compile Include="Steps\Server\ServerSteps.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitContext.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitSteps.cs" />
-    <Compile Include="Steps\Temporal\DateTimeContext.cs" />
-    <Compile Include="Steps\Temporal\DateTimeSteps.cs" />
-    <Compile Include="TestEvent.cs" />
+    <Compile Include="Steps\TestCommitRetrievalClient.cs" />
+    <Compile Include="Steps\TestEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
     <None Include="Features\RetrieveEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RetrieveEvents.feature.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -151,10 +142,6 @@
     <ProjectReference Include="..\..\SystemDot.EventSourcing.Synchronisation.csproj">
       <Project>{B2173EC4-6BF0-45DB-9CAB-7100F61F2FEA}</Project>
       <Name>SystemDot.EventSourcing.Synchronisation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Testing\SystemDot.EventSourcing.Synchronisation.Testing.csproj">
-      <Project>{0C2DFC27-3E6B-41D4-9199-A83A6C0D0348}</Project>
-      <Name>SystemDot.EventSourcing.Synchronisation.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

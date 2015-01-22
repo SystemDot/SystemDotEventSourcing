@@ -30,18 +30,6 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits
         {
             context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).Single(c => c.CommitId == commitId);
         }
-
-        [Then(@"there should be a commit in the session with an id of (.*)")]
-        public void ThenThereShouldBeACommitInTheSessionWithAnIdOf(Guid commitId)
-        {
-            session.AllCommitsFrom(DateTime.MinValue).Should().Contain(c => c.CommitId == commitId);
-        }
-
-        [Then(@"there should not be a commit in the session with an id of (.*)")]
-        public void ThenThereShouldNotBeACommitInTheSessionWithAnIdOf(Guid commitId)
-        {
-            session.AllCommitsFrom(DateTime.MinValue).Should().NotContain(c => c.CommitId == commitId);
-        }
         
         [Then(@"the commit should be for a stream identified as '(.*)'")]
         public void ThenTheCommitShouldBeForAStreamIdentifiedAs(string id)

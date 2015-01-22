@@ -33,8 +33,5 @@
 		And I set the synchronisable commit to be returned from the server
 		And I have created a new event session
 		When I synchronise the client with the server with client id 'TestClient'
-		Given I have set the current date and time back 1 millisecond
-		And I have created a synchronisable commit with an id of B261A67D-2C00-4854-A0FF-6DEFA84A4276 and stream identified as '2157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9' for the current date and time
-		When I synchronise the client with the server with client id 'TestClient'
-		Then there should be a commit in the session with an id of A261A67D-2C00-4854-A0FF-6DEFA84A4276
-		And there should not be a commit in the session with an id of B261A67D-2C00-4854-A0FF-6DEFA84A4276
+		And I synchronise the client with the server with client id 'TestClient'
+		Then the commits should have been retreived from the server from the date of the last commit synchronised

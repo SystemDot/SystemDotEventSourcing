@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Temporal;
 using SystemDot.EventSourcing.Synchronisation;
 using SystemDot.Serialisation;
 using TechTalk.SpecFlow;
@@ -11,12 +10,10 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchroni
     public class SynchronisableCommitSteps
     {
         readonly SynchronisableCommitContext context;
-        readonly DateTimeContext dateTimeContext;
         
-        public SynchronisableCommitSteps(SynchronisableCommitContext context, DateTimeContext dateTimeContext)
+        public SynchronisableCommitSteps(SynchronisableCommitContext context)
         {
             this.context = context;
-            this.dateTimeContext = dateTimeContext;
         }
 
         [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)' for the current date and time")]
@@ -26,7 +23,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchroni
             {
                 CommitId = id, 
                 StreamId = streamId, 
-                CreatedOn = dateTimeContext.Current,
+                CreatedOn = DateTime.Now,
                 Events = new List<SynchronisableSourcedEvent>()
             };
         }
