@@ -41,9 +41,8 @@
     <Compile Include="ClientSynchronisationProcess.cs" />
     <Compile Include="CommitRetrievalClient.cs" />
     <Compile Include="CommitSynchroniser.cs" />
-    <Compile Include="Http\HttpClientFactory.cs" />
-    <Compile Include="Http\HttpContentExtensions.cs" />
-    <Compile Include="Http\IHttpClientFactory.cs" />
+    <Compile Include="HttpContentExtensions.cs" />
+    <Compile Include="ICommitRetrievalClient.cs" />
     <Compile Include="InitialiseClientSynchronisationProcessHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SynchronisableSourcedEventExtensions.cs" />

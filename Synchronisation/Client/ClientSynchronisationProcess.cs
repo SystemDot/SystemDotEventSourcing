@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using SystemDot.EventSourcing.Aggregation;
-using SystemDot.EventSourcing.Synchronisation.Messages;
+using SystemDot.EventSourcing.Synchronisation.Client.Messages;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {

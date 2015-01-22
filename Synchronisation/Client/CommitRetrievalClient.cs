@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SystemDot.EventSourcing.Synchronisation.Client.Http;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {
-    public class CommitRetrievalClient
+    public class CommitRetrievalClient : ICommitRetrievalClient
     {
-        readonly IHttpClientFactory httpClientFactory;
+        readonly HttpClient httpClient;
 
-        public CommitRetrievalClient(IHttpClientFactory httpClientFactory)
+        public CommitRetrievalClient()
         {
-            this.httpClientFactory = httpClientFactory;
+            httpClient = new HttpClient(); 
         }
 
         public async Task<IEnumerable<SynchronisableCommit>> GetCommitsAsync(Uri serverUri)
         {
-            HttpResponseMessage response = await httpClientFactory
-                .Create()
+            HttpResponseMessage response = await httpClient
                 .GetAsync(new Uri(serverUri, "Synchronisation"));
            
             return await response

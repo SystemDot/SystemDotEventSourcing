@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using SystemDot.Domain.Commands;
-using SystemDot.EventSourcing.Synchronisation.Messages;
+using SystemDot.EventSourcing.Synchronisation.Client.Messages;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {

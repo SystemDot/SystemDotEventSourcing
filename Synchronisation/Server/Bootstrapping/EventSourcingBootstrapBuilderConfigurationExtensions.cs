@@ -8,10 +8,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping
     {
         public static EventSourcingBootstrapBuilderConfiguration WithSynchronisation(this EventSourcingBootstrapBuilderConfiguration config)
         {
-            config.GetBootstrapBuilderConfiguration()
-                .RegisterBuildAction(c => c.RegisterQueryHandlersFromAssemblyOf<CommitQuery>())
-                .RegisterBuildAction(c => c.RegisterCommandHandlersFromAssemblyOf<CommitQuery>());
-
+            config.GetBootstrapBuilderConfiguration().RegisterBuildAction(c => c.RegisterQueryHandlersFromAssemblyOf<CommitQuery>());
             return config;
         }
     }

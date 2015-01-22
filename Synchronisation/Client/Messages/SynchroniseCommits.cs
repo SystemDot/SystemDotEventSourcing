@@ -1,4 +1,4 @@
-namespace SystemDot.EventSourcing.Synchronisation.Messages
+namespace SystemDot.EventSourcing.Synchronisation.Client.Messages
 {
     public class SynchroniseCommits
     {

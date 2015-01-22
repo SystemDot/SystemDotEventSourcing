@@ -8,11 +8,11 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 {
     public class CommitSynchroniser
     {
-        readonly CommitRetrievalClient commitRetrievalClient;
+        readonly ICommitRetrievalClient commitRetrievalClient;
         readonly IEventSessionFactory eventSessionFactory;
 
         public CommitSynchroniser(
-            CommitRetrievalClient commitRetrievalClient, 
+            ICommitRetrievalClient commitRetrievalClient, 
             IEventSessionFactory eventSessionFactory)
         {
             this.commitRetrievalClient = commitRetrievalClient;

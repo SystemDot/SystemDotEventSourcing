@@ -1,5 +1,5 @@
-﻿using SystemDot.EventSourcing.Bootstrapping;
-using SystemDot.EventSourcing.Synchronisation.Client.Http;
+﻿using SystemDot.Domain.Commands;
+using SystemDot.EventSourcing.Bootstrapping;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping
 {
@@ -8,7 +8,8 @@ namespace SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping
         public static EventSourcingBootstrapBuilderConfiguration WithSynchronisation(this EventSourcingBootstrapBuilderConfiguration config)
         {
             config.GetBootstrapBuilderConfiguration()
-                .RegisterBuildAction(c => c.RegisterInstance<IHttpClientFactory, HttpClientFactory>());
+                .RegisterBuildAction(c => c.RegisterCommandHandlersFromAssemblyOf<CommitRetrievalClient>())
+                .RegisterBuildAction(c => c.RegisterInstance<ICommitRetrievalClient, CommitRetrievalClient>());
 
             return config;
         }
