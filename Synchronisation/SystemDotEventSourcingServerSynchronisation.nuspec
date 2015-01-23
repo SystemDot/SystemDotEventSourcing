@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Synchronisation.Server</id>
-    <version>1.0.1-beta</version>
+    <version>1.0.2-beta</version>
     <title>SystemDot.EventSourcing.Synchronisation.Server</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>
@@ -27,12 +27,7 @@
   <files>
     <file src="Build\SystemDot.EventSourcing.Synchronisation.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.dll" />
     <file src="Build\SystemDot.EventSourcing.Synchronisation.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.pdb" />
-<<<<<<< HEAD
     <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.dll" target="lib\net\SystemDot.EventSourcing.Server.Synchronisation.dll" />
     <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.pdb" target="lib\net\SystemDot.EventSourcing.Server.Synchronisation.pdb" />
-=======
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Server.dll" />
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.Server.pdb" />
->>>>>>> origin/master
   </files>
 </package>
