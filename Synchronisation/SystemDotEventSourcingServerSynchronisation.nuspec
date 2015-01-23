@@ -27,7 +27,7 @@
   <files>
     <file src="Build\SystemDot.EventSourcing.Synchronisation.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.dll" />
     <file src="Build\SystemDot.EventSourcing.Synchronisation.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Synchronisation.pdb" />
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Server.Synchronisation.dll" />
-    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.pdb" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.Server.Synchronisation.pdb" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.dll" target="lib\net\SystemDot.EventSourcing.Server.Synchronisation.dll" />
+    <file src="Build\SystemDot.EventSourcing.Synchronisation.Server.pdb" target="lib\net\SystemDot.EventSourcing.Server.Synchronisation.pdb" />
   </files>
 </package>
