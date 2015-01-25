@@ -41,13 +41,13 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
         [Then(@"the commits should have been retreived from the server from the beggining of time")]
         public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerFromTheBegginingOfTime()
         {
-            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(DateTime.MinValue);
+            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(DateTime.MinValue.Ticks);
         }
 
         [Then(@"the commits should have been retreived from the server from the date of the last commit synchronised")]
         public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerFromTheDateOfTheLastCommitSynchronised()
         {
-            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(synchronisableCommitContext.CommitInUse.CreatedOn);
+            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(synchronisableCommitContext.CommitInUse.CreatedOn.Ticks);
         }
     }
 }

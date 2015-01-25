@@ -28,7 +28,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         public void WhenIRequestEventsForSynchronisation()
         {
             commits = controller
-                .GetAsync(DateTime.MinValue)
+                .GetAsync(DateTime.MinValue.Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
                 .Content;
         }
@@ -37,7 +37,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         public void WhenIRequestEventsForSynchronisationCreatedAfterTheDateOfTheCommit()
         {
             commits = controller
-                .GetAsync(commitContext.CommitInUse.CreatedOn.AddMilliseconds(1))
+                .GetAsync(commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
                 .Content;
         }

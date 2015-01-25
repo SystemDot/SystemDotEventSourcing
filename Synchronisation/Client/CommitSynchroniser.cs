@@ -22,7 +22,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
         public async Task Synchronise(Uri serverUri, DateTime getCommitsFrom, Action<SynchronisableCommit> onProcessingCommit, Action onError)
         {
-            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(serverUri, getCommitsFrom);
+            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(serverUri, getCommitsFrom.Ticks);
 
             if (!response.IsSuccessStatusCode)
             {

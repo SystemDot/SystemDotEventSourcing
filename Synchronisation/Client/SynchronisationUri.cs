@@ -8,9 +8,9 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
         {
         }
 
-        public static SynchronisationUri Parse(Uri serverUri, DateTime @from)
+        public static SynchronisationUri Parse(Uri serverUri, long @fromCommitInTicks)
         {
-            return new SynchronisationUri(serverUri, string.Format("Synchronisation/{0}", @from));
+            return new SynchronisationUri(serverUri, string.Format("Synchronisation/{0}", @fromCommitInTicks));
         }
     }
 }

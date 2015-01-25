@@ -13,9 +13,9 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             httpClient = new HttpClient(); 
         }
 
-        public async Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, DateTime @from)
+        public async Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, long @fromCommitInTicks)
         {
-           return await httpClient.GetAsync(SynchronisationUri.Parse(serverUri, @from));
+            return await httpClient.GetAsync(SynchronisationUri.Parse(serverUri, @fromCommitInTicks));
         }
     }
 }

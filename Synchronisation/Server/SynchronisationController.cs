@@ -15,9 +15,9 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
             this.handler = handler;
         }
 
-        public async Task<IHttpActionResult> GetAsync(DateTime from)
+        public async Task<IHttpActionResult> GetAsync(long fromInTicks)
         {
-            return Ok(await handler.Handle(new CommitQuery { From = from }));
+            return Ok(await handler.Handle(new CommitQuery { From = new DateTime(fromInTicks) }));
         }
     }
 }

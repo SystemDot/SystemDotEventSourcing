@@ -15,17 +15,17 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
         
         public HttpStatusCode StatusToReturn { get; set; }
         public Uri LastGetCommitsAsyncCallServerUri { get; private set; }
-        public DateTime LastGetCommitsAsyncCallFrom { get; private set; }
+        public long LastGetCommitsAsyncCallFrom { get; private set; }
 
         public TestCommitRetrievalClient()
         {
             StatusToReturn = HttpStatusCode.OK;
         }
 
-        public Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, DateTime from)
+        public Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, long @fromCommitInTicks)
         {
             LastGetCommitsAsyncCallServerUri = serverUri;
-            LastGetCommitsAsyncCallFrom = from;
+            LastGetCommitsAsyncCallFrom = @fromCommitInTicks;
 
             var response = new HttpResponseMessage
             {
