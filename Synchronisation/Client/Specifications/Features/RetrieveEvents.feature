@@ -14,7 +14,7 @@
 		And I set the synchronisable commit to be returned from the server
 		And I have created a new event session
 		When I synchronise the client with the server with client id 'TestClient'
-		Then the end of the synchronisation should be signalled
+		Then the successful completion of the synchronisation should be signalled
 		And the commits should have been retreived from the server with the address 'http://localhost:1234/'
 		And the commits should have been retreived from the server from the beggining of time 
 		When I use the commit in the session with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276
@@ -35,3 +35,10 @@
 		When I synchronise the client with the server with client id 'TestClient'
 		And I synchronise the client with the server with client id 'TestClient'
 		Then the commits should have been retreived from the server from the date of the last commit synchronised
+
+	Scenario: Updating local device when server not available
+		Given I have initialised the client synchronisation process with the server address of 'http://localhost:1234/' and client id of 'TestClient'
+		And the server is unavailable
+		When I synchronise the client with the server with client id 'TestClient'
+		Then the successful completion of the synchronisation should be signalled
+		

@@ -9,12 +9,14 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client
     public class ClientSteps
     {
         readonly Dispatcher dispatcher;
-        ClientSynchronisationCompleted completedEvent;
+        ClientSynchronisationSuccessfullyCompleted successfulCompletionEvent;
+        ClientSynchronisationUnsuccessful unsuccessfulCompletionEvent;
         
         public ClientSteps(Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            this.dispatcher.RegisterHandler<ClientSynchronisationCompleted>(e => completedEvent = e);
+            this.dispatcher.RegisterHandler<ClientSynchronisationSuccessfullyCompleted>(e => successfulCompletionEvent = e);
+            this.dispatcher.RegisterHandler<ClientSynchronisationUnsuccessful>(e => unsuccessfulCompletionEvent = e);
         }
 
         [Given(@"I have initialised the client synchronisation process with the server address of '(.*)' and client id of '(.*)'")]
@@ -33,10 +35,16 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client
             dispatcher.SendAsync(new SynchroniseCommits{ ClientId = clientId }).Wait();
         }
 
-        [Then(@"the end of the synchronisation should be signalled")]
-        public void ThenTheEndOfTheSynchronisationShouldBeSignalled()
+        [Then(@"the successful completion of the synchronisation should be signalled")]
+        public void ThenTheSuccsessfulCompletionOfTheSynchronisationShouldBeSignalled()
         {
-            completedEvent.Should().NotBeNull();
+            successfulCompletionEvent.Should().NotBeNull();
+        }
+
+        [Then(@"the unsuccessful completion of the synchronisation should be signalled")]
+        public void ThenTheUnsuccsessfulCompletionOfTheSynchronisationShouldBeSignalled()
+        {
+            unsuccessfulCompletionEvent.Should().NotBeNull();
         }
     }
 }

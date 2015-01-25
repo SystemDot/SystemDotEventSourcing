@@ -31,19 +31,31 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
         public async Task Synchronise(CommitSynchroniser commitSynchroniser)
         {
-            DateTime commitDate = await commitSynchroniser.Synchronise(serverUri, previousCommitDate);
-            Complete(commitDate);
+            DateTime commitDate = DateTime.MinValue;
+
+            await commitSynchroniser.Synchronise(
+                serverUri, 
+                previousCommitDate,
+                commit => commitDate = commit.CreatedOn,
+                CompleteUnsuccsessfully);
+
+            CompleteSuccsessfully(commitDate);
         }
 
-        void Complete(DateTime lastCommitDate)
+        void CompleteSuccsessfully(DateTime lastCommitDate)
         {
-            AddEvent(new ClientSynchronisationCompleted
+            AddEvent(new ClientSynchronisationSuccessfullyCompleted
             {
                 LastCommitDate = lastCommitDate
             });
         }
 
-        void ApplyEvent(ClientSynchronisationCompleted @event)
+        void CompleteUnsuccsessfully()
+        {
+            AddEvent(new ClientSynchronisationUnsuccessful());
+        }
+
+        void ApplyEvent(ClientSynchronisationSuccessfullyCompleted @event)
         {
             previousCommitDate = @event.LastCommitDate;
         }

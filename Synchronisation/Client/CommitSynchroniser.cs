@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Sessions;
@@ -19,19 +20,23 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             this.eventSessionFactory = eventSessionFactory;
         }
 
-        public async Task<DateTime> Synchronise(Uri serverUri, DateTime commitsStartFrom)
+        public async Task Synchronise(Uri serverUri, DateTime getCommitsFrom, Action<SynchronisableCommit> onProcessingCommit, Action onError)
         {
-            DateTime lastCommitDate = DateTime.MinValue;
+            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(serverUri, getCommitsFrom);
 
-            IEnumerable<SynchronisableCommit> commits = await commitRetrievalClient.GetCommitsAsync(serverUri, commitsStartFrom);
-
-            commits.ForEach(c =>
+            if (!response.IsSuccessStatusCode)
             {
-                lastCommitDate = c.CreatedOn;
-                SynchroniseCommit(c);
-            });
+                onError();
+                return;
+            }
 
-            return lastCommitDate;
+            IEnumerable<SynchronisableCommit> commits = await response.ReadContentAsSynchronisableCommitsAsync();
+
+            commits.ForEach(commit =>
+            {
+                onProcessingCommit(commit);
+                SynchroniseCommit(commit);
+            });
         }
 
         void SynchroniseCommit(SynchronisableCommit toSynchronise)

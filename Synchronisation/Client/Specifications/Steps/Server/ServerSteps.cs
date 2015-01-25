@@ -1,4 +1,5 @@
-﻿using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchronisation;
+﻿using System.Net;
+using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchronisation;
 using TechTalk.SpecFlow;
 
 namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
@@ -17,6 +18,12 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
         {
             this.synchronisableCommitContext = synchronisableCommitContext;
             this.testCommitRetrievalClient = testCommitRetrievalClient;
+        }
+
+        [Given(@"the server is unavailable")]
+        public void GivenTheServerIsUnavailable()
+        {
+            testCommitRetrievalClient.StatusToReturn = HttpStatusCode.BadRequest;
         }
 
         [Given(@"I set the synchronisable commit to be returned from the server")]
