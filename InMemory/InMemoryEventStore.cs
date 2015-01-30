@@ -12,16 +12,16 @@ namespace SystemDot.EventSourcing.InMemory
     {
         readonly IEventDispatcher eventDispatcher;
         readonly List<Commit> commits;
-        readonly Dictionary<string, IEventStream> streams;
+        readonly Dictionary<EventStreamId, IEventStream> streams;
 
         public InMemoryEventStore(IEventDispatcher eventDispatcher)
         {
             this.eventDispatcher = eventDispatcher;
-            streams = new Dictionary<string, IEventStream>();
+            streams = new Dictionary<EventStreamId, IEventStream>();
             commits = new List<Commit>();
         }
 
-        public IEventStream OpenStream(string streamId)
+        public IEventStream OpenStream(EventStreamId streamId)
         {
             if (!streams.ContainsKey(streamId))
             {
@@ -30,22 +30,27 @@ namespace SystemDot.EventSourcing.InMemory
             return streams[streamId];
         }
 
+        public IEnumerable<Commit> GetCommitsFrom(string bucketId, DateTime @from)
+        {
+            return commits.Where(c => c.BucketId == bucketId && c.CreatedOn >= @from);
+        }
+
+        public IEnumerable<Commit> GetCommits()
+        {
+            return commits;
+        }
+
         void Commit(Commit commit)
         {
              commits.Add(commit);
              commit.Events.ForEach(e => eventDispatcher.Dispatch(e.Body));
         }
 
-        List<SourcedEvent> GetEvents(string streamId)
+        List<SourcedEvent> GetEvents(EventStreamId streamId)
         {
             return commits
-                .Where(c => c.StreamId == streamId)
+                .Where(c => c.StreamId == streamId.Id && c.BucketId == streamId.BucketId)
                 .SelectMany(c => c.Events).ToList();
-        }
-
-        public IEnumerable<Commit> GetCommitsFrom(DateTime @from)
-        {
-            return commits.Where(c => c.CreatedOn >= @from);
         }
     }
 }

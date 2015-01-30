@@ -7,7 +7,7 @@ namespace SystemDot.EventSourcing.Sessions
 {
     public static class IEventSessionExtensions
     {
-        public static void StoreEvent<TEvent>(this IEventSession session, Action<TEvent> eventIntialiser, string id, ILocalMachine localMachine)
+        public static void StoreEvent<TEvent>(this IEventSession session, Action<TEvent> eventIntialiser, EventStreamId id, ILocalMachine localMachine)
             where TEvent : new()
         {
             var @event = new TEvent();
@@ -15,7 +15,7 @@ namespace SystemDot.EventSourcing.Sessions
             session.StoreEvent(@event, id, localMachine);
         }
 
-        public static void StoreEvent<TEvent>(this IEventSession session, TEvent @event, string id, ILocalMachine localMachine)
+        public static void StoreEvent<TEvent>(this IEventSession session, TEvent @event, EventStreamId id, ILocalMachine localMachine)
             where TEvent : new()
         {
             session.StoreEvent(new SourcedEvent { Body = @event }, id);
@@ -23,7 +23,7 @@ namespace SystemDot.EventSourcing.Sessions
                     
         }
 
-        public static void StoreEventAndCommit<TEvent>(this IEventSession session, TEvent @event, string id, ILocalMachine localMachine)
+        public static void StoreEventAndCommit<TEvent>(this IEventSession session, TEvent @event, EventStreamId id, ILocalMachine localMachine)
             where TEvent : new()
         {
             session.StoreEvent(@event, id, localMachine);

@@ -1,6 +1,8 @@
 using SystemDot.Environment;
+using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Handlers;
 using SystemDot.EventSourcing.Sessions;
+using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Specifications
 {
@@ -16,9 +18,9 @@ namespace SystemDot.EventSourcing.Specifications
             return new TestStoreAndCommitEvent {Id = command.Id};
         }
 
-        protected override string CreateEventIdFromCommand(TestCommand command)
+        protected override AggregateRootId CreateAggregateRootIdFromCommand(TestCommand command)
         {
-            return command.Id;
+            return new TestAggregateRootId(command.Id, command.BucketId);
         }
     }
 }

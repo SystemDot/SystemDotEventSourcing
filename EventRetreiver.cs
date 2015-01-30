@@ -18,7 +18,7 @@ namespace SystemDot.EventSourcing
         public IEnumerable<SourcedEvent> GetAllEvents()
         {
             return factory.Create()
-                .AllCommitsFrom(DateTime.MinValue)
+                .AllCommits()
                 .SelectMany(c => c.Events)
                 .ToList();
         }

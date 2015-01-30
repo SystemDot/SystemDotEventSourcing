@@ -9,5 +9,9 @@
   <FrameworkUtilisationTypeForMSTest>UseStaticAnalysis</FrameworkUtilisationTypeForMSTest>
   <FrameworkUtilisationTypeForXUnitV2>UseStaticAnalysis</FrameworkUtilisationTypeForXUnitV2>
   <MetricsExclusionList>
+CommitRetrievalClient.cs:Client\SystemDot.EventSourcing.Synchronisation.Client.csproj
+Retrieval\CommitRetrievalClient.cs:Client\SystemDot.EventSourcing.Synchronisation.Client.csproj
+Retrieval\SynchronisationUri.cs:Client\SystemDot.EventSourcing.Synchronisation.Client.csproj
+SynchronisationUri.cs:Client\SystemDot.EventSourcing.Synchronisation.Client.csproj
 </MetricsExclusionList>
 </SolutionConfiguration>

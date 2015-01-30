@@ -1,5 +1,6 @@
 ﻿using SystemDot.Domain.Commands;
 using SystemDot.EventSourcing.Bootstrapping;
+using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping
 {

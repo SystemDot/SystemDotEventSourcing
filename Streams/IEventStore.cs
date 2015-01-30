@@ -6,7 +6,8 @@ namespace SystemDot.EventSourcing.Streams
 {
     public interface IEventStore
     {
-        IEventStream OpenStream(string streamId);
-        IEnumerable<Commit> GetCommitsFrom(DateTime @from);
+        IEventStream OpenStream(EventStreamId streamId);
+        IEnumerable<Commit> GetCommitsFrom(string bucketId, DateTime @from);
+        IEnumerable<Commit> GetCommits();
     }
 }

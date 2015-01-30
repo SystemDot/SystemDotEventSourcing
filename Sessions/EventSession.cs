@@ -11,36 +11,41 @@ namespace SystemDot.EventSourcing.Sessions
     public class EventSession : Disposable, IEventSession
     {
         readonly IEventStore eventStore;
-        readonly Dictionary<string, IEventStream> streams;
+        readonly Dictionary<EventStreamId, IEventStream> streams;
 
         public EventSession(IEventStore eventStore)
         {
             this.eventStore = eventStore;
-            streams = new Dictionary<string, IEventStream>();
+            streams = new Dictionary<EventStreamId, IEventStream>();
         }
 
-        public IEnumerable<SourcedEvent> GetEvents(string streamId)
+        public IEnumerable<SourcedEvent> GetEvents(EventStreamId streamId)
         {
             IEventStream stream = GetStream(streamId);
             return stream.CommittedEvents.Concat(stream.UncommittedEvents);
         }
 
-        public void StoreEvent(SourcedEvent @event, string aggregateRootId)
+        public void StoreEvent(SourcedEvent @event, EventStreamId aggregateRootId)
         {
             GetStream(aggregateRootId).Add(@event);
         }
 
-        public IEnumerable<Commit> AllCommitsFrom(DateTime @from)
+        public IEnumerable<Commit> AllCommitsFrom(string bucketId, DateTime @from)
         {
-            return eventStore.GetCommitsFrom(@from);
+            return eventStore.GetCommitsFrom(bucketId, @from);
         }
 
-        public void StoreHeader(string id, string key, object value)
+        public IEnumerable<Commit> AllCommits()
+        {
+            return eventStore.GetCommits();
+        }
+
+        public void StoreHeader(EventStreamId id, string key, object value)
         {
             GetStream(id).UncommittedHeaders[key] = value;
         }
 
-        IEventStream GetStream(string aggregateRootId)
+        IEventStream GetStream(EventStreamId aggregateRootId)
         {
             IEventStream stream;
 

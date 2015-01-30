@@ -4,17 +4,16 @@ using SystemDot.Environment;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation.Client;
 using SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping;
+using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Simple;
 using BoDi;
 using TechTalk.SpecFlow;
+using SystemDot.Domain.Synchronisation.Client.Specifications.Steps;
 
 namespace SystemDot.Domain.Synchronisation.Client.Specifications.Bootstrapping
 {
-    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps;
-
     [Binding]
     public class Bootstrapper
     {

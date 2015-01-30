@@ -9,14 +9,14 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client
     public class ClientSteps
     {
         readonly Dispatcher dispatcher;
-        ClientSynchronisationSuccessfullyCompleted successfulCompletionEvent;
-        ClientSynchronisationUnsuccessful unsuccessfulCompletionEvent;
+        int successfulCompletionEventCount;
+        int unsuccessfulCompletionEventCount;
         
         public ClientSteps(Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            this.dispatcher.RegisterHandler<ClientSynchronisationSuccessfullyCompleted>(e => successfulCompletionEvent = e);
-            this.dispatcher.RegisterHandler<ClientSynchronisationUnsuccessful>(e => unsuccessfulCompletionEvent = e);
+            this.dispatcher.RegisterHandler<ClientSynchronisationSuccessfullyCompleted>(e => successfulCompletionEventCount++);
+            this.dispatcher.RegisterHandler<ClientSynchronisationUnsuccessful>(e => unsuccessfulCompletionEventCount++);
         }
 
         [Given(@"I have initialised the client synchronisation process with the server address of '(.*)' and client id of '(.*)'")]
@@ -29,22 +29,28 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client
             }).Wait();
         }
 
-        [When(@"I synchronise the client with the server with client id '(.*)'")]
-        public void WhenISynchroniseTheClientWithTheServerWithClientId(string clientId)
+        [When(@"I synchronise the client with the server")]
+        public void WhenISynchroniseTheClientWithTheServerWithClientId()
         {
-            dispatcher.SendAsync(new SynchroniseCommits{ ClientId = clientId }).Wait();
+            dispatcher.SendAsync(new SynchroniseCommits()).Wait();
         }
 
         [Then(@"the successful completion of the synchronisation should be signalled")]
         public void ThenTheSuccsessfulCompletionOfTheSynchronisationShouldBeSignalled()
         {
-            successfulCompletionEvent.Should().NotBeNull();
+            successfulCompletionEventCount.Should().Be(1);
+        }
+
+        [Then(@"the successful completion of the synchronisation should not be signalled")]
+        public void ThenTheSuccessfulCompletionOfTheSynchronisationShouldNotBeSignalled()
+        {
+            successfulCompletionEventCount.Should().Be(0);
         }
 
         [Then(@"the unsuccessful completion of the synchronisation should be signalled")]
         public void ThenTheUnsuccsessfulCompletionOfTheSynchronisationShouldBeSignalled()
         {
-            unsuccessfulCompletionEvent.Should().NotBeNull();
+            unsuccessfulCompletionEventCount.Should().Be(1);
         }
     }
 }

@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.EventSourcing.Streams;
+using SystemDot.Core;
 
 namespace SystemDot.EventSourcing.Commits
 {
-    using SystemDot.Core;
 
     public class Commit
     {
         public Guid CommitId { get; private set; }
-        
+
         public string StreamId { get; private set; }
+
+        public string BucketId { get; private set; }
 
         public IEnumerable<SourcedEvent> Events { get; private set; }
 
@@ -23,10 +25,11 @@ namespace SystemDot.EventSourcing.Commits
             return Headers[key].As<T>();
         }
 
-        public Commit(Guid commitId, string streamId, IEnumerable<SourcedEvent> events, IDictionary<string, object> headers)
+        public Commit(Guid commitId, string bucketId, string streamId, IEnumerable<SourcedEvent> events, IDictionary<string, object> headers)
         {
             CommitId = commitId;
             StreamId = streamId;
+            BucketId = bucketId;
             Events = events;
             CreatedOn = DateTime.Now;
             Headers = headers;

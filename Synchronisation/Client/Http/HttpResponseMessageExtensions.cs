@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation.Client.Http
 {
     public static class HttpResponseMessageExtensions
     {

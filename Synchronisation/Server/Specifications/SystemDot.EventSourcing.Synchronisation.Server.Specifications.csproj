@@ -84,11 +84,13 @@
     <Reference Include="SystemDot.Environment.Windows">
       <HintPath>..\..\packages\SystemDotEnvironment.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing">
-      <HintPath>..\..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+    <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\SystemDotEventSourcing.6.0.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.EventSourcing.InMemory">
-      <HintPath>..\..\packages\SystemDotEventSourcing.5.3.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+    <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\SystemDotEventSourcing.6.0.4\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
       <HintPath>..\..\packages\SystemDotIoc.1.2.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>

@@ -6,57 +6,49 @@ using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Streams;
 using SystemDot.EventSourcing.Commits;
+using NEventStore;
 
 namespace SystemDot.EventSourcing.Sql.Windows
 {
     public class EventStoreEventSession : Disposable, IEventSession
     {
-        readonly NEventStore.IStoreEvents eventStore;
-        readonly Dictionary<string, NEventStore.IEventStream> streams;
+        readonly IStoreEvents eventStore;
+        readonly Dictionary<EventStreamId, NEventStore.IEventStream> streams;
 
-        public EventStoreEventSession(NEventStore.IStoreEvents eventStore)
+        public EventStoreEventSession(IStoreEvents eventStore)
         {
             this.eventStore = eventStore;
-            streams = new Dictionary<string, NEventStore.IEventStream>();
+            streams = new Dictionary<EventStreamId, NEventStore.IEventStream>();
         }
 
-        public IEnumerable<Commit> AllCommitsFrom(DateTime @from)
+        public IEnumerable<Commit> AllCommits()
         {
-            return eventStore.Advanced
-                .GetFrom("default", @from)
-                .Select(c => new Commit(c.CommitId, c.StreamId, c.Events.Select(CreateSourcedEvent).ToList(), c.Headers));
+             return eventStore.Advanced.GetFrom().Select(c => c.CreateCommit());
         }
 
-        public void StoreHeader(string id, string key, object value)
+        public IEnumerable<Commit> AllCommitsFrom(string bucketId, DateTime @from)
+        {
+            return eventStore.Advanced.GetFrom(bucketId, @from).Select(c => c.CreateCommit());
+        }
+
+        public void StoreHeader(EventStreamId id, string key, object value)
         {
             GetStream(id).UncommittedHeaders[key] = value;
         }
 
-        public IEnumerable<SourcedEvent> GetEvents(string streamId)
+        public IEnumerable<SourcedEvent> GetEvents(EventStreamId streamId)
         {
             NEventStore.IEventStream stream = GetStream(streamId);
 
             return stream.CommittedEvents
-                .Select(CreateSourcedEvent)
+                .Select(e => e.CreateSourcedEvent())
                 .Concat(stream.UncommittedEvents
-                .Select(CreateSourcedEvent));
+                .Select(e => e.CreateSourcedEvent()));
         }
 
-        SourcedEvent CreateSourcedEvent(NEventStore.EventMessage @from)
+        public void StoreEvent(SourcedEvent @event, EventStreamId aggregateRootId)
         {
-            var @event = new SourcedEvent
-            {
-                Body = @from.Body
-            };
-
-            @from.Headers.ForEach(h => @event.Headers.Add(h.Key, h.Value));
-
-            return @event;
-        }
-
-        public void StoreEvent(SourcedEvent @event, string aggregateRootId)
-        {
-            var uncommittedEvent = new NEventStore.EventMessage
+            var uncommittedEvent = new EventMessage
             {
                 Body = @event.Body
             };
@@ -74,11 +66,11 @@ namespace SystemDot.EventSourcing.Sql.Windows
             }
         }
 
-        NEventStore.IEventStream GetStream(string aggregateRootId)
+        NEventStore.IEventStream GetStream(EventStreamId streamId)
         {
             NEventStore.IEventStream stream;
 
-            if (!streams.TryGetValue(aggregateRootId, out stream)) streams[aggregateRootId] = stream = eventStore.OpenStream("default", aggregateRootId, 0, int.MaxValue);
+            if (!streams.TryGetValue(streamId, out stream)) streams[streamId] = stream = eventStore.OpenStream(streamId.BucketId, streamId.Id, 0, int.MaxValue);
 
             return stream;
         }

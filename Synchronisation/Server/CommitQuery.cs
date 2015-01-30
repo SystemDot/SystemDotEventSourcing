@@ -5,5 +5,6 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
     public class CommitQuery
     {
         public DateTime From { get; set; }
+        public string ClientId { get; set; }
     }
 }

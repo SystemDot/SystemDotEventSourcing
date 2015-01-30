@@ -18,6 +18,7 @@ namespace SystemDot.EventSourcing.Specifications
     public class when_bootstrapping_event_sourcing_with_a_projection_without_hydrate_on_startup_specified
     {
         private const string Id = "Id";
+        private const string BucketId = "BucketId";
         private static IIocContainer container;
 
         private Establish context = () =>
@@ -26,7 +27,7 @@ namespace SystemDot.EventSourcing.Specifications
             container.RegisterInstance<IEventSessionFactory>(() => new EventSessionFactory(new InMemoryEventStore(new NullEventDispatcher())));
 
             IEventSession session = container.Resolve<IEventSessionFactory>().Create();
-            session.StoreEvent(new SourcedEvent { Body = new TestAggregateRootCreatedEvent { Id = Id }, }, Id);
+            session.StoreEvent(new SourcedEvent { Body = new TestAggregateRootCreatedEvent { Id = Id }, }, new EventStreamId(Id, BucketId));
             session.Commit(Guid.NewGuid());
         };
 

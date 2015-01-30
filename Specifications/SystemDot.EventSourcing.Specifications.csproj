@@ -116,6 +116,7 @@
     <Compile Include="StoreAndCommitTestCommandHandler.cs" />
     <Compile Include="TestAggregateRoot.cs" />
     <Compile Include="TestAggregateRootCreatedEvent.cs" />
+    <Compile Include="TestAggregateRootId.cs" />
     <Compile Include="TestAggregateRootStateEvent.cs" />
     <Compile Include="TestCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

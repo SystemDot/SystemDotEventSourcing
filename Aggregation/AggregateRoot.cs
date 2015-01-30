@@ -10,9 +10,14 @@ namespace SystemDot.EventSourcing.Aggregation
     {
         readonly ConventionEventToHandlerRouter eventRouter;
         public EventHandler<EventSourceEventArgs> EventReplayed;
+        AggregateRootId id;
 
         internal List<SourcedEvent> EventsAdded { get; private set; }
-        public string Id { get; private set; }
+
+        internal EventStreamId GetEventStreamId()
+        {
+            return id.ToEventStreamId();
+        }
         
         protected AggregateRoot()
         {
@@ -20,10 +25,10 @@ namespace SystemDot.EventSourcing.Aggregation
             eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected AggregateRoot(string id)
+        protected AggregateRoot(AggregateRootId id)
             : this()
         {
-            Id = id;
+            this.id = id;
         }
 
         protected internal void AddEvent(object @event)
@@ -47,9 +52,9 @@ namespace SystemDot.EventSourcing.Aggregation
             return sourcedEvent;
         }
 
-        internal void Rehydrate(string id, IEnumerable<SourcedEvent> events)
+        internal void Rehydrate(AggregateRootId id, IEnumerable<SourcedEvent> events)
         {
-            Id = id;
+            this.id = id;
             events
                 .Select(e => e.Body)
                 .ForEach(ReplayEvent);

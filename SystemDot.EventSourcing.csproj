@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Aggregation\AggregateEntity.cs" />
     <Compile Include="Aggregation\AggregateRoot.cs" />
+    <Compile Include="Aggregation\AggregateRootId.cs" />
     <Compile Include="Aggregation\ConventionEventToHandlerRouter.cs" />
     <Compile Include="Aggregation\AggregateHeader.cs" />
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Sessions\IEventSessionFactory.cs" />
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Streams\EventStreamId.cs" />
+    <Compile Include="Streams\Int32Extensions.cs" />
     <Compile Include="Streams\SourcedEvent.cs" />
     <Compile Include="Streams\IEventStore.cs" />
     <Compile Include="Streams\IEventStream.cs" />

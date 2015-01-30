@@ -28,7 +28,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits
         [When(@"I use the commit in the session with an id of (.*)")]
         public void WhenIUseTheCommitInTheSessionWithAnIdOf(Guid commitId)
         {
-            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).Single(c => c.CommitId == commitId);
+            context.CommitInUse = session.AllCommits().Single(c => c.CommitId == commitId);
         }
         
         [Then(@"the commit should be for a stream identified as '(.*)'")]
@@ -41,6 +41,12 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits
         public void ThenTheCommitShouldContainAnEventWithAnIdOf(Guid id)
         {
             context.CommitInUse.Events.Should().Contain(e => e.Body.As<TestEvent>().Id == id);
+        }
+
+        [Then(@"a commit with an id of (.*) should not exist in the session")]
+        public void ThenACommitWithAnIdOfShouldNotExistInTheSession(Guid commitId)
+        {
+            session.AllCommits().Should().NotContain(c => c.CommitId == commitId);
         }
     }
 }

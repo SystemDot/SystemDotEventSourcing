@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation.Client.Http
 {
     public static class HttpContentExtensions
     {

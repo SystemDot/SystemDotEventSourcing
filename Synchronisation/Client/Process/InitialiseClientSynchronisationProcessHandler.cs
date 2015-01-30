@@ -1,21 +1,24 @@
 using System.Threading.Tasks;
 using SystemDot.Domain.Commands;
+using SystemDot.Environment;
 using SystemDot.EventSourcing.Synchronisation.Client.Messages;
 
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation.Client.Process
 {
     public class InitialiseClientSynchronisationProcessHandler : IAsyncCommandHandler<InitialiseClientSynchronisationProcess>
     {
         readonly IDomainRepository domainRepository;
+        readonly ILocalMachine localMachine;
 
-        public InitialiseClientSynchronisationProcessHandler(IDomainRepository domainRepository)
+        public InitialiseClientSynchronisationProcessHandler(IDomainRepository domainRepository, ILocalMachine localMachine)
         {
             this.domainRepository = domainRepository;
+            this.localMachine = localMachine;
         }
 
         public Task Handle(InitialiseClientSynchronisationProcess message)
         {
-            domainRepository.Save(ClientSynchronisationProcess.Initialise(message.ClientId, message.ServerUri));
+            domainRepository.Save(ClientSynchronisationProcess.Initialise(localMachine, message.ClientId, message.ServerUri));
             return Task.FromResult(false);
         }
     }

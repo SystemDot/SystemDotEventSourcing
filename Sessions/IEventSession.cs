@@ -7,14 +7,16 @@ namespace SystemDot.EventSourcing.Sessions
 {
     public interface IEventSession : IDisposable
     {
-        IEnumerable<SourcedEvent> GetEvents(string streamId);
+        IEnumerable<SourcedEvent> GetEvents(EventStreamId streamId);
 
-        void StoreEvent(SourcedEvent @event, string id);
+        void StoreEvent(SourcedEvent @event, EventStreamId id);
 
         void Commit(Guid commitId);
 
-        IEnumerable<Commit> AllCommitsFrom(DateTime from);
+        IEnumerable<Commit> AllCommits();
 
-        void StoreHeader(string id, string key, object value);
+        IEnumerable<Commit> AllCommitsFrom(string bucketId, DateTime from);
+
+        void StoreHeader(EventStreamId id, string key, object value);
     }
 }

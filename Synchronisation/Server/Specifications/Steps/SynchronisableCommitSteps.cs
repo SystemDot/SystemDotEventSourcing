@@ -24,20 +24,20 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
             this.commitContext = commitContext;
         }
 
-        [When(@"I request events for synchronisation")]
-        public void WhenIRequestEventsForSynchronisation()
+        [When(@"I request events for synchronisation for the client '(.*)'")]
+        public void WhenIRequestEventsForSynchronisation(string clientId)
         {
             commits = controller
-                .GetAsync(DateTime.MinValue.Ticks)
+                .GetAsync(clientId, DateTime.MinValue.Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
                 .Content;
         }
 
-        [When(@"I request events for synchronisation created after the date of the commit")]
-        public void WhenIRequestEventsForSynchronisationCreatedAfterTheDateOfTheCommit()
+        [When(@"I request events for synchronisation for the client '(.*)' created after the date of the commit")]
+        public void WhenIRequestEventsForSynchronisationCreatedAfterTheDateOfTheCommit(string clientId)
         {
             commits = controller
-                .GetAsync(commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks)
+                .GetAsync(clientId, commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
                 .Content;
         }
@@ -82,7 +82,13 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         [Then(@"the synchronisable commit should be for the same stream as the commit")]
         public void ThenTheSynchronisableCommitShouldBeForTheSameStreamAsTheCommit()
         {
-            context.CommitInUse.StreamId.Should().Be(commitContext.CommitInUse.StreamId);
+            context.CommitInUse.StreamId.Id.Should().Be(commitContext.CommitInUse.StreamId);
+        }
+
+        [Then(@"the synchronisable commit should be for the same client as the commit")]
+        public void ThenTheSynchronisableClientShouldBeForTheSameStreamAsTheCommit()
+        {
+            context.CommitInUse.StreamId.ClientId.Should().Be(commitContext.CommitInUse.BucketId);
         }
 
         [Then(@"the synchronisable commit should be for the same date and time as the commit")]

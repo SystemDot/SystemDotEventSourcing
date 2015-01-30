@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Sessions;
+using SystemDot.EventSourcing.Synchronisation.Client.Http;
+using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {
@@ -20,9 +22,9 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             this.eventSessionFactory = eventSessionFactory;
         }
 
-        public async Task Synchronise(Uri serverUri, DateTime getCommitsFrom, Action<SynchronisableCommit> onProcessingCommit, Action onError)
+        public async Task Synchronise(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
         {
-            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(serverUri, getCommitsFrom.Ticks);
+            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(criteria.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -32,18 +34,22 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
             IEnumerable<SynchronisableCommit> commits = await response.ReadContentAsSynchronisableCommitsAsync();
 
+            DateTime lastCommitDate = criteria.GetCommitsFrom;
+            
             commits.ForEach(commit =>
             {
-                onProcessingCommit(commit);
                 SynchroniseCommit(commit);
+                lastCommitDate = commit.CreatedOn;
             });
+
+            onComplete(lastCommitDate);
         }
 
         void SynchroniseCommit(SynchronisableCommit toSynchronise)
         {
             using (var eventSession = eventSessionFactory.Create())
             {
-                toSynchronise.Events.ForEach(e => eventSession.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId));
+                toSynchronise.Events.ForEach(e => eventSession.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId.ToEventStreamId()));
                 eventSession.Commit(toSynchronise.CommitId);
             }
         }

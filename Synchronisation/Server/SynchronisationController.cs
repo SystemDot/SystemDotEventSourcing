@@ -4,7 +4,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using SystemDot.Domain.Queries;
+    using Domain.Queries;
 
     public class SynchronisationController : ApiController
     {
@@ -15,9 +15,14 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
             this.handler = handler;
         }
 
-        public async Task<IHttpActionResult> GetAsync(long fromInTicks)
+        public async Task<IHttpActionResult> GetAsync(string clientId, long fromInTicks)
         {
-            return Ok(await handler.Handle(new CommitQuery { From = new DateTime(fromInTicks) }));
+            return Ok(await handler.Handle(
+                new CommitQuery
+                {
+                    ClientId = clientId, 
+                    From = new DateTime(fromInTicks)
+                }));
         }
     }
 }

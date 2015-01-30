@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using SystemDot.Environment;
+using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.Handlers
@@ -21,7 +22,7 @@ namespace SystemDot.EventSourcing.Handlers
             eventSessionFactory
                 .Create().StoreEventAndCommit(
                     CreateEventFromCommand(command), 
-                    CreateEventIdFromCommand(command), 
+                    CreateAggregateRootIdFromCommand(command).ToEventStreamId(), 
                     localMachine);
 
             return Task.FromResult(false);
@@ -29,6 +30,6 @@ namespace SystemDot.EventSourcing.Handlers
 
         protected abstract TEvent CreateEventFromCommand(TCommand command);
 
-        protected abstract string CreateEventIdFromCommand(TCommand command);
+        protected abstract AggregateRootId CreateAggregateRootIdFromCommand(TCommand command);
     }
 }

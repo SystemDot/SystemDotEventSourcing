@@ -8,21 +8,23 @@ using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
+using SystemDot.EventSourcing.Streams;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 using FluentAssertions;
+using SystemDot.Environment;
 
 namespace SystemDot.EventSourcing.Specifications
 {
-    using SystemDot.Environment;
-
     public class when_sending_a_command_that_results_in_a_sourced_event_via_an_aggregate_root
     {
+        private const string Id = "Id";
+        private const string BucketId = "BucketId";
+        
         static TestAggregateRootCreatedEvent handledEvent;
         static IIocContainer container;
-        const string Id = "Id";
-
+        
         Establish context = () =>
         {
             container = new IocContainer();
@@ -38,17 +40,19 @@ namespace SystemDot.EventSourcing.Specifications
             container.Resolve<Dispatcher>().RegisterHandler<TestAggregateRootCreatedEvent>(e => handledEvent = e);
         };
 
-        Because of = () => container.Resolve<IAsyncCommandHandler<TestCommand>>().Handle(new TestCommand { Id = Id }).Wait();
+        Because of = () => container.Resolve<IAsyncCommandHandler<TestCommand>>()
+            .Handle(new TestCommand { Id = Id, BucketId = BucketId})
+            .Wait();
         
         It should_put_the_sourced_event_in_the_session_with_the_event_as_its_session = () =>
-             container.Resolve<IEventSessionFactory>().Create().GetEvents(Id).Single()
+             container.Resolve<IEventSessionFactory>().Create().GetEvents(new EventStreamId(Id, BucketId)).Single()
                 .Body.As<TestAggregateRootCreatedEvent>().Id.Should().Be(Id);
 
         It should_send_the_event = () => handledEvent.Id.Should().Be(Id);
         
         It should_put_the_sourced_event_in_the_session_with_the_aggregate_root_type_in_its_headers = () =>
             container.Resolve<IEventSessionFactory>().Create()
-                .AllCommitsFrom(DateTime.MinValue).Single()
+                .AllCommits().Single()
                 .GetHeader<AggregateHeader>(AggregateHeader.Key)
                 .Type.Should().Be(typeof(TestAggregateRoot));
     }

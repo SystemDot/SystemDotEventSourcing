@@ -1,24 +1,33 @@
 using System;
 using System.Threading.Tasks;
+using SystemDot.Environment;
 using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Synchronisation.Client.Messages;
+using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation.Client.Process
 {
     public class ClientSynchronisationProcess : AggregateRoot
     {
         Uri serverUri;
         DateTime previousCommitDate;
+        string clientId;
 
-        public static ClientSynchronisationProcess Initialise(string clientId, string serverUri)
+        public static ClientSynchronisationProcess Initialise(ILocalMachine localMachine, string clientId, string serverUri)
         {
-            return new ClientSynchronisationProcess(clientId, serverUri);
+            return new ClientSynchronisationProcess(ClientSynchronisationProcessId.Parse(localMachine), clientId, serverUri);
         }
 
-        ClientSynchronisationProcess(string clientId, string serverUri) : base(clientId)
+        ClientSynchronisationProcess(ClientSynchronisationProcessId id, string clientId, string serverUri)
+            : base(id)
         {
-            AddEvent<ClientSynchronisationProcessInitialised>(e => e.ServerUri = serverUri);
+            AddEvent<ClientSynchronisationProcessInitialised>(e =>
+            {
+                e.ServerUri = serverUri;
+                e.ClientId = clientId;
+            });
         }
+
 
         public ClientSynchronisationProcess()
         {
@@ -27,19 +36,15 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
         void ApplyEvent(ClientSynchronisationProcessInitialised @event)
         {
             serverUri = new Uri(@event.ServerUri);
+            clientId = @event.ClientId;
         }
 
         public async Task Synchronise(CommitSynchroniser commitSynchroniser)
         {
-            DateTime commitDate = DateTime.MinValue;
-
             await commitSynchroniser.Synchronise(
-                serverUri, 
-                previousCommitDate,
-                commit => commitDate = commit.CreatedOn,
+                new CommitRetrievalCriteria(serverUri, previousCommitDate, clientId), 
+                CompleteSuccsessfully,
                 CompleteUnsuccsessfully);
-
-            CompleteSuccsessfully(commitDate);
         }
 
         void CompleteSuccsessfully(DateTime lastCommitDate)

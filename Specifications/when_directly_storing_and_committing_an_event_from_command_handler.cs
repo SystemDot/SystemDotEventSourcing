@@ -37,7 +37,7 @@ namespace SystemDot.EventSourcing.Specifications
             localMachine = container.Resolve<ILocalMachine>();
             handler = new StoreAndCommitTestCommandHandler(eventSessionFactory, localMachine);
 
-            testCommand = new TestCommand {Id = "1"};
+            testCommand = new TestCommand {Id = "1", BucketId = "BucketId"};
         };
 
         Because of = () => handler.Handle(testCommand);
@@ -46,7 +46,7 @@ namespace SystemDot.EventSourcing.Specifications
         {
             using (var eventSession = eventSessionFactory.Create())
             {
-                eventSession.AllCommitsFrom(DateTime.MinValue)
+                eventSession.AllCommits()
                     .Single()
                     .Headers["Origin"]
                     .As<EventOriginHeader>().MachineName.Should().Be(localMachine.GetName());
@@ -57,8 +57,8 @@ namespace SystemDot.EventSourcing.Specifications
         {
             using (var eventSession = eventSessionFactory.Create())
             {
-                eventSession.AllCommitsFrom(DateTime.MinValue)
-                    .Single(e => e.StreamId == testCommand.Id)
+                eventSession.AllCommits()
+                    .Single(e => e.StreamId == testCommand.Id && e.BucketId == testCommand.BucketId)
                     .Events.Single()
                     .Body.As<TestStoreAndCommitEvent>().Id.Should().Be(testCommand.Id);
             }

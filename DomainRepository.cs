@@ -4,11 +4,11 @@ using System.Linq;
 using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Streams;
+using SystemDot.Environment;
+using SystemDot.EventSourcing.Headers;
 
 namespace SystemDot.EventSourcing
 {
-    using SystemDot.Environment;
-    using SystemDot.EventSourcing.Headers;
 
     public class DomainRepository : IDomainRepository
     {
@@ -21,16 +21,16 @@ namespace SystemDot.EventSourcing
             this.localMachine = localMachine;
         }
 
-        public bool Exists(string aggregateRootId)
+        public bool Exists(AggregateRootId aggregateRootId)
         {
-            return GetEvents(aggregateRootId).Any();
+            return GetEvents(aggregateRootId.ToEventStreamId()).Any();
         }
 
-        public TAggregateRoot Get<TAggregateRoot>(string aggregateRootId)
+        public TAggregateRoot Get<TAggregateRoot>(AggregateRootId aggregateRootId)
             where TAggregateRoot : AggregateRoot, new()
         {
             var aggregateRoot = new TAggregateRoot();
-            aggregateRoot.Rehydrate(aggregateRootId, GetEvents(aggregateRootId));
+            aggregateRoot.Rehydrate(aggregateRootId, GetEvents(aggregateRootId.ToEventStreamId()));
             return aggregateRoot;
         }
 
@@ -41,16 +41,18 @@ namespace SystemDot.EventSourcing
             {
                 foreach (SourcedEvent @event in aggregateRoot.EventsAdded)
                 {
-                    eventSession.StoreEvent(@event, aggregateRoot.Id);
-                    eventSession.StoreHeader(aggregateRoot.Id, EventOriginHeader.Key, EventOriginHeader.ForMachine(localMachine));
-                    eventSession.StoreHeader(aggregateRoot.Id, AggregateHeader.Key, AggregateHeader.FromType(aggregateRoot.GetType()));
+                    EventStreamId eventStreamId = aggregateRoot.GetEventStreamId();
+
+                    eventSession.StoreEvent(@event, eventStreamId);
+                    eventSession.StoreHeader(eventStreamId, EventOriginHeader.Key, EventOriginHeader.ForMachine(localMachine));
+                    eventSession.StoreHeader(eventStreamId, AggregateHeader.Key, AggregateHeader.FromType(aggregateRoot.GetType()));
                 }
 
                 eventSession.Commit(Guid.NewGuid());
             }
         }
 
-        IEnumerable<SourcedEvent> GetEvents(string aggregateRootId)
+        IEnumerable<SourcedEvent> GetEvents(EventStreamId aggregateRootId)
         {
             return eventSessionFactory.Create().GetEvents(aggregateRootId).ToList();
         }

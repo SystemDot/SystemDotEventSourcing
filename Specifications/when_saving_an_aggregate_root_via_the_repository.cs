@@ -17,8 +17,9 @@ namespace SystemDot.EventSourcing.Specifications
 {
     public class when_saving_an_aggregate_root_via_the_repository
     {
-        const string Id = "Id";
-
+        private const string Id = "Id";
+        private const string BucketId = "BucketId";
+        
         static IDomainRepository repository;
         static IEventSessionFactory eventSessionFactory;
         static ILocalMachine localMachine;
@@ -40,13 +41,13 @@ namespace SystemDot.EventSourcing.Specifications
             localMachine = container.Resolve<ILocalMachine>();
         };
 
-        Because of = () => repository.Save(TestAggregateRoot.Create(Id));
+        Because of = () => repository.Save(TestAggregateRoot.Create(new TestAggregateRootId(Id, BucketId)));
 
         It should_associate_any_events_with_a_header_specifying_the_name_of_the_machine_the_event_originated_from = () =>
         {
             using (var eventSession = eventSessionFactory.Create())
             {
-                eventSession.AllCommitsFrom(DateTime.MinValue)
+                eventSession.AllCommits()
                     .Single()
                     .Headers["Origin"]
                     .As<EventOriginHeader>().MachineName.Should().Be(localMachine.GetName());

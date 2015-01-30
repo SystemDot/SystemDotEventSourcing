@@ -25,10 +25,10 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
             session = sessionFactory.Create();
         }
 
-        [Given(@"I have created an event in the session with an id of (.*) for the stream identified as (.*)")]
-        public void GivenIHaveCreatedAnEventInTheSessionWithAnIdOfForTheStreamIdentifiedAs(Guid id, Guid streamId)
+        [Given(@"I have created an event in the session with an id of (.*) for the stream identified as (.*) in the bucket identified as '(.*)'")]
+        public void GivenIHaveCreatedAnEventInTheSessionWithAnIdOfForTheStreamIdentifiedAs(Guid id, Guid streamId, string bucketId)
         {
-            session.StoreEvent(new SourcedEvent { Body = new TestEvent { Id = id } }, streamId.ToString());
+            session.StoreEvent(new SourcedEvent { Body = new TestEvent { Id = id } }, new EventStreamId(streamId.ToString(), bucketId));
         }
 
         [Given(@"I commit the session with the id (.*)")]
@@ -40,13 +40,13 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         [When(@"I use the first commit in the event session")]
         public void WhenIUseTheFirstCommitInTheEventSession()
         {
-            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(0);
+            context.CommitInUse = session.AllCommits().ElementAt(0);
         }
 
         [When(@"I use the second commit in the event session")]
         public void WhenIUseTheSecondCommitInTheEventSession()
         {
-            context.CommitInUse = session.AllCommitsFrom(DateTime.MinValue).ElementAt(1);
+            context.CommitInUse = session.AllCommits().ElementAt(1);
         }
     }
 }

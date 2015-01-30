@@ -16,13 +16,13 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchroni
             this.context = context;
         }
 
-        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)' for the current date and time")]
-        public void GivenIHaveCreatedASynchronisableCommitWithAnIdOfAndStreamIdentifiedAs(Guid id, string streamId)
+        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)' and client identified as '(.*)'")]
+        public void GivenIHaveCreatedASynchronisableCommitWithAnIdOfAndStreamIdentifiedAs(Guid id, string streamId, string clientId)
         {
             context.CommitInUse = new SynchronisableCommit
             {
-                CommitId = id, 
-                StreamId = streamId, 
+                CommitId = id,
+                StreamId = new SynchronisableEventStreamId { ClientId = clientId, Id = streamId }, 
                 CreatedOn = DateTime.Now,
                 Events = new List<SynchronisableSourcedEvent>()
             };

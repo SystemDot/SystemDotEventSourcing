@@ -16,7 +16,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
 
         public Task<IEnumerable<SynchronisableCommit>> Handle(CommitQuery message)
         {
-            return Task.FromResult(factory.Create().GetSynchronisableCommits(message.From));
+            return Task.FromResult(factory.Create().GetSynchronisableCommits(message.ClientId, message.From));
         }       
     }
 }

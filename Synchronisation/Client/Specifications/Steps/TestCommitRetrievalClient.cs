@@ -1,5 +1,7 @@
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
             StatusToReturn = HttpStatusCode.OK;
         }
 
-        public Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, long @fromCommitInTicks)
+        public Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, string clientId, long @fromCommitInTicks)
         {
             LastGetCommitsAsyncCallServerUri = serverUri;
             LastGetCommitsAsyncCallFrom = @fromCommitInTicks;
@@ -34,7 +36,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
 
             if (response.IsSuccessStatusCode)
             {
-                response.Content = new StringContent(JsonConvert.SerializeObject(commits));
+                response.Content = new StringContent(JsonConvert.SerializeObject(commits.Where(c => c.StreamId.ClientId == clientId)));
             }
 
             return Task.FromResult(response);

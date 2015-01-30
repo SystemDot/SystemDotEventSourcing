@@ -14,7 +14,7 @@ namespace SystemDot.EventSourcing.Specifications
 
         public Task Handle(TestCommand message)
         {
-            domainRepository.Save(TestAggregateRoot.Create(message.Id));
+            domainRepository.Save(TestAggregateRoot.Create(new TestAggregateRootId(message.Id, message.BucketId)));
             return Task.FromResult(false);
         }
     }
