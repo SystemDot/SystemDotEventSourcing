@@ -19,16 +19,18 @@ namespace SystemDot.EventSourcing.Handlers
 
         public Task Handle(TCommand command)
         {
+            AggregateRootId id = CreateAggregateRootIdFromCommand(command);
+
             eventSessionFactory
                 .Create().StoreEventAndCommit(
-                    CreateEventFromCommand(command), 
-                    CreateAggregateRootIdFromCommand(command).ToEventStreamId(), 
+                    CreateEventFromCommand(command, id), 
+                    id.ToEventStreamId(), 
                     localMachine);
 
             return Task.FromResult(false);
         }
 
-        protected abstract TEvent CreateEventFromCommand(TCommand command);
+        protected abstract TEvent CreateEventFromCommand(TCommand command, AggregateRootId id);
 
         protected abstract AggregateRootId CreateAggregateRootIdFromCommand(TCommand command);
     }

@@ -13,9 +13,9 @@ namespace SystemDot.EventSourcing.Specifications
         {
         }
 
-        protected override TestStoreAndCommitEvent CreateEventFromCommand(TestCommand command)
+        protected override TestStoreAndCommitEvent CreateEventFromCommand(TestCommand command, AggregateRootId id)
         {
-            return new TestStoreAndCommitEvent {Id = command.Id};
+            return new TestStoreAndCommitEvent { Id = id.Id };
         }
 
         protected override AggregateRootId CreateAggregateRootIdFromCommand(TestCommand command)
