@@ -43,7 +43,7 @@ namespace SystemDot.EventSourcing.InMemory
         void Commit(Commit commit)
         {
              commits.Add(commit);
-             commit.Events.ForEach(e => eventDispatcher.Dispatch(e.Body));
+             commit.Events.ForEach(e =>  eventDispatcher.Dispatch(e.Body));
         }
 
         List<SourcedEvent> GetEvents(EventStreamId streamId)

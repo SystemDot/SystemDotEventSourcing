@@ -38,6 +38,8 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Http\HttpClientFactory.cs" />
+    <Compile Include="Http\IHttpClientFactory.cs" />
     <Compile Include="Process\ClientSynchronisationProcess.cs" />
     <Compile Include="Process\ClientSynchronisationProcessId.cs" />
     <Compile Include="Retrieval\CommitRetrievalClient.cs" />

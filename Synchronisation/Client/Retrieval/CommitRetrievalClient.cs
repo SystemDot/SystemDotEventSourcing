@@ -4,18 +4,20 @@ using System.Threading.Tasks;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client.Retrieval
 {
+    using SystemDot.EventSourcing.Synchronisation.Client.Http;
+
     public class CommitRetrievalClient : ICommitRetrievalClient
     {
-        readonly HttpClient httpClient;
+        readonly IHttpClientFactory httpClientFactory;
 
-        public CommitRetrievalClient()
+        public CommitRetrievalClient(IHttpClientFactory httpClientFactory)
         {
-            httpClient = new HttpClient(); 
+            this.httpClientFactory = httpClientFactory;
         }
 
         public async Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, string clientId, long @fromCommitInTicks)
         {
-            return await httpClient.GetAsync(SynchronisationUri.Parse(serverUri, clientId, @fromCommitInTicks));
+            return await httpClientFactory.Create().GetAsync(SynchronisationUri.Parse(serverUri, clientId, @fromCommitInTicks));
         }
     }
 }
