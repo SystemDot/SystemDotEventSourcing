@@ -9,6 +9,8 @@ using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {
+    using System.Net;
+
     public class CommitSynchroniser
     {
         readonly ICommitRetrievalClient commitRetrievalClient;
@@ -24,8 +26,17 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
         public async Task Synchronise(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
         {
-            HttpResponseMessage response = await commitRetrievalClient.GetCommitsAsync(criteria.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
-
+            HttpResponseMessage response;
+            try
+            {
+                response = await commitRetrievalClient.GetCommitsAsync(criteria.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
+            }
+            catch (WebException)
+            {
+                onError();
+                return;
+            }
+            
             if (!response.IsSuccessStatusCode)
             {
                 onError();
