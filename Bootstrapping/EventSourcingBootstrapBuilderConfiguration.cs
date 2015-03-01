@@ -9,7 +9,10 @@ namespace SystemDot.EventSourcing.Bootstrapping
         public EventSourcingBootstrapBuilderConfiguration(BootstrapBuilderConfiguration config)
         {
             this.config = config;
-            config.RegisterBuildAction(async c => await c.HydrateInMemoryProjections(), BuildOrder.VeryLate);
+
+            config
+                .RegisterBuildAction(c => c.RegisterProjectionsWithMessenger())
+                .RegisterBuildAction(async c => await c.HydrateInMemoryProjections(), BuildOrder.VeryLate);
         }
 
         public BootstrapBuilderConfiguration GetBootstrapBuilderConfiguration()

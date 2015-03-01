@@ -5,6 +5,8 @@ using SystemDot.Ioc;
 
 namespace SystemDot.EventSourcing.Bootstrapping
 {
+    using SystemDot.Messaging.Handling.Configuration;
+
     internal static class IocContainerExtensions
     {
         public static void RegisterEventSourcing(this IIocContainer container)
@@ -23,6 +25,11 @@ namespace SystemDot.EventSourcing.Bootstrapping
                 .ResolveMutipleTypes()
                 .ThatImplementOpenType(typeof(IProjection<>))
                 .ThatHaveAttribute<HydrateProjectionAtStartupAttribute>();
+        }
+
+        public static void RegisterProjectionsWithMessenger(this IIocContainer container)
+        {
+            container.RegisterOpenTypeHandlersWithMessenger(typeof(IProjection<>));
         }
     }
 }
