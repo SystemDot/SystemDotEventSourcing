@@ -1,8 +1,9 @@
 namespace SystemDot.EventSourcing.Projections
 {
-    using Domain.Events;
+    using System.Threading.Tasks;
 
-    public interface IProjection<in T> : IAsyncEventHandler<T>
+    public interface IProjection<in T>
     {
+        Task Handle(T message);
     }
 }
