@@ -11,7 +11,7 @@ namespace SystemDot.EventSourcing.Bootstrapping
             this.config = config;
 
             config
-                .RegisterBuildAction(c => c.RegisterProjectionsWithMessenger())
+                .RegisterBuildAction(c => c.RegisterProjectionsWithMessenger(), BuildOrder.VeryLate)
                 .RegisterBuildAction(async c => await c.HydrateInMemoryProjections(), BuildOrder.VeryLate);
         }
 
