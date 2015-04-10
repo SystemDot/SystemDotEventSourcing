@@ -22,5 +22,12 @@ namespace SystemDot.EventSourcing
                 .SelectMany(c => c.Events)
                 .ToList();
         }
+
+        public IEnumerable<SourcedEvent> GetEvents(EventStreamId id)
+        {
+            return factory.Create()
+                .GetEvents(id)
+                .ToList();
+        }
     }
 }
