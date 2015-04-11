@@ -23,6 +23,14 @@ namespace SystemDot.EventSourcing
                 .ToList();
         }
 
+        public IEnumerable<SourcedEvent> GetAllEventsInBucket(string bucketId)
+        {
+            return factory.Create()
+                .AllCommitsFrom(bucketId, DateTime.MinValue)
+                .SelectMany(c => c.Events)
+                .ToList();
+        }
+
         public IEnumerable<SourcedEvent> GetEvents(EventStreamId id)
         {
             return factory.Create()

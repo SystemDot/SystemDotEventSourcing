@@ -1,6 +1,7 @@
 namespace SystemDot.EventSourcing.Projections
 {
     using System;
+    using System.Collections.Generic;
     using SystemDot.Core.Collections;
     using SystemDot.EventSourcing.Streams;
     using SystemDot.Messaging.Handling;
@@ -14,13 +15,23 @@ namespace SystemDot.EventSourcing.Projections
             this.retreiver = retreiver;
         }
 
-        public void Project<TProjection>(EventStreamId id, Action<TProjection> onLoaded) where TProjection : new()
+        public void Project<TProjection>(string bucketId, Action<TProjection> onLoaded) where TProjection : new()
+        {
+            CreateProjectionFromEvents(retreiver.GetAllEventsInBucket(bucketId), onLoaded);
+        }
+
+        public void Project<TProjection>(string bucketId, string eventStreamId, Action<TProjection> onLoaded) where TProjection : new()
+        {
+            CreateProjectionFromEvents(retreiver.GetEvents(new EventStreamId(eventStreamId, bucketId)), onLoaded); 
+        }
+
+        void CreateProjectionFromEvents<TProjection>(IEnumerable<SourcedEvent> events, Action<TProjection> onLoaded) where TProjection : new()
         {
             var projection = new TProjection();
 
             var router = new MessageHandlerRouter();
             router.RegisterHandler(projection);
-            retreiver.GetEvents(id).ForEach(e => router.RouteMessageToHandlers(e));
+            events.ForEach(e => router.RouteMessageToHandlers(e.Body));
             router.UnregisterHandler(projection);
 
             onLoaded(projection);
