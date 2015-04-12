@@ -49,8 +49,10 @@
     <Compile Include="Handlers\StoreAndCommitEventCommandHandler.cs" />
     <Compile Include="Headers\EventOriginHeader.cs" />
     <Compile Include="IDomainRepository.cs" />
+    <Compile Include="Projections\DataStore.cs" />
     <Compile Include="Projections\EventProjector.cs" />
     <Compile Include="Projections\HydrateProjectionAtStartupAttribute.cs" />
+    <Compile Include="Projections\IDataStoreProjection.cs" />
     <Compile Include="Projections\IocContainerExtensions.cs" />
     <Compile Include="Projections\IProjection.cs" />
     <Compile Include="Projections\ProjectionHydrater.cs" />
