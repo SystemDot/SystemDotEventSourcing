@@ -6,17 +6,19 @@ using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Aggregation
 {
+    using SystemDot.Domain;
+
     public abstract class AggregateRoot
     {
         readonly ConventionEventToHandlerRouter eventRouter;
         public EventHandler<EventSourceEventArgs> EventReplayed;
-        AggregateRootId id;
+        MultiSiteId multiSiteId;
 
         internal List<SourcedEvent> EventsAdded { get; private set; }
 
         internal EventStreamId GetEventStreamId()
         {
-            return id.ToEventStreamId();
+            return multiSiteId.ToEventStreamId();
         }
         
         protected AggregateRoot()
@@ -25,10 +27,10 @@ namespace SystemDot.EventSourcing.Aggregation
             eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected AggregateRoot(AggregateRootId id)
+        protected AggregateRoot(MultiSiteId multiSiteId)
             : this()
         {
-            this.id = id;
+            this.multiSiteId = multiSiteId;
         }
 
         protected internal void AddEvent(object @event)
@@ -52,9 +54,10 @@ namespace SystemDot.EventSourcing.Aggregation
             return sourcedEvent;
         }
 
-        internal void Rehydrate(AggregateRootId id, IEnumerable<SourcedEvent> events)
+        internal void Rehydrate(MultiSiteId id, IEnumerable<SourcedEvent> events)
         {
-            this.id = id;
+            multiSiteId = id;
+
             events
                 .Select(e => e.Body)
                 .ForEach(ReplayEvent);

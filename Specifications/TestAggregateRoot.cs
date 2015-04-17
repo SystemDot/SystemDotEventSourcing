@@ -2,24 +2,25 @@ using SystemDot.EventSourcing.Aggregation;
 
 namespace SystemDot.EventSourcing.Specifications
 {
+    using SystemDot.Domain;
+
     public class TestAggregateRoot : AggregateRoot
     {
         public bool State { private set; get; }
         public string Id { get; private set; }
-        public string BucketId { get; private set; }
+        public string SiteId { get; private set; }
 
         public static TestAggregateRoot Create(TestAggregateRootId id)
         {
             return new TestAggregateRoot(id);
         }
 
-        TestAggregateRoot(TestAggregateRootId id)
-            : base(id)
+        TestAggregateRoot(MultiSiteId multiSiteId) : base(multiSiteId)
         {
             AddEvent<TestAggregateRootCreatedEvent>(c =>
             {
-                c.Id = id.Id;
-                c.BucketId = id.BucketId;
+                c.Id = multiSiteId.Id;
+                c.SiteId = multiSiteId.SiteId;
             });
         }
 
@@ -35,7 +36,7 @@ namespace SystemDot.EventSourcing.Specifications
         void ApplyEvent(TestAggregateRootCreatedEvent @event)
         {
             Id = @event.Id;
-            BucketId = @event.BucketId;
+            SiteId = @event.SiteId;
         }
 
         void ApplyEvent(TestAggregateRootStateEvent @event)

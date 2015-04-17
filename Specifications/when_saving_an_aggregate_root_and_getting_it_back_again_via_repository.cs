@@ -50,7 +50,7 @@ namespace SystemDot.EventSourcing.Specifications
 
         It should_have_hydrated_the_root_with_the_first_event_with_the_correct_id = () => root.Id.Should().Be(Id);
 
-        It should_have_hydrated_the_root_with_the_first_event_the_correct_bucket_id = () => root.BucketId.Should().Be(BucketId);
+        It should_have_hydrated_the_root_with_the_first_event_the_correct_bucket_id = () => root.SiteId.Should().Be(BucketId);
 
         It should_have_hydrated_the_root_with_the_state_from_the_second_event = () => root.State.Should().BeTrue();
     }

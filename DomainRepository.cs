@@ -9,6 +9,7 @@ using SystemDot.EventSourcing.Headers;
 
 namespace SystemDot.EventSourcing
 {
+    using SystemDot.Domain;
 
     public class DomainRepository : IDomainRepository
     {
@@ -21,16 +22,16 @@ namespace SystemDot.EventSourcing
             this.localMachine = localMachine;
         }
 
-        public bool Exists(AggregateRootId aggregateRootId)
+        public bool Exists(MultiSiteId aggregateRootId)
         {
-            return GetEvents(aggregateRootId.ToEventStreamId()).Any();
+            return GetEvents(aggregateRootId).Any();
         }
 
-        public TAggregateRoot Get<TAggregateRoot>(AggregateRootId aggregateRootId)
+        public TAggregateRoot Get<TAggregateRoot>(MultiSiteId aggregateRootId)
             where TAggregateRoot : AggregateRoot, new()
         {
             var aggregateRoot = new TAggregateRoot();
-            aggregateRoot.Rehydrate(aggregateRootId, GetEvents(aggregateRootId.ToEventStreamId()));
+            aggregateRoot.Rehydrate(aggregateRootId, GetEvents(aggregateRootId));
             return aggregateRoot;
         }
 
@@ -52,9 +53,9 @@ namespace SystemDot.EventSourcing
             }
         }
 
-        IEnumerable<SourcedEvent> GetEvents(EventStreamId aggregateRootId)
+        IEnumerable<SourcedEvent> GetEvents(MultiSiteId aggregateRootId)
         {
-            return eventSessionFactory.Create().GetEvents(aggregateRootId).ToList();
+            return eventSessionFactory.Create().GetEvents(aggregateRootId.ToEventStreamId()).ToList();
         }
     }
 }

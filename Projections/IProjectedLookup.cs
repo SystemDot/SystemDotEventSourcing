@@ -2,7 +2,7 @@ namespace SystemDot.EventSourcing.Projections
 {
     using System.Threading.Tasks;
 
-    public interface IDataStoreProjection<in T>
+    public interface IProjectedLookup<in T>
     {
         Task Handle(T message);
     }

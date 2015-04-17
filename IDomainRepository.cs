@@ -3,12 +3,14 @@ using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing
 {
+    using SystemDot.Domain;
+
     public interface IDomainRepository
     {
-        TAggregateRoot Get<TAggregateRoot>(AggregateRootId aggregateRootId) 
+        TAggregateRoot Get<TAggregateRoot>(MultiSiteId aggregateRootId) 
             where TAggregateRoot : AggregateRoot, new();
 
-        bool Exists(AggregateRootId aggregateRootId);
+        bool Exists(MultiSiteId aggregateRootId);
 
         void Save<TAggregateRoot>(TAggregateRoot aggregateRoot)
             where TAggregateRoot : AggregateRoot;

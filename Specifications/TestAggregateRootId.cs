@@ -1,15 +1,11 @@
-using SystemDot.EventSourcing.Aggregation;
-
 namespace SystemDot.EventSourcing.Specifications
 {
-    public class TestAggregateRootId : AggregateRootId
-    {
-        public string BucketId { get; set; }
+    using SystemDot.Domain;
 
-        public TestAggregateRootId(string id, string bucketId)
-            : base(id, bucketId)
+    public class TestAggregateRootId : MultiSiteId
+    {
+        public TestAggregateRootId(string id, string siteId) : base(id, siteId)
         {
-            BucketId = bucketId;
         }
     }
 }

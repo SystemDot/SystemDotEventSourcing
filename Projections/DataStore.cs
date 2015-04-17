@@ -1,6 +1,8 @@
 namespace SystemDot.EventSourcing.Projections
 {
     using System;
+    using System.Threading.Tasks;
+    using SystemDot.Domain;
 
     public class DataStore<TProjection> where TProjection : new()
     {
@@ -11,14 +13,9 @@ namespace SystemDot.EventSourcing.Projections
             this.projector = projector;
         }
 
-        public void Load(Guid bucketId, Guid id, Action<TProjection> onLoad)
+        public async Task LoadAsync(MultiSiteId id, Action<TProjection> onLoad)
         {
-            projector.Project(bucketId.ToString(), id.ToString(), onLoad);
-        }
-
-        public void Load(Guid bucketId, Action<TProjection> onLoad)
-        {
-            projector.Project(bucketId.ToString(), onLoad);
+            await projector.ProjectAsync(id, onLoad);
         }
     }
 }

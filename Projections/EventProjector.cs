@@ -2,8 +2,9 @@ namespace SystemDot.EventSourcing.Projections
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using SystemDot.Core.Collections;
-    using SystemDot.EventSourcing.Aggregation;
+    using SystemDot.Domain;
     using SystemDot.EventSourcing.Streams;
     using SystemDot.Messaging.Handling;
 
@@ -16,30 +17,29 @@ namespace SystemDot.EventSourcing.Projections
             this.retreiver = retreiver;
         }
 
-        public void Project<TProjection>(string bucketId, Action<TProjection> onLoaded) where TProjection : new()
+        public async Task ProjectAsync<TProjection>(MultiSiteId id, Action<TProjection> onLoaded) where TProjection : new()
         {
-            CreateProjectionFromEvents(retreiver.GetAllEventsInBucket(bucketId), onLoaded);
+            await CreateProjectionFromEvents(retreiver.GetEvents(id.ToEventStreamId()), onLoaded);
         }
 
-        public void Project<TProjection>(string bucketId, string id, Action<TProjection> onLoaded) where TProjection : new()
+        public async Task ProjectAsync<TProjection>(string siteId, Action<TProjection> onLoaded) where TProjection : new()
         {
-            CreateProjectionFromEvents(retreiver.GetEvents(new EventStreamId(id, bucketId)), onLoaded);
+            await CreateProjectionFromEvents(retreiver.GetAllEventsInBucket(siteId), onLoaded);
         }
 
-        public void Project<TProjection>(AggregateRootId id, Action<TProjection> onLoaded) where TProjection : new()
-        {
-            CreateProjectionFromEvents(retreiver.GetEvents(id.ToEventStreamId()), onLoaded);
-        }
-
-        void CreateProjectionFromEvents<TProjection>(IEnumerable<SourcedEvent> events, Action<TProjection> onLoaded) where TProjection : new()
+        async Task CreateProjectionFromEvents<TProjection>(IEnumerable<SourcedEvent> events, Action<TProjection> onLoaded) where TProjection : new()
         {
             var projection = new TProjection();
 
             var router = new MessageHandlerRouter();
             router.RegisterHandler(projection);
-            events.ForEach(e => router.RouteMessageToHandlers(e.Body));
-            router.UnregisterHandler(projection);
 
+            foreach (var e in events)
+            {
+                await router.RouteMessageToHandlersAsync(e.Body);
+            }
+
+            router.UnregisterHandler(projection);
             onLoaded(projection);
         }
     }

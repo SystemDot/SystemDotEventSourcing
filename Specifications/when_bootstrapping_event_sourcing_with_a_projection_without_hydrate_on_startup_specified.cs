@@ -18,7 +18,7 @@ namespace SystemDot.EventSourcing.Specifications
     public class when_bootstrapping_event_sourcing_with_a_projection_without_hydrate_on_startup_specified
     {
         private const string Id = "Id";
-        private const string BucketId = "BucketId";
+        private const string BucketId = "SiteId";
         private static IIocContainer container;
 
         private Establish context = () =>

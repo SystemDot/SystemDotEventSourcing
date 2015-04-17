@@ -5,6 +5,8 @@ using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.Handlers
 {
+    using SystemDot.Domain;
+
     public abstract class StoreAndCommitEventCommandHandler<TCommand, TEvent>
         where TEvent : new()
     {
@@ -19,7 +21,7 @@ namespace SystemDot.EventSourcing.Handlers
 
         public Task Handle(TCommand command)
         {
-            AggregateRootId id = CreateAggregateRootIdFromCommand(command);
+            MultiSiteId id = CreateAggregateRootIdFromCommand(command);
 
             eventSessionFactory
                 .Create().StoreEventAndCommit(
@@ -30,8 +32,8 @@ namespace SystemDot.EventSourcing.Handlers
             return Task.FromResult(false);
         }
 
-        protected abstract TEvent CreateEventFromCommand(TCommand command, AggregateRootId id);
+        protected abstract TEvent CreateEventFromCommand(TCommand command, MultiSiteId id);
 
-        protected abstract AggregateRootId CreateAggregateRootIdFromCommand(TCommand command);
+        protected abstract MultiSiteId CreateAggregateRootIdFromCommand(TCommand command);
     }
 }
