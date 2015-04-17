@@ -1,9 +1,10 @@
 using SystemDot.Environment;
-using SystemDot.EventSourcing.Aggregation;
 
 namespace SystemDot.EventSourcing.Synchronisation.Client.Process
 {
-    public class ClientSynchronisationProcessId : AggregateRootId
+    using SystemDot.Domain;
+
+    public class ClientSynchronisationProcessId : MultiSiteId
     {
         public static ClientSynchronisationProcessId Parse(ILocalMachine localMachine)
         {
