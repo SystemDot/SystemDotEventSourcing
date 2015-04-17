@@ -17,5 +17,10 @@ namespace SystemDot.EventSourcing.Projections
         {
             await projector.ProjectAsync(id, onLoad);
         }
+
+        public async Task LoadAsync(string siteId, Action<TProjection> onLoad)
+        {
+            await projector.ProjectAsync(siteId, onLoad);
+        }
     }
 }
