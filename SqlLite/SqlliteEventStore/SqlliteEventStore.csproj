@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbConnectionExtensions.cs" />
     <Compile Include="SqlLiteEventStore.cs" />
     <Compile Include="EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="IocContainerExtensions.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLiteEventStream.cs" />
+    <Compile Include="SqlLitePersistenceEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

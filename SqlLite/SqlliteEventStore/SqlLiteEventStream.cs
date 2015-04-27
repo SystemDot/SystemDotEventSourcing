@@ -1,15 +1,12 @@
-using System.Data.SqlClient;
-
 namespace SqlliteEventStore
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Common;
+    using SystemDot.Core;
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Streams;
-    using Mono.Data.Sqlite;
 
-    public class SqlLiteEventStream : IEventStream, IDisposable
+    public class SqlLiteEventStream : Disposable, IEventStream
     {
         readonly SqlLitePersistenceEngine persistenceEngine;
         readonly EventStreamId streamId;
@@ -38,13 +35,14 @@ namespace SqlliteEventStore
             }           
         }
 
-        public void Dispose()
+        protected override void DisposeOfManagedResources()
         {
             uncommittedEvents.Clear();
             committedEvents.Clear();
             UncommittedHeaders.Clear();
+            base.DisposeOfManagedResources();
         }
-
+        
         public void Add(SourcedEvent @event)
         {
             uncommittedEvents.Add(@event);
@@ -72,113 +70,6 @@ namespace SqlliteEventStore
         }
 
         public IDictionary<string, object> UncommittedHeaders { get; private set; }
-    }
-
-    public class SqlLitePersistenceEngine
-    {
-        protected string GetInitialisationSql()
-        {
-            return @"
-CREATE TABLE IF NOT EXISTS Commits(
-    BucketId TEXT NOT NULL,
-    StreamId TEXT NOT NULL,
-	StreamIdOriginal TEXT NOT NULL,
-	CommitId TEXT NOT NULL,
-	CommitSequence INTEGER NOT NULL,
-	CheckpointNumber INTEGER PRIMARY KEY,
-    Headers BLOB NULL,
-    Payload BLOB NOT NULL)";
-        }
-
-        void AddParameter(DbParameterCollection collection, string name, object value)
-        {
-            collection.Add(new SqliteParameter(name, value));
-        }
-
-        DbConnection GetConnection()
-        {
-            DbConnection connection = CreateConnection();
-            connection.Open();
-            return connection;
-        }
-
-        DbConnection CreateConnection()
-        {
-            return new SqliteConnection(ConnectionString);
-        }
-
-        string ConnectionString { get; set; }
-
-        public void Commit(string bucketId, string streamId, Guid commitId, int sequence, byte[] uncommittedEvents, byte[] uncommittedHeaders)
-        {
-            using (var connection = GetConnection())
-            {
-                connection.Execute(
-                    "insert into Commits(BucketId, StreamId, StreamIdOriginal, CommitId, CommitSequence, Headers, Payload) values(@BucketId, @StreamId, @StreamIdOriginal, @CommitId, @CommitSequence, @Headers, @Payload)",
-                    command =>
-                    {
-                        AddParameter(command.Parameters, "@BucketId", bucketId);
-                        AddParameter(command.Parameters, "@StreamId", streamId);
-                        AddParameter(command.Parameters, "@StreamIdOriginal", streamId);
-                        AddParameter(command.Parameters, "@CommitId", commitId.ToString());
-                        AddParameter(command.Parameters, "@CommitSequence", sequence);
-                        AddParameter(command.Parameters, "@Headers", uncommittedHeaders);
-                        AddParameter(command.Parameters, "@Payload", uncommittedEvents);
-                    });
-            } 
-        }
-
-        public IEnumerable<Commit> GetCommits(string bucketId, string id)
-        {
-            yield break;
-        }
-    }
-
-
-    public static class DbConnectionExtensions
-    {
-        static DbCommand GetCommand(this DbConnection connection, string toExecute)
-        {
-            DbCommand command = connection.CreateCommand();
-            command.CommandText = toExecute;
-
-            return command;
-        }
-
-        public static void ExecuteReader(this DbConnection connection, string toExecute, Action<DbDataReader> onRowRead)
-        {
-            using (var command = connection.GetCommand(toExecute))
-            {
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        onRowRead(reader);
-                    }
-                    reader.Close();
-                }
-            }
-        }
-
-        public static int Execute(this DbConnection connection, string toExecute, Action<DbCommand> onCommandInit)
-        {
-            using (var command = connection.GetCommand(toExecute))
-            {
-                onCommandInit(command);
-                return command.ExecuteNonQuery();
-            }
-        }
-
-        public static int Execute(this DbConnection connection, SqlTransaction transaction, string toExecute,
-            Action<DbCommand> onCommandInit)
-        {
-            using (var command = connection.GetCommand(toExecute))
-            {
-                command.Transaction = transaction;
-                onCommandInit(command);
-                return command.ExecuteNonQuery();
-            }
-        }
     }
 }
 

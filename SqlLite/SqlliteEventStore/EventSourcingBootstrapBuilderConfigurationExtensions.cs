@@ -5,9 +5,9 @@ namespace SqlliteEventStore
 
     public static class EventSourcingBootstrapBuilderConfigurationExtensions
     {
-        public static BootstrapBuilderConfiguration PersistToSqlLite(this EventSourcingBootstrapBuilderConfiguration config)
+        public static BootstrapBuilderConfiguration PersistToSqlLite(this EventSourcingBootstrapBuilderConfiguration config, string connectionString)
         {
-            return config.GetBootstrapBuilderConfiguration().RegisterBuildAction(c => c.RegisterSqlLiteEventSourcing());
+            return config.GetBootstrapBuilderConfiguration().RegisterBuildAction(c => c.RegisterSqlLiteEventSourcing(connectionString));
         }
     }
 }

@@ -21,12 +21,12 @@ namespace SqlliteEventStore
 
         public IEnumerable<Commit> GetCommitsFrom(string bucketId, DateTime @from)
         {
-            yield break;
+            return persistenceEngine.GetCommitsFrom(bucketId, @from);
         }
 
         public IEnumerable<Commit> GetCommits()
         {
-            yield break;
+            return persistenceEngine.GetCommits();
         }
     }
 }

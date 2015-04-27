@@ -6,10 +6,11 @@ namespace SqlliteEventStore
 
     internal static class IocContainerExtensions
     {
-        internal static void RegisterSqlLiteEventSourcing(this IIocContainer container)
+        internal static void RegisterSqlLiteEventSourcing(this IIocContainer container, string connectionString)
         {
             container.RegisterInstance<IEventSessionFactory, EventSessionFactory>();
             container.RegisterInstance<IEventStore, SqlLiteEventStore>();
+            container.RegisterInstance<SqlLitePersistenceEngine>(() => new SqlLitePersistenceEngine(connectionString));
         }
     }
 }
