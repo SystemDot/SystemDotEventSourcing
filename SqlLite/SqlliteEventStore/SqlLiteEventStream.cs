@@ -28,11 +28,15 @@ namespace SqlliteEventStore
 
         void PopulateStream()
         {
+            committedEvents.Clear();
+            
             foreach (Commit commit in persistenceEngine.GetCommits(streamId.BucketId, streamId.Id))
             {
                 committedEvents.AddRange(commit.Events);
                 currentSequence++;
-            }           
+            }  
+         
+            ClearChanges();
         }
 
         protected override void DisposeOfManagedResources()
@@ -51,6 +55,7 @@ namespace SqlliteEventStore
         public void CommitChanges(Guid commitId)
         {
             persistenceEngine.Commit(streamId.BucketId, streamId.Id, commitId, currentSequence, UncommittedEvents, UncommittedHeaders);
+            PopulateStream();
         }
 
         public void ClearChanges()
