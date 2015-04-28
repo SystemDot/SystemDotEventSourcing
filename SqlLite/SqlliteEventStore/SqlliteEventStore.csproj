@@ -98,7 +98,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteExtensions.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DbConnectionExtensions.cs" />
+    <Compile Include="DbDataReaderExtensions.cs" />
+    <Compile Include="ISerialize.cs" />
+    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="SqlLiteEventStore.cs" />
     <Compile Include="EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="IocContainerExtensions.cs" />

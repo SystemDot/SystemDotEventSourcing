@@ -10,7 +10,7 @@ namespace SqlliteEventStore
         {
             container.RegisterInstance<IEventSessionFactory, EventSessionFactory>();
             container.RegisterInstance<IEventStore, SqlLiteEventStore>();
-            container.RegisterInstance(() => new SqlLitePersistenceEngine(connectionString));
+            container.RegisterInstance(() => new SqlLitePersistenceEngine(connectionString, new JsonSerializer()));
         }
     }
 }

@@ -3,15 +3,9 @@ namespace SqlliteEventStore
     using System;
     using System.Collections.Generic;
     using System.Data.Common;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Streams;
     using Mono.Data.Sqlite;
-    using Newtonsoft.Json;
-    using ProtoBuf;
-    using ProtoBuf.Meta;
 
     public class SqlLitePersistenceEngine
     {
@@ -109,115 +103,6 @@ CREATE TABLE IF NOT EXISTS Commits(
             DbConnection connection = CreateConnection();
             connection.Open();
             return connection;
-        }
-    }
-
-    public static class ObjectExtensions
-    {
-        public static byte[] SerialiseToBytes(this object toSerialise, ISerialize serializer)
-        {
-            using (var stream = new MemoryStream())
-            {
-                serializer.Serialize(stream, toSerialise);
-                return stream.ToArray();
-            }
-        }
-    }
-
-    public static class ByteExtensions
-    {
-        public static T DeserialiseTo<T>(this byte[] toDeserialise, ISerialize serializer)
-        {
-            toDeserialise = toDeserialise ?? new byte[] { };
-            if (toDeserialise.Length == 0)
-            {
-                return default(T);
-            }
-
-            using (var stream = new MemoryStream(toDeserialise))
-                return serializer.Deserialize<T>(stream);
-        }
-    }
-
-    public interface ISerialize
-    {
-        void Serialize<T>(Stream output, T graph);
-        T Deserialize<T>(Stream input);
-    }
-
-    public static class DateTimeExtensions
-    {
-        public static string ToSqliteFormat(this DateTime datetime)
-        {
-            return string.Format("{0}-{1}-{2} {3}:{4}:{5}.{6}", datetime.Year, datetime.Month, datetime.Day, datetime.Hour, datetime.Minute, datetime.Second, datetime.Millisecond);
-        }
-    }
-
-    public static class DbDataReaderExtensions
-    {
-        public static byte[] GetBytes(this DbDataReader reader, int ordinal)
-        {
-            long length = reader.GetBytes(ordinal, 0, null, 0, 0);
-
-            var buffer = new byte[length];
-            reader.GetBytes(ordinal, 0, buffer, 0, (int)length);
-
-            return buffer;
-        }
-    }
-
-    public class JsonSerializer : ISerialize
-    {
-        private readonly IEnumerable<Type> _knownTypes = new[] { typeof(List<SourcedEvent>), typeof(Dictionary<string, object>) };
-
-        private readonly Newtonsoft.Json.JsonSerializer _typedSerializer = new Newtonsoft.Json.JsonSerializer
-        {
-            TypeNameHandling = TypeNameHandling.All,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore
-        };
-
-        private readonly Newtonsoft.Json.JsonSerializer _untypedSerializer = new Newtonsoft.Json.JsonSerializer
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore
-        };
-
-        public virtual void Serialize<T>(Stream output, T graph)
-        {
-            using (var streamWriter = new StreamWriter(output, Encoding.UTF8))
-                Serialize(new JsonTextWriter(streamWriter), graph);
-        }
-
-        public virtual T Deserialize<T>(Stream input)
-        {
-            using (var streamReader = new StreamReader(input, Encoding.UTF8))
-                return Deserialize<T>(new JsonTextReader(streamReader));
-        }
-
-        protected virtual void Serialize(JsonWriter writer, object graph)
-        {
-            using (writer)
-                GetSerializer(graph.GetType()).Serialize(writer, graph);
-        }
-
-        protected virtual T Deserialize<T>(JsonReader reader)
-        {
-            Type type = typeof(T);
-
-            using (reader)
-                return (T)GetSerializer(type).Deserialize(reader, type);
-        }
-
-        protected virtual Newtonsoft.Json.JsonSerializer GetSerializer(Type typeToSerialize)
-        {
-            if (_knownTypes.Contains(typeToSerialize))
-            {
-                return _untypedSerializer;
-            }
-
-            return _typedSerializer;
         }
     }
 
