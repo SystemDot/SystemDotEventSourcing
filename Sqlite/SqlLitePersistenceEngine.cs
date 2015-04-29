@@ -1,20 +1,19 @@
-namespace SqlliteEventStore
+namespace SystemDot.EventSourcing.Sqlite.Android
 {
     using System;
     using System.Collections.Generic;
     using System.Data.Common;
+    using System.IO;
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Streams;
     using Mono.Data.Sqlite;
 
     public class SqlLitePersistenceEngine
     {
-        readonly string connectionString;
         readonly ISerialize serialiser;
 
-        public SqlLitePersistenceEngine(string connectionString, ISerialize serialiser)
+        public SqlLitePersistenceEngine(ISerialize serialiser)
         {
-            this.connectionString = connectionString;
             this.serialiser = serialiser;
 
             using (var connection = GetConnection())
@@ -95,7 +94,22 @@ CREATE TABLE IF NOT EXISTS Commits(
 
         DbConnection CreateConnection()
         {
-            return new SqliteConnection(connectionString);
+            return new SqliteConnection(GetConnectionString());
+        }
+
+        string GetConnectionString()
+        {
+            return string.Format("Data Source={0}", GetDatabaseFilePath());
+        }
+
+        static string GetDatabaseFilePath()
+        {
+            return Path.Combine(GetPersonalFileFolder(), "EventStore");
+        }
+
+        static string GetPersonalFileFolder()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
 
         DbConnection GetConnection()

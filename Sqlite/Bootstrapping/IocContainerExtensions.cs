@@ -1,4 +1,4 @@
-namespace SqlliteEventStore
+namespace SystemDot.EventSourcing.Sqlite.Android.Bootstrapping
 {
     using SystemDot.EventSourcing.Sessions;
     using SystemDot.EventSourcing.Streams;
@@ -6,11 +6,11 @@ namespace SqlliteEventStore
 
     internal static class IocContainerExtensions
     {
-        internal static void RegisterSqlLiteEventSourcing(this IIocContainer container, string connectionString)
+        internal static void RegisterSqliteEventSourcing(this IIocContainer container)
         {
             container.RegisterInstance<IEventSessionFactory, EventSessionFactory>();
             container.RegisterInstance<IEventStore, SqlLiteEventStore>();
-            container.RegisterInstance(() => new SqlLitePersistenceEngine(connectionString, new JsonSerializer()));
+            container.RegisterInstance<ISerialize, JsonSerializer>();
         }
     }
 }

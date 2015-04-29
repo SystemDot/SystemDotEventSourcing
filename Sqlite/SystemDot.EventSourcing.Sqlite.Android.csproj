@@ -5,29 +5,27 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4450EF84-9E0C-4551-8A06-285516F0465A}</ProjectGuid>
+    <ProjectGuid>{57E06293-F56E-4E98-9B78-CD9A521B734E}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SqlliteEventStore</RootNamespace>
-    <AssemblyName>SqlliteEventStore</AssemblyName>
+    <RootNamespace>SystemDot.EventSourcing.Sqlite.Android</RootNamespace>
+    <AssemblyName>SystemDot.EventSourcing.Sqlite.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidUseLatestPlatformSdk>
+    </AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,15 +34,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,52 +48,54 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="SystemDot.Bootstrapping">
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.5\lib\MonoAndroid\SystemDot.Bootstrapping.dll</HintPath>
+      <HintPath>packages\SystemDotBootstrapping.1.0.5\lib\MonoAndroid\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Bootstrapping.Android">
-      <HintPath>..\packages\SystemDotBootstrapping.1.0.5\lib\MonoAndroid\SystemDot.Bootstrapping.Android.dll</HintPath>
+      <HintPath>packages\SystemDotBootstrapping.1.0.5\lib\MonoAndroid\SystemDot.Bootstrapping.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core">
-      <HintPath>..\packages\SystemDotCore.3.3.0\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
+      <HintPath>packages\SystemDotCore.3.3.0\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain">
-      <HintPath>..\packages\SystemDotDomain.3.6.8\lib\MonoAndroid\SystemDot.Domain.dll</HintPath>
+      <HintPath>packages\SystemDotDomain.3.6.8\lib\MonoAndroid\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Domain.Android">
-      <HintPath>..\packages\SystemDotDomain.3.6.8\lib\MonoAndroid\SystemDot.Domain.Android.dll</HintPath>
+      <HintPath>packages\SystemDotDomain.3.6.8\lib\MonoAndroid\SystemDot.Domain.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment">
-      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
+      <HintPath>packages\SystemDotEnvironment.1.0.1\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment.Android">
-      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
+      <HintPath>packages\SystemDotEnvironment.1.0.1\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing">
-      <HintPath>..\packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory">
-      <HintPath>..\packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\packages\SystemDotIoc.1.3.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>packages\SystemDotIoc.1.3.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging">
-      <HintPath>..\packages\SystemDotMessaging.2.1.0\lib\MonoAndroid\SystemDot.Messaging.dll</HintPath>
+      <HintPath>packages\SystemDotMessaging.2.1.0\lib\MonoAndroid\SystemDot.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Reflection">
-      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\MonoAndroid\SystemDot.Reflection.dll</HintPath>
+      <HintPath>packages\SystemDotReflection.1.0.2\lib\MonoAndroid\SystemDot.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Reflection.Android">
-      <HintPath>..\packages\SystemDotReflection.1.0.2\lib\MonoAndroid\SystemDot.Reflection.Android.dll</HintPath>
+      <HintPath>packages\SystemDotReflection.1.0.2\lib\MonoAndroid\SystemDot.Reflection.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>packages\SystemDotThreadMarshalling.1.0.3\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling.Android">
-      <HintPath>..\packages\SystemDotThreadMarshalling.1.0.3\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
+      <HintPath>packages\SystemDotThreadMarshalling.1.0.3\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="ByteExtensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DbConnectionExtensions.cs" />
@@ -105,35 +103,22 @@
     <Compile Include="ISerialize.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="ObjectExtensions.cs" />
-    <Compile Include="SqlLiteEventStore.cs" />
-    <Compile Include="EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
-    <Compile Include="IocContainerExtensions.cs" />
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlLiteEventStore.cs" />
     <Compile Include="SqlLiteEventStream.cs" />
     <Compile Include="SqlLitePersistenceEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-     Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">

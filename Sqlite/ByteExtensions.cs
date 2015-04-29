@@ -1,4 +1,4 @@
-namespace SqlliteEventStore
+namespace SystemDot.EventSourcing.Sqlite.Android
 {
     using System.IO;
 

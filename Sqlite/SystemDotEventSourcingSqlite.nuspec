@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SystemDotEventSourcing.Sqlite</id>
+        <version>1.0.0</version>
+        <title>SystemDot.EventSourcing.Sqlite</title>
+        <authors>Chris Sampson,James Goodenough</authors>
+        <owners>Chris Sampson,James Goodenough</owners>
+        <projectUrl>https://github.com/SystemDot/SystemDotMobile</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Event sourcing for Sqlite</description>
+        <summary>Event sourcing for Sqlite</summary>
+        <copyright>SystemDot 2015</copyright>
+        <language>en-GB</language>
+        <tags>MvvmCross, Mobile development, Cross Platform</tags>
+        <dependencies>
+          <dependency id="Newtonsoft.Json" version="6.0.8" />
+          <dependency id="SystemDotEventSourcing" version="7.3.2" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Build\SystemDot.EventSourcing.Sqlite.Android.dll" target="lib\MonoAndroid\SystemDot.EventSourcing.Sqlite.Android.dll" />
+        <file src="Build\SystemDot.EventSourcing.Sqlite.Android.dll.mdb" target="lib\MonoAndroid\SystemDot.EventSourcing.Sqlite.Android.dll.mdb" />
+        <file src="Build\SystemDot.EventSourcing.Sqlite.Android.pdb" target="lib\MonoAndroid\SystemDot.EventSourcing.Sqlite.Android.pdb" />
+    </files>
+</package>
