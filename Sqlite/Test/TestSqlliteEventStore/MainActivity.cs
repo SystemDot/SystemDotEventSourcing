@@ -18,6 +18,8 @@ namespace SqlliteEventStore
     using SystemDot.EventSourcing.Aggregation;
     using SystemDot.EventSourcing.Bootstrapping;
     using SystemDot.EventSourcing.InMemory.Bootstrapping;
+    using SystemDot.EventSourcing.Sqlite.Android;
+    using SystemDot.EventSourcing.Sqlite.Android.Bootstrapping;
     using SystemDot.EventSourcing.Streams;
     using SystemDot.Ioc;
     using SystemDot.ThreadMarshalling;
@@ -72,7 +74,7 @@ namespace SqlliteEventStore
                 .ResolveReferencesWith(container)
                 .UseEnvironment()
                 .UseDomain().DispatchEventsOnUiThread().WithSimpleMessaging()
-                .UseEventSourcing().PersistToSqlLite()
+                .UseEventSourcing().PersistToSqlite()
                 .InitialiseAsync();
         }
     }
