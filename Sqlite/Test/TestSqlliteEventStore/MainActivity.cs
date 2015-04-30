@@ -32,32 +32,32 @@ namespace SqlliteEventStore
 
         protected override void OnCreate(Bundle bundle)
         {
-            //MainActivityLocator.Set(this);
+            MainActivityLocator.Set(this);
 
-            //var container = new IocContainer();
+            var container = new IocContainer();
 
-            //Setup(container).Wait();
+            Setup(container).Wait();
 
-            //container.Resolve<TestAggregateThing>().Do();
+            container.Resolve<TestAggregateThing>().Do();
 
             SqlLitePersistenceEngine engine = new SqlLitePersistenceEngine(new JsonSerializer());
             SqlLiteEventStore store = new SqlLiteEventStore(engine);
-            TestRootId testRootId = new TestRootId();
+            //TestRootId testRootId = new TestRootId();
             
-            IEventStream stream = store.OpenStream(testRootId.ToEventStreamId());
-            stream.Add(new SourcedEvent
-            {
-                Body = new TestEvent
-                {
-                    TestValue = "Hello",
-                    TestStructure = new TestStructure
-                    {
-                        TestStructureValue = 1
-                    }
-                }
-            });
+            //IEventStream stream = store.OpenStream(testRootId.ToEventStreamId());
+            //stream.Add(new SourcedEvent
+            //{
+            //    Body = new TestEvent
+            //    {
+            //        TestValue = "Hello",
+            //        TestStructure = new TestStructure
+            //        {
+            //            TestStructureValue = 1
+            //        }
+            //    }
+            //});
 
-            stream.CommitChanges(Guid.NewGuid());
+            //stream.CommitChanges(Guid.NewGuid());
 
             store.GetCommits().ForEach(c => c.Events.ForEach(OutputEvent));
             base.OnCreate(bundle);
