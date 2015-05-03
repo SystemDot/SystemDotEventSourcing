@@ -3,6 +3,8 @@ namespace SystemDot.EventSourcing.Sqlite.Android
     using System;
     using System.Collections.Generic;
     using SystemDot.Core;
+    using SystemDot.Core.Collections;
+    using SystemDot.Domain.Events.Dispatching;
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Streams;
 
@@ -10,14 +12,16 @@ namespace SystemDot.EventSourcing.Sqlite.Android
     {
         readonly SqlLitePersistenceEngine persistenceEngine;
         readonly EventStreamId streamId;
+        readonly IEventDispatcher eventDispatcher;
         readonly List<SourcedEvent> uncommittedEvents;
         readonly List<SourcedEvent> committedEvents;
         int currentSequence;
 
-        public SqlLiteEventStream(SqlLitePersistenceEngine persistenceEngine, EventStreamId streamId)
+        public SqlLiteEventStream(SqlLitePersistenceEngine persistenceEngine, EventStreamId streamId, IEventDispatcher eventDispatcher)
         {
             this.persistenceEngine = persistenceEngine;
             this.streamId = streamId;
+            this.eventDispatcher = eventDispatcher;
 
             uncommittedEvents = new List<SourcedEvent>();
             committedEvents = new List<SourcedEvent>();
@@ -55,6 +59,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
         public void CommitChanges(Guid commitId)
         {
             persistenceEngine.Commit(streamId.BucketId, streamId.Id, commitId, currentSequence, UncommittedEvents, UncommittedHeaders);
+            UncommittedEvents.ForEach(e => eventDispatcher.Dispatch(e.Body));
             PopulateStream();
         }
 
