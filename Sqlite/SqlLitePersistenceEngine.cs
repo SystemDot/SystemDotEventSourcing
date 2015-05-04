@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS Commits(
 
         public IEnumerable<Commit> GetCommitsFrom(string bucketId, DateTime @from)
         {
-            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload from Commits where BucketId = '" + bucketId + "' and CommitStamp = '" + @from.ToSqliteFormat() + "' order by StreamId ASC, CommitSequence ASC");
+            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload from Commits where BucketId = '" + bucketId + "' and CommitStamp >= '" + @from.ToSqliteFormat() + "' order by StreamId ASC, CommitSequence ASC");
         }
 
         IEnumerable<Commit> GetCommits(string sql)
