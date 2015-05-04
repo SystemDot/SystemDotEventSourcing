@@ -9,9 +9,9 @@ namespace SystemDot.EventSourcing.Sqlite.Android
     public class SqlLiteEventStore : IEventStore
     {
         readonly SqlLitePersistenceEngine persistenceEngine;
-        readonly EventDispatcher eventDispatcher;
+        readonly IEventDispatcher eventDispatcher;
 
-        public SqlLiteEventStore(SqlLitePersistenceEngine persistenceEngine, EventDispatcher eventDispatcher)
+        public SqlLiteEventStore(SqlLitePersistenceEngine persistenceEngine, IEventDispatcher eventDispatcher)
         {
             this.persistenceEngine = persistenceEngine;
             this.eventDispatcher = eventDispatcher;
