@@ -7,7 +7,9 @@ using TechTalk.SpecFlow;
 using System.Web.Http.Results;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
-{   
+{
+    using SystemDot.EventSourcing.Headers;
+
     [Binding]
     public class SynchronisableCommitSteps
     {
@@ -35,6 +37,19 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
                 CreatedOn = DateTime.Now,
                 Events = new List<SynchronisableSourcedEvent>()
             });
+        }
+
+        [Given(@"I add an event origin for the local machine as a header of the synchronisable commit")]
+        public void GivenIAddAnEventOriginForTheLocalMachineAsAHeaderOfTheSynchronisableCommit()
+        {
+            commits.Last().Headers = new List<SynchronisableCommitHeader>
+            {
+                new SynchronisableCommitHeader
+                {
+                    Key = EventOriginHeader.Key, 
+                    Value = new JsonSerialiser().Serialise(new EventOriginHeader { MachineName = System.Environment.MachineName })
+                }
+            };
         }
 
         [Given(@"I add a serialised event with an id of (.*) to the commit")]

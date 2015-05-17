@@ -36,12 +36,12 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             this.localMachine = localMachine;
         }
 
-        public async Task PullAsync(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
+        public async Task SynchroniseAsync(CommitSynchronisationCriteria criteria, Action<CommitSynchronisationResult> onComplete, Action onError)
         {
             HttpResponseMessage response;
             try
             {
-                response = await synchronisationHttpClient.GetCommitsAsync(serverUriProvider.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
+                response = await synchronisationHttpClient.GetCommitsAsync(serverUriProvider.ServerUri, criteria.ClientId, criteria.PullCommitsFrom.Ticks);
             }
             catch (WebException)
             {
@@ -55,37 +55,31 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
                 return;
             }
 
-            IEnumerable<SynchronisableCommit> commits = await response.ReadContentAsSynchronisableCommitsAsync();
+            IEnumerable<SynchronisableCommit> pullCommits = await response.ReadContentAsSynchronisableCommitsAsync();
 
-            DateTime lastCommitDate = criteria.GetCommitsFrom;
+            DateTime lastPullCommitDate = criteria.PullCommitsFrom;
             
-            commits.ForEach(commit =>
+            pullCommits.ForEach(commit =>
             {
                 synchronisableCommitSynchroniser.SynchroniseCommit(commit);
-                lastCommitDate = commit.CreatedOn;
+                lastPullCommitDate = commit.CreatedOn;
             });
 
-            onComplete(lastCommitDate);
-        }
+            DateTime lastPushCommitDate = criteria.PullCommitsFrom;
 
-        public async Task PushAsync(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
-        {
-            HttpResponseMessage response;
-            DateTime lastCommitDate = criteria.GetCommitsFrom;
-            
             try
             {
-                IEnumerable<SynchronisableCommit> commits = synchronisableCommitBuilder.Build(
-                    criteria.ClientId, 
-                    criteria.GetCommitsFrom, 
+                IEnumerable<SynchronisableCommit> pushCommits = synchronisableCommitBuilder.Build(
+                    criteria.ClientId,
+                    criteria.PullCommitsFrom,
                     commit => commit.OriginatesOnMachineNamed(localMachine.GetName()));
 
-                if (commits.Any())
+                if (pushCommits.Any())
                 {
-                    lastCommitDate = commits.Last().CreatedOn;
+                    lastPushCommitDate = pushCommits.Last().CreatedOn;
                 }
 
-                response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, commits.SerialiseToHttpContent());
+                response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, pushCommits.SerialiseToHttpContent());
             }
             catch (WebException)
             {
@@ -99,7 +93,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
                 return;
             }
 
-            onComplete(lastCommitDate);
+            onComplete(new CommitSynchronisationResult(lastPullCommitDate, lastPushCommitDate));
         }
     }
 }

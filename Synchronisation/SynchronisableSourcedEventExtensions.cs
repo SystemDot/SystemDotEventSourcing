@@ -7,7 +7,7 @@ namespace SystemDot.EventSourcing.Synchronisation
     {
         public static SourcedEvent ToSourcedEvent(this SynchronisableSourcedEvent e)
         {
-            return new SourcedEvent { Body = new JsonSerialiser().Deserialise(e.Body) };
+            return new SourcedEvent { Body = e.Body.Deserialise() };
         }
     }
 }

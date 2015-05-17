@@ -9,5 +9,6 @@ namespace SystemDot.EventSourcing.Synchronisation
         public SynchronisableEventStreamId StreamId { get; set; }
         public DateTime CreatedOn { get; set; }
         public List<SynchronisableSourcedEvent> Events { get; set; }
+        public List<SynchronisableCommitHeader> Headers { get; set; }
     }
 }

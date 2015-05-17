@@ -83,45 +83,51 @@ this.ScenarioSetup(scenarioInfo);
                     "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 7
+ testRunner.And("I add an event origin for the local machine as a header of the synchronisable com" +
+                    "mit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 8
  testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 8
+#line 9
  testRunner.And("I add a serialised event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
+#line 10
  testRunner.And("I have created a synchronisable commit with an id of F261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 and stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
+#line 11
+ testRunner.And("I add an event origin for the local machine as a header of the synchronisable com" +
+                    "mit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
  testRunner.And("I add a serialised event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 11
+#line 13
  testRunner.And("I add a serialised event with an id of A261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 12
- testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 13
- testRunner.When("I synchronise the server with the synchronisable commits", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
- testRunner.And("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
+ testRunner.When("I synchronise the server with the synchronisable commits", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.And("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.Then("the commit should be for a stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
+#line 18
  testRunner.And("the commit should contain an event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
+#line 19
  testRunner.And("the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
+#line 20
  testRunner.When("I use the second commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 19
+#line 21
  testRunner.Then("the commit should be for a stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 20
+#line 22
  testRunner.And("the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
+#line 23
  testRunner.And("the commit should contain an event with an id of A261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

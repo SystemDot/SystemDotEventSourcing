@@ -83,37 +83,40 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Features
                     "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 7
+  testRunner.And("I add an event origin for the local machine as a header of the synchronisable com" +
+                    "mit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 8
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 8
+#line 9
   testRunner.And("I add a serialised event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
-  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
-  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
-  testRunner.When("I pull events from the server for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
-  testRunner.Then("the commits should have been retreived from the server with the correct address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
+  testRunner.Then("the commits should have been retreived from the server with the correct address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 14
   testRunner.And("the commits should have been retreived from the server from the beggining of time" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 14
+#line 15
   testRunner.When("I use the commit in the session with an id of E261A67D-2C00-4854-A0FF-6DEFA84A427" +
                     "6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
+#line 16
   testRunner.Then("the commit should be for a stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
+#line 17
   testRunner.And("the commit should contain an event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
+#line 18
   testRunner.And("the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
+#line 19
   testRunner.And("the successful completion of the synchronisation should be signalled with the dat" +
-                    "e of the last commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "e of the last pull commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -124,45 +127,51 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Features
         public virtual void UpdatingLocalDeviceWithTwoCommitsRetreivedFromTheServer()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating local device with two commits retreived from the server", ((string[])(null)));
-#line 20
- this.ScenarioSetup(scenarioInfo);
 #line 21
+ this.ScenarioSetup(scenarioInfo);
+#line 22
   testRunner.Given("I have created a synchronisable commit with an id of E261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 22
+#line 23
+  testRunner.And("I add an event origin for the local machine as a header of the synchronisable com" +
+                    "mit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
+#line 25
   testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 24
+#line 26
   testRunner.And("I have created a synchronisable commit with an id of F261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 and stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
+#line 27
+  testRunner.And("I add an event origin for the local machine as a header of the synchronisable com" +
+                    "mit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4278 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
-  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 27
-  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
-  testRunner.When("I pull events from the server for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 29
-  testRunner.Then("the commits should have been retreived from the server with the correct address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
+  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+  testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+  testRunner.Then("the commits should have been retreived from the server with the correct address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 33
   testRunner.And("the commits should have been retreived from the server from the beggining of time" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
+#line 34
   testRunner.When("I use the commit in the session with an id of E261A67D-2C00-4854-A0FF-6DEFA84A427" +
                     "6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 32
+#line 35
   testRunner.Then("the commit should be for a stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 33
+#line 36
   testRunner.When("I use the commit in the session with an id of F261A67D-2C00-4854-A0FF-6DEFA84A427" +
                     "6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 34
+#line 37
   testRunner.Then("the commit should be for a stream identified as \'2157AC59-AD0D-4BF0-9CC1-238BDE2C" +
                     "EFB9\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -175,22 +184,22 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Features
         public virtual void UpdatingLocalDeviceWhenCommitsOnlyExistForADifferentClient()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating local device when commits only exist for a different client", ((string[])(null)));
-#line 36
+#line 39
  this.ScenarioSetup(scenarioInfo);
-#line 37
+#line 40
   testRunner.Given("I have created a synchronisable commit with an id of E261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 and stream identified as \'1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9\' and cli" +
                     "ent identified as \'OtherTestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 38
+#line 41
   testRunner.And("I add a serialised event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277 to th" +
                     "e commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 39
-  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 40
-  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
-  testRunner.When("I pull events from the server for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
+  testRunner.And("I set the synchronisable commit to be returned from the server", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+  testRunner.And("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+  testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 45
   testRunner.Then("a commit with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276 should not exist in t" +
                     "he session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -203,15 +212,15 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Features
         public virtual void UpdatingLocalDeviceWhenServerNotAvailable()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating local device when server not available", ((string[])(null)));
-#line 44
- this.ScenarioSetup(scenarioInfo);
-#line 45
-  testRunner.Given("the server is unavailable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 46
-  testRunner.When("I pull events from the server for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 47
-  testRunner.Then("the successful completion of the synchronisation should not be signalled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ this.ScenarioSetup(scenarioInfo);
 #line 48
+  testRunner.Given("the server is unavailable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 49
+  testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 50
+  testRunner.Then("the successful completion of the synchronisation should not be signalled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 51
   testRunner.And("the unsuccessful completion of the synchronisation should be signalled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

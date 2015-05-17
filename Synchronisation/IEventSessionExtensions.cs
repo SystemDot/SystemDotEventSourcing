@@ -22,6 +22,7 @@ namespace SystemDot.EventSourcing.Synchronisation
                     CommitId = commit.CommitId,
                     StreamId = new SynchronisableEventStreamId { ClientId = commit.BucketId, Id = commit.StreamId },
                     CreatedOn = commit.CreatedOn,
+                    Headers = commit.GetCommitHeaders(),
                     Events = commit.GetSynchronisableEvents()
                 });
         }

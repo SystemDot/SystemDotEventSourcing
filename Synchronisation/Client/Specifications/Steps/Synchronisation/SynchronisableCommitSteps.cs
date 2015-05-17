@@ -8,6 +8,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchroni
 {
     using System.Linq;
     using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits;
+    using SystemDot.EventSourcing.Headers;
     using FluentAssertions;
 
     [Binding]
@@ -35,6 +36,19 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchroni
             };
         }
 
+        [Given(@"I add an event origin for the local machine as a header of the synchronisable commit")]
+        public void GivenIAddAnEventOriginForTheLocalMachineAsAHeaderOfTheSynchronisableCommit()
+        {
+            context.CommitInUse.Headers = new List<SynchronisableCommitHeader>
+            {
+                new SynchronisableCommitHeader
+                {
+                    Key = EventOriginHeader.Key, 
+                    Value = new JsonSerialiser().Serialise(new EventOriginHeader { MachineName = System.Environment.MachineName })
+                }
+            };
+        }
+        
         [Given(@"I add a serialised event with an id of (.*) to the commit")]
         public void GivenIAddASerialisedEventWithAnIdOfToTheCommit(Guid id)
         {

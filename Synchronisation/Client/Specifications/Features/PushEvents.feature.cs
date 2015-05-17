@@ -95,7 +95,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 10
  testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.When("I push events to the server for client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
  testRunner.And("I use the first synchronisable commit posted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
@@ -120,7 +120,7 @@ this.ScenarioSetup(scenarioInfo);
                     "6DEFA84A4276", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
  testRunner.And("the successful completion of the synchronisation should be signalled with the dat" +
-                    "e of the last commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "e of the last push commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -152,7 +152,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 29
  testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
- testRunner.When("I push events to the server for client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
  testRunner.And("I use the first synchronisable commit posted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 32
@@ -188,7 +188,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 40
  testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
- testRunner.When("I push events to the server for client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 42
  testRunner.Then("No commits should be pushed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -206,7 +206,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 45
  testRunner.Given("the server is unavailable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 46
- testRunner.When("I push events to the server for client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I synchronise commits for the client id \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 47
  testRunner.Then("the successful completion of the synchronisation should not be signalled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 48

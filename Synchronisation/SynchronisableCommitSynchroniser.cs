@@ -2,6 +2,7 @@ namespace SystemDot.EventSourcing.Synchronisation
 {
     using SystemDot.Core.Collections;
     using SystemDot.EventSourcing.Sessions;
+    using SystemDot.EventSourcing.Streams;
 
     public class SynchronisableCommitSynchroniser
     {
@@ -17,6 +18,7 @@ namespace SystemDot.EventSourcing.Synchronisation
             using (var eventSession = eventSessionFactory.Create())
             {
                 toSynchronise.Events.ForEach(e => eventSession.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId.ToEventStreamId()));
+                toSynchronise.Headers.ForEach(h => eventSession.StoreHeader(toSynchronise.StreamId.ToEventStreamId(), h.Key, h.Value.Deserialise()));
                 eventSession.Commit(toSynchronise.CommitId);
             }
         }

@@ -38,12 +38,13 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="CommitSynchronisationResult.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\IHttpClientFactory.cs" />
     <Compile Include="Http\ObjectExtensions.cs" />
     <Compile Include="Http\PostEventsSynchronisationUri.cs" />
     <Compile Include="Http\SynchronisationHttpClient.cs" />
-    <Compile Include="Retrieval\CommitRetrievalCriteria.cs" />
+    <Compile Include="Retrieval\CommitSynchronisationCriteria.cs" />
     <Compile Include="CommitSynchroniser.cs" />
     <Compile Include="Http\HttpContentExtensions.cs" />
     <Compile Include="Http\HttpResponseMessageExtensions.cs" />
