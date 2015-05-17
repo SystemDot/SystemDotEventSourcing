@@ -1,8 +1,8 @@
-using SystemDot.EventSourcing.Streams;
-using SystemDot.Serialisation;
-
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation
 {
+    using SystemDot.EventSourcing.Streams;
+    using SystemDot.Serialisation;
+
     public static class SynchronisableSourcedEventExtensions
     {
         public static SourcedEvent ToSourcedEvent(this SynchronisableSourcedEvent e)

@@ -1,7 +1,7 @@
-using SystemDot.EventSourcing.Streams;
-
-namespace SystemDot.EventSourcing.Synchronisation.Client
+namespace SystemDot.EventSourcing.Synchronisation
 {
+    using SystemDot.EventSourcing.Streams;
+
     public static class SynchronisableEventStreamIdExtensions
     {
         public static EventStreamId ToEventStreamId(this SynchronisableEventStreamId id)

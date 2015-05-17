@@ -7,51 +7,50 @@ using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping;
 using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Simple;
-using BoDi;
 using TechTalk.SpecFlow;
 using SystemDot.Domain.Synchronisation.Client.Specifications.Steps;
 
 namespace SystemDot.Domain.Synchronisation.Client.Specifications.Bootstrapping
 {
+    using System;
+    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client;
+    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits;
+    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server;
+    using SystemDot.EventSourcing.Synchronisation.Client;
+    using SystemDot.EventSourcing.Synchronisation.Client.Http;
+
     [Binding]
     public class Bootstrapper
     {
-        readonly IObjectContainer specFlowContainer;
-        static IIocContainer container;
+        readonly CommitContext commitContext;
+        readonly CommitSynchroniserContext commitSynchroniserContext;
+        readonly ServerContext serverContext;
 
-        Bootstrapper(IObjectContainer specFlowContainer)
+        public Bootstrapper(CommitContext commitContext, CommitSynchroniserContext commitSynchroniserContext, ServerContext serverContext)
         {
-            this.specFlowContainer = specFlowContainer;
+            this.commitContext = commitContext;
+            this.commitSynchroniserContext = commitSynchroniserContext;
+            this.serverContext = serverContext;
         }
 
         [BeforeScenario]
         public void OnBeforeScenario()
         {
-            Reset();
+            var container = new IocContainer();
 
-            container.RegisterInstance<ICommitRetrievalClient, TestCommitRetrievalClient>();
-            RegisterInSpecFlow<ICommitRetrievalClient>();
+            serverContext.ServerUri = new Uri("http://TestServer");
+            serverContext.SynchronisationHttpClient = new TestSynchronisationHttpClient();
+            container.RegisterInstance<ISynchronisationHttpClient>(() => serverContext.SynchronisationHttpClient);
             
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
                 .UseEnvironment()
                 .UseDomain().DispatchEventsOnUiThread().WithSimpleMessaging()
-                .UseEventSourcing().WithSynchronisation().PersistToMemory()
+                .UseEventSourcing().WithSynchronisation(serverContext.ServerUri).PersistToMemory()
                 .Initialise();
 
-            RegisterInSpecFlow<IEventSessionFactory>();
-            RegisterInSpecFlow<Dispatcher>();
-        }
-
-        void RegisterInSpecFlow<T>() where T : class
-        {
-            specFlowContainer.RegisterInstanceAs<T>(container.Resolve<T>());
-        }
-
-        static void Reset()
-        {
-            container = new IocContainer();
+            commitContext.EventSessionFactory = container.Resolve<IEventSessionFactory>();
+            commitSynchroniserContext.CommitSynchroniser = container.Resolve<CommitSynchroniser>();
         }
     }
 }

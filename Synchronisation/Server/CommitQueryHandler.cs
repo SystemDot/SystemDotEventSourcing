@@ -1,22 +1,44 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SystemDot.Domain.Queries;
-using SystemDot.EventSourcing.Sessions;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server
 {
+    using System;
+    using SystemDot.Core;
+    using SystemDot.Environment;
+    using SystemDot.EventSourcing.Commits;
+    using SystemDot.EventSourcing.Headers;
+
     public class CommitQueryHandler : IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>>
     {
-        readonly IEventSessionFactory factory;
+        readonly SynchronisableCommitBuilder builder;
+        readonly ILocalMachine localMachine;
 
-        public CommitQueryHandler(IEventSessionFactory factory)
+        public CommitQueryHandler(SynchronisableCommitBuilder builder, ILocalMachine localMachine)
         {
-            this.factory = factory;
+            this.builder = builder;
+            this.localMachine = localMachine;
         }
 
         public Task<IEnumerable<SynchronisableCommit>> Handle(CommitQuery message)
         {
-            return Task.FromResult(factory.Create().GetSynchronisableCommits(message.ClientId, message.From));
-        }       
+            if (message.From == DateTime.MinValue)
+            {
+                return Task.FromResult(builder.Build(message.ClientId, message.From, CheckCommitOriginatesOnAnyMachine));
+            }
+
+            return Task.FromResult(builder.Build(message.ClientId, message.From, CheckCommitOriginatesOnLocalMachine));
+        }
+
+        bool CheckCommitOriginatesOnAnyMachine(Commit commit)
+        {
+            return true;
+        }
+        
+        bool CheckCommitOriginatesOnLocalMachine(Commit commit)
+        {
+            return commit.OriginatesOnMachineNamed(localMachine.GetName());
+        }
     }
 }

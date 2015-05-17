@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Synchronisation.Server</id>
-    <version>2.0.3-beta</version>
+    <version>2.1.0-beta</version>
     <title>SystemDot.EventSourcing.Synchronisation.Server</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>

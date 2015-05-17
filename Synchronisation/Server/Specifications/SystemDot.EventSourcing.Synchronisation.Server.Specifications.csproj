@@ -127,6 +127,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\Bootstrapper.cs" />
+    <Compile Include="Features\PostEvents.feature.cs">
+      <DependentUpon>PostEvents.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\RetrieveEvents.feature.cs">
       <DependentUpon>RetrieveEvents.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -141,6 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\PostEvents.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PostEvents.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\RetrieveEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RetrieveEvents.feature.cs</LastGenOutput>

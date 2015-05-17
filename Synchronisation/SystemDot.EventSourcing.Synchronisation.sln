@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4FC2D1A6-8FA2-4B93-B9E9-66655099F1BE}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,8 +21,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Server", "Server\SystemDot.EventSourcing.Synchronisation.Server.csproj", "{374AA691-FA00-4218-886F-9E679CE86BA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Client", "Client\SystemDot.EventSourcing.Synchronisation.Client.csproj", "{BE28B99E-FF4A-4535-9C73-688738E707A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Client.Messages", "Client\Messages\SystemDot.EventSourcing.Synchronisation.Client.Messages.csproj", "{78D85BB6-985C-489C-8278-8F6384C6CEC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.EventSourcing.Synchronisation.Server.Specifications", "Server\Specifications\SystemDot.EventSourcing.Synchronisation.Server.Specifications.csproj", "{537E4757-1634-4F25-A093-ED5BD07AD59A}"
 EndProject
@@ -46,10 +44,6 @@ Global
 		{BE28B99E-FF4A-4535-9C73-688738E707A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE28B99E-FF4A-4535-9C73-688738E707A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE28B99E-FF4A-4535-9C73-688738E707A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78D85BB6-985C-489C-8278-8F6384C6CEC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78D85BB6-985C-489C-8278-8F6384C6CEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78D85BB6-985C-489C-8278-8F6384C6CEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78D85BB6-985C-489C-8278-8F6384C6CEC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{537E4757-1634-4F25-A093-ED5BD07AD59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{537E4757-1634-4F25-A093-ED5BD07AD59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{537E4757-1634-4F25-A093-ED5BD07AD59A}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,35 +1,47 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using SystemDot.Core.Collections;
-using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation.Client.Http;
-using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
+
 
 namespace SystemDot.EventSourcing.Synchronisation.Client
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using SystemDot.Core.Collections;
+    using SystemDot.EventSourcing.Synchronisation.Client.Http;
+    using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
+    using System.Linq;
     using System.Net;
+    using SystemDot.Environment;
 
     public class CommitSynchroniser
     {
-        readonly ICommitRetrievalClient commitRetrievalClient;
-        readonly IEventSessionFactory eventSessionFactory;
+        readonly ISynchronisationHttpClient synchronisationHttpClient;
+        readonly SynchronisationServerUriProvider serverUriProvider;
+        readonly SynchronisableCommitSynchroniser synchronisableCommitSynchroniser;
+        readonly SynchronisableCommitBuilder synchronisableCommitBuilder;
+        readonly ILocalMachine localMachine;
 
         public CommitSynchroniser(
-            ICommitRetrievalClient commitRetrievalClient, 
-            IEventSessionFactory eventSessionFactory)
+            ISynchronisationHttpClient synchronisationHttpClient, 
+            SynchronisationServerUriProvider serverUriProvider, 
+            SynchronisableCommitSynchroniser synchronisableCommitSynchroniser,
+            SynchronisableCommitBuilder synchronisableCommitBuilder, 
+            ILocalMachine localMachine)
         {
-            this.commitRetrievalClient = commitRetrievalClient;
-            this.eventSessionFactory = eventSessionFactory;
+            this.synchronisationHttpClient = synchronisationHttpClient;
+            this.serverUriProvider = serverUriProvider;
+
+            this.synchronisableCommitSynchroniser = synchronisableCommitSynchroniser;
+            this.synchronisableCommitBuilder = synchronisableCommitBuilder;
+            this.localMachine = localMachine;
         }
 
-        public async Task Synchronise(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
+        public async Task PullAsync(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
         {
             HttpResponseMessage response;
             try
             {
-                response = await commitRetrievalClient.GetCommitsAsync(criteria.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
+                response = await synchronisationHttpClient.GetCommitsAsync(serverUriProvider.ServerUri, criteria.ClientId, criteria.GetCommitsFrom.Ticks);
             }
             catch (WebException)
             {
@@ -49,20 +61,45 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             
             commits.ForEach(commit =>
             {
-                SynchroniseCommit(commit);
+                synchronisableCommitSynchroniser.SynchroniseCommit(commit);
                 lastCommitDate = commit.CreatedOn;
             });
 
             onComplete(lastCommitDate);
         }
 
-        void SynchroniseCommit(SynchronisableCommit toSynchronise)
+        public async Task PushAsync(CommitRetrievalCriteria criteria, Action<DateTime> onComplete, Action onError)
         {
-            using (var eventSession = eventSessionFactory.Create())
+            HttpResponseMessage response;
+            DateTime lastCommitDate = criteria.GetCommitsFrom;
+            
+            try
             {
-                toSynchronise.Events.ForEach(e => eventSession.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId.ToEventStreamId()));
-                eventSession.Commit(toSynchronise.CommitId);
+                IEnumerable<SynchronisableCommit> commits = synchronisableCommitBuilder.Build(
+                    criteria.ClientId, 
+                    criteria.GetCommitsFrom, 
+                    commit => commit.OriginatesOnMachineNamed(localMachine.GetName()));
+
+                if (commits.Any())
+                {
+                    lastCommitDate = commits.Last().CreatedOn;
+                }
+
+                response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, commits.SerialiseToHttpContent());
             }
+            catch (WebException)
+            {
+                onError();
+                return;
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                onError();
+                return;
+            }
+
+            onComplete(lastCommitDate);
         }
     }
 }

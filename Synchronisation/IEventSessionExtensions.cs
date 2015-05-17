@@ -1,16 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SystemDot.EventSourcing.Sessions;
-
-namespace SystemDot.EventSourcing.Synchronisation.Server
+namespace SystemDot.EventSourcing.Synchronisation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SystemDot.EventSourcing.Commits;
+    using SystemDot.EventSourcing.Sessions;
+
     public static class IEventSessionExtensions
     {
-        public static IEnumerable<SynchronisableCommit> GetSynchronisableCommits(this IEventSession session, string bucketId, DateTime @from)
+        public static IEnumerable<SynchronisableCommit> GetSynchronisableCommits(
+            this IEventSession session, 
+            string bucketId, 
+            DateTime @from, 
+            Func<Commit, bool> commitsWhereClause)
         {
             return session
                 .AllCommitsFrom(bucketId, @from)
+                .Where(commitsWhereClause)
                 .Select(commit => new SynchronisableCommit
                 {
                     CommitId = commit.CommitId,
@@ -20,4 +26,4 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
                 });
         }
     }
-}
+} 

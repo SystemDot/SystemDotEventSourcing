@@ -1,53 +1,63 @@
-﻿using System.Net;
-using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchronisation;
-using TechTalk.SpecFlow;
+﻿
 
 namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
 {
+    using System.Net;
+    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Synchronisation;
+    using TechTalk.SpecFlow;
     using System;
+    using System.Linq;
     using FluentAssertions;
 
     [Binding]
     public class ServerSteps
     {
+        readonly ServerContext context;
         readonly SynchronisableCommitContext synchronisableCommitContext;
-        readonly TestCommitRetrievalClient testCommitRetrievalClient;
 
-        public ServerSteps(SynchronisableCommitContext synchronisableCommitContext, 
-            TestCommitRetrievalClient testCommitRetrievalClient)
+        public ServerSteps(
+            SynchronisableCommitContext synchronisableCommitContext, 
+            ServerContext context)
         {
             this.synchronisableCommitContext = synchronisableCommitContext;
-            this.testCommitRetrievalClient = testCommitRetrievalClient;
+            this.context = context;
         }
 
         [Given(@"the server is unavailable")]
         public void GivenTheServerIsUnavailable()
         {
-            testCommitRetrievalClient.StatusToReturn = HttpStatusCode.BadRequest;
+            context.SynchronisationHttpClient.StatusToReturn = HttpStatusCode.BadRequest;
         }
 
         [Given(@"I set the synchronisable commit to be returned from the server")]
         public void GivenISetTheCommitToBeReturnedFromTheServer()
         {
-            testCommitRetrievalClient.Add(synchronisableCommitContext.CommitInUse);
+            context.SynchronisationHttpClient.Add(synchronisableCommitContext.CommitInUse);
         }
 
-        [Then(@"the commits should have been retreived from the server with the address '(.*)'")]
-        public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerWithTheAddress(string address)
+        [When(@"I use the first synchronisable commit posted")]
+        public void WhenIUseTheFirstSynchronisableCommitPosted()
         {
-            testCommitRetrievalClient.LastGetCommitsAsyncCallServerUri.ToString().Should().Be(address);
+            synchronisableCommitContext.CommitInUse = context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().First();
+        }
+        
+        [Then(@"the commits should have been posted to the server with the correct address")]
+        [Then(@"the commits should have been retreived from the server with the correct address")]
+        public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerWithTheAddress()
+        {
+            context.SynchronisationHttpClient.LastAsyncCallServerUri.Should().Be(context.ServerUri);
         }
 
         [Then(@"the commits should have been retreived from the server from the beggining of time")]
         public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerFromTheBegginingOfTime()
         {
-            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(DateTime.MinValue.Ticks);
+            context.SynchronisationHttpClient.LastGetCommitsAsyncCallFrom.Should().Be(DateTime.MinValue.Ticks);
         }
-
-        [Then(@"the commits should have been retreived from the server from the date of the last commit synchronised")]
-        public void ThenTheCommitsShouldHaveBeenRetreivedFromTheServerFromTheDateOfTheLastCommitSynchronised()
+        
+        [Then(@"No commits should be pushed")]
+        public void ThenNoCommitsShouldBePushed()
         {
-            testCommitRetrievalClient.LastGetCommitsAsyncCallFrom.Should().Be(synchronisableCommitContext.CommitInUse.CreatedOn.Ticks);
+            context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().Should().BeEmpty();
         }
     }
 }

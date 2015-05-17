@@ -6,6 +6,9 @@ using TechTalk.SpecFlow;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
 {
+    using SystemDot.EventSourcing.Headers;
+    using FluentAssertions;
+
     [Binding]
     public class EventSessionSteps
     {
@@ -23,6 +26,18 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         public void GivenIHaveCreatedANewEventSession()
         {
             session = sessionFactory.Create();
+        }
+        
+        [Given(@"I add an event origin for the local machine as a header for the stream identified as (.*) in the bucket identified as '(.*)'")]
+        public void GivenIAddAnEventOriginForTheLocalMachineAsAHeaderToTheEventSession(Guid streamId, string bucketId)
+        {
+            session.StoreHeader(new EventStreamId(streamId.ToString(), bucketId), EventOriginHeader.Key, new EventOriginHeader { MachineName = System.Environment.MachineName });
+        }
+        
+        [Given(@"I add an event origin for another machine as a header for the stream identified as (.*) in the bucket identified as '(.*)'")]
+        public void GivenIAddAnEventOriginForAnotherMachineAsAHeaderToTheEventSession(Guid streamId, string bucketId)
+        {
+            session.StoreHeader(new EventStreamId(streamId.ToString(), bucketId), EventOriginHeader.Key, new EventOriginHeader { MachineName = "MachineName" });
         }
 
         [Given(@"I have created an event in the session with an id of (.*) for the stream identified as (.*) in the bucket identified as '(.*)'")]
@@ -47,6 +62,18 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         public void WhenIUseTheSecondCommitInTheEventSession()
         {
             context.CommitInUse = session.AllCommits().ElementAt(1);
+        }
+
+        [Then(@"the commit should be for a stream identified as '(.*)'")]
+        public void ThenTheCommitShouldBeForAStreamIdentifiedAs(string id)
+        {
+            context.CommitInUse.StreamId.Should().Be(id);
+        }
+
+        [Then(@"the commit should contain an event with an id of (.*)")]
+        public void ThenTheCommitShouldContainAnEventWithAnIdOf(Guid id)
+        {
+            context.CommitInUse.Events.Should().Contain(e => e.Body.As<TestEvent>().Id == id);
         }
     }
 }

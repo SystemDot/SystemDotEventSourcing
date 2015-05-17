@@ -112,28 +112,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\Bootstrapper.cs" />
-    <Compile Include="Steps\Client\ClientSteps.cs" />
-    <Compile Include="Steps\Commits\CommitContext.cs" />
-    <Compile Include="Steps\Commits\CommitSteps.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Features\RetrieveEvents.feature.cs">
+    <Compile Include="Features\PushEvents.feature.cs">
+      <DependentUpon>PushEvents.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RetrieveEvents.feature</DependentUpon>
     </Compile>
+    <Compile Include="Steps\Client\CommitSynchroniserSteps.cs" />
+    <Compile Include="Steps\Commits\CommitContext.cs" />
+    <Compile Include="Steps\Client\CommitSynchroniserContext.cs" />
+    <Compile Include="Steps\Commits\CommitSteps.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Features\PullEvents.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PullEvents.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Steps\Server\HttpContentExtensions.cs" />
+    <Compile Include="Steps\Server\ServerContext.cs" />
     <Compile Include="Steps\Server\ServerSteps.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitContext.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitSteps.cs" />
-    <Compile Include="Steps\TestCommitRetrievalClient.cs" />
+    <Compile Include="Steps\TestSynchronisationHttpClient.cs" />
     <Compile Include="Steps\TestEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Features\RetrieveEvents.feature">
+    <None Include="Features\PushEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>RetrieveEvents.feature.cs</LastGenOutput>
+      <LastGenOutput>PushEvents.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\PullEvents.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PullEvents.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -141,10 +153,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Messages\SystemDot.EventSourcing.Synchronisation.Client.Messages.csproj">
-      <Project>{78D85BB6-985C-489C-8278-8F6384C6CEC0}</Project>
-      <Name>SystemDot.EventSourcing.Synchronisation.Client.Messages</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SystemDot.EventSourcing.Synchronisation.Client.csproj">
       <Project>{BE28B99E-FF4A-4535-9C73-688738E707A0}</Project>
       <Name>SystemDot.EventSourcing.Synchronisation.Client</Name>

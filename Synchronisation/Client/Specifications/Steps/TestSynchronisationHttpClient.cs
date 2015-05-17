@@ -7,26 +7,28 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SystemDot.EventSourcing.Synchronisation;
-using SystemDot.EventSourcing.Synchronisation.Client;
 
 namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
 {
-    public class TestCommitRetrievalClient : ICommitRetrievalClient
+    using SystemDot.EventSourcing.Synchronisation.Client.Http;
+
+    public class TestSynchronisationHttpClient : ISynchronisationHttpClient
     {
         readonly List<SynchronisableCommit> commits = new List<SynchronisableCommit>();
         
-        public HttpStatusCode StatusToReturn { get; set; }
-        public Uri LastGetCommitsAsyncCallServerUri { get; private set; }
+        public HttpStatusCode StatusToReturn { private get; set; }
+        public Uri LastAsyncCallServerUri { get; private set; }
         public long LastGetCommitsAsyncCallFrom { get; private set; }
+        public HttpContent LastPostCommitsAsyncCallContent { get; set; }
 
-        public TestCommitRetrievalClient()
+        public TestSynchronisationHttpClient()
         {
             StatusToReturn = HttpStatusCode.OK;
         }
 
         public Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, string clientId, long @fromCommitInTicks)
         {
-            LastGetCommitsAsyncCallServerUri = serverUri;
+            LastAsyncCallServerUri = serverUri;
             LastGetCommitsAsyncCallFrom = @fromCommitInTicks;
 
             var response = new HttpResponseMessage
@@ -41,7 +43,19 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
 
             return Task.FromResult(response);
         }
-        
+
+        public Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, HttpContent content)
+        {
+            LastAsyncCallServerUri = serverUri;
+            LastPostCommitsAsyncCallContent = content;
+            var response = new HttpResponseMessage
+            {
+                StatusCode = StatusToReturn
+            };
+
+            return Task.FromResult(response);
+        }
+
         public void Add(SynchronisableCommit toAdd)
         {
             commits.Add(toAdd);

@@ -11,7 +11,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
     [Binding]
     public class SynchronisableCommitSteps
     {
-        IEnumerable<SynchronisableCommit> commits;
+        List<SynchronisableCommit> commits;
         readonly SynchronisationController controller;
         readonly SynchronisableCommitContext context;
         IEnumerable<object> events;
@@ -19,18 +19,43 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         
         public SynchronisableCommitSteps(SynchronisationController controller, SynchronisableCommitContext context, CommitContext commitContext)
         {
+            commits = new List<SynchronisableCommit>();
             this.controller = controller;
             this.context = context;
             this.commitContext = commitContext;
         }
 
-        [When(@"I request events for synchronisation for the client '(.*)'")]
+        [Given(@"I have created a synchronisable commit with an id of (.*) and stream identified as '(.*)' and client identified as '(.*)'")]
+        public void GivenIHaveCreatedASynchronisableCommitWithAnIdOfAndStreamIdentifiedAs(Guid id, string streamId, string clientId)
+        {
+            commits.Add(new SynchronisableCommit
+            {
+                CommitId = id,
+                StreamId = new SynchronisableEventStreamId { ClientId = clientId, Id = streamId },
+                CreatedOn = DateTime.Now,
+                Events = new List<SynchronisableSourcedEvent>()
+            });
+        }
+
+        [Given(@"I add a serialised event with an id of (.*) to the commit")]
+        public void GivenIAddASerialisedEventWithAnIdOfToTheCommit(Guid id)
+        {
+            commits.Last().Events.Add(new SynchronisableSourcedEvent { Body = new JsonSerialiser().Serialise(new TestEvent { Id = id }) });
+        }
+
+        [When(@"I request events for synchronisation for the client '(.*)' from the beggining of time")]
         public void WhenIRequestEventsForSynchronisation(string clientId)
         {
+            WhenIRequestEventsForSynchronisation(clientId, DateTime.MinValue);
+        }
+
+        [When(@"I request events for synchronisation for the client '(.*)' from (.*)")]
+        public void WhenIRequestEventsForSynchronisation(string clientId, DateTime from)
+        {
             commits = controller
-                .GetAsync(clientId, DateTime.MinValue.Ticks)
+                .GetAsync(clientId, from.Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
-                .Content;
+                .Content.ToList();
         }
 
         [When(@"I request events for synchronisation for the client '(.*)' created after the date of the commit")]
@@ -39,7 +64,13 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
             commits = controller
                 .GetAsync(clientId, commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks)
                 .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
-                .Content;
+                .Content.ToList();
+        }
+
+        [When(@"I synchronise the server with the synchronisable commits")]
+        public void WhenISynchroniseTheServerWithTheSynchronisableCommits()
+        {
+            controller.PostAsync(commits).Wait();
         }
 
 
