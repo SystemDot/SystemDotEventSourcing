@@ -127,7 +127,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PullEvents.feature</DependentUpon>
     </Compile>
-    <Compile Include="Steps\Server\HttpContentExtensions.cs" />
     <Compile Include="Steps\Server\ServerContext.cs" />
     <Compile Include="Steps\Server\ServerSteps.cs" />
     <Compile Include="Steps\Synchronisation\SynchronisableCommitContext.cs" />

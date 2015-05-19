@@ -18,9 +18,9 @@
             return await httpClientFactory.Create().GetAsync(GetEventsSynchronisationUri.Parse(serverUri, clientId, @fromCommitInTicks));
         }
 
-        public async Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, HttpContent content)
+        public async Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, CommitSynchronisation content)
         {
-            return await httpClientFactory.Create().PostAsync(PostEventsSynchronisationUri.Parse(serverUri), content);
+            return await httpClientFactory.Create().PostAsJsonAsync(PostEventsSynchronisationUri.Parse(serverUri), content);
         }
     }
 }

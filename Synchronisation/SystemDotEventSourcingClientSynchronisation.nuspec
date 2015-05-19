@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Synchronisation</id>
-    <version>5.0.2</version>
+    <version>5.0.4</version>
     <title>SystemDot.EventSourcing.Synchronisation.Client</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>
@@ -14,6 +14,7 @@
     <language>en-GB</language>
     <tags>Event Sourcing, Azure, Synchronisation</tags>
     <dependencies>
+      <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
       <dependency id="SystemDotEnvironment" version="1.0.1" />
       <dependency id="SystemDotEventSourcing" version="7.3.2" />
       <dependency id="SystemDotDomain" version="3.6.8" />

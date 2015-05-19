@@ -19,7 +19,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
         public HttpStatusCode StatusToReturn { private get; set; }
         public Uri LastAsyncCallServerUri { get; private set; }
         public long LastGetCommitsAsyncCallFrom { get; private set; }
-        public HttpContent LastPostCommitsAsyncCallContent { get; set; }
+        public CommitSynchronisation LastPostCommitsAsyncCallContent { get; private set; }
 
         public TestSynchronisationHttpClient()
         {
@@ -44,7 +44,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
             return Task.FromResult(response);
         }
 
-        public Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, HttpContent content)
+        public Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, CommitSynchronisation content)
         {
             LastAsyncCallServerUri = serverUri;
             LastPostCommitsAsyncCallContent = content;

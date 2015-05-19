@@ -79,7 +79,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
                     lastPushCommitDate = pushCommits.Commits.Last().CreatedOn;
                 }
 
-                response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, pushCommits.SerialiseToHttpContent());
+                response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, pushCommits);
             }
             catch (WebException)
             {

@@ -9,6 +9,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
 {
     using System.Net.Http;
     using SystemDot.EventSourcing.Headers;
+    using Newtonsoft.Json;
 
     [Binding]
     public class SynchronisableCommitSteps
@@ -140,6 +141,14 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         public void ThenTheSynchronisableCommitShouldBeForTheSameDateAndTimeAsTheCommit()
         {
             context.CommitInUse.CreatedOn.Should().Be(commitContext.CommitInUse.CreatedOn);
+        }
+    }
+
+    public static class ObjectExtensions
+    {
+        public static StringContent SerialiseToHttpContent(this object toSerialise)
+        {
+            return new StringContent(JsonConvert.SerializeObject(toSerialise));
         }
     }
 }

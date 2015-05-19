@@ -133,6 +133,20 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Updating server with events from commits from the client 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "PostEvents")]
+        public virtual void UpdatingServerWithEventsFromCommitsFromTheClient1()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating server with events from commits from the client 1", ((string[])(null)));
+#line 25
+ this.ScenarioSetup(scenarioInfo);
+#line 26
+ testRunner.When("I synchronise the server with the synchronisable commits", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

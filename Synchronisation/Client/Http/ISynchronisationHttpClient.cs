@@ -7,6 +7,6 @@
     public interface ISynchronisationHttpClient
     {
         Task<HttpResponseMessage> GetCommitsAsync(Uri serverUri, string clientId, long @fromCommitInTicks);
-        Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, HttpContent content);
+        Task<HttpResponseMessage> PostCommitsAsync(Uri serverUri, CommitSynchronisation content);
     }
 }
