@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="ByteExtensions.cs" />
     <Compile Include="CommitExtensions.cs" />
+    <Compile Include="CommitSynchronisation.cs" />
     <Compile Include="IEventSessionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SynchronisableCommit.cs" />

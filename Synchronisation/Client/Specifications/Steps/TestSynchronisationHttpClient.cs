@@ -38,7 +38,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps
 
             if (response.IsSuccessStatusCode)
             {
-                response.Content = new StringContent(JsonConvert.SerializeObject(commits.Where(c => c.StreamId.ClientId == clientId)));
+                response.Content = new StringContent(JsonConvert.SerializeObject(new CommitSynchronisation {Commits = commits.Where(c => c.StreamId.ClientId == clientId).ToList()}));
             }
 
             return Task.FromResult(response);

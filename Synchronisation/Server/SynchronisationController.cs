@@ -10,11 +10,11 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
 
     public class SynchronisationController : ApiController
     {
-        readonly IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>> queryHandler;
+        readonly IAsyncQueryHandler<CommitQuery, CommitSynchronisation> queryHandler;
         readonly IAsyncCommandHandler<CommitSynchronisableCommits> commandHandler;
 
         public SynchronisationController(
-            IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>> queryHandler, 
+            IAsyncQueryHandler<CommitQuery, CommitSynchronisation> queryHandler, 
             IAsyncCommandHandler<CommitSynchronisableCommits> commandHandler)
         {
             this.queryHandler = queryHandler;
@@ -31,9 +31,9 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
                 }));
         }
 
-        public async Task<IHttpActionResult> PostAsync(IEnumerable<SynchronisableCommit> toPost)
+        public async Task<IHttpActionResult> PostAsync(CommitSynchronisation toPost)
         {
-            await commandHandler.Handle(new CommitSynchronisableCommits { Commits = toPost });
+            await commandHandler.Handle(new CommitSynchronisableCommits { Synchronisation = toPost });
             return Ok();
         }
     }

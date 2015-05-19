@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Bootstrapping\HttpConfigurationExtensions.cs" />
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="CommitQuery.cs" />
     <Compile Include="CommitQueryHandler.cs" />

@@ -15,7 +15,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
 
         public Task Handle(CommitSynchronisableCommits message)
         {
-            message.Commits.ForEach(synchronisableCommitSynchroniser.SynchroniseCommit);
+            message.Synchronisation.Commits.ForEach(synchronisableCommitSynchroniser.SynchroniseCommit);
             return Task.FromResult(false);
         }
     }

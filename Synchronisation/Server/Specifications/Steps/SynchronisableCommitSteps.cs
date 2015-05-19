@@ -4,25 +4,23 @@ using System.Linq;
 using SystemDot.Serialisation;
 using FluentAssertions;
 using TechTalk.SpecFlow;
-using System.Web.Http.Results;
 
 namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
 {
+    using System.Net.Http;
     using SystemDot.EventSourcing.Headers;
 
     [Binding]
     public class SynchronisableCommitSteps
     {
         List<SynchronisableCommit> commits;
-        readonly SynchronisationController controller;
         readonly SynchronisableCommitContext context;
         IEnumerable<object> events;
         readonly CommitContext commitContext;
         
-        public SynchronisableCommitSteps(SynchronisationController controller, SynchronisableCommitContext context, CommitContext commitContext)
+        public SynchronisableCommitSteps(SynchronisableCommitContext context, CommitContext commitContext)
         {
             commits = new List<SynchronisableCommit>();
-            this.controller = controller;
             this.context = context;
             this.commitContext = commitContext;
         }
@@ -67,28 +65,29 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps
         [When(@"I request events for synchronisation for the client '(.*)' from (.*)")]
         public void WhenIRequestEventsForSynchronisation(string clientId, DateTime from)
         {
-            commits = controller
-                .GetAsync(clientId, from.Ticks)
-                .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
-                .Content.ToList();
+            commits = context.TestServer
+                .HttpClient
+                .GetAsync(string.Format("Synchronisation/{0}/{1}", clientId, from.Ticks))
+                .Result.Content.ReadAsAsync<CommitSynchronisation>().Result.Commits;
         }
 
         [When(@"I request events for synchronisation for the client '(.*)' created after the date of the commit")]
         public void WhenIRequestEventsForSynchronisationCreatedAfterTheDateOfTheCommit(string clientId)
         {
-            commits = controller
-                .GetAsync(clientId, commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks)
-                .Result.As<OkNegotiatedContentResult<IEnumerable<SynchronisableCommit>>>()
-                .Content.ToList();
+            commits = context.TestServer
+                .HttpClient
+                .GetAsync(string.Format("Synchronisation/{0}/{1}", clientId, commitContext.CommitInUse.CreatedOn.AddMilliseconds(1).Ticks))
+                .Result.Content.ReadAsAsync<CommitSynchronisation>().Result.Commits;
         }
 
         [When(@"I synchronise the server with the synchronisable commits")]
         public void WhenISynchroniseTheServerWithTheSynchronisableCommits()
         {
-            controller.PostAsync(commits).Wait();
+            context.TestServer
+                .HttpClient
+                .PostAsJsonAsync("Synchronisation", new CommitSynchronisation { Commits = commits }).Wait();
         }
-
-
+        
         [When(@"I use the first synchronisable commit requested")]
         public void WhenIUseTheFirstSynchronisableCommitRequested()
         {

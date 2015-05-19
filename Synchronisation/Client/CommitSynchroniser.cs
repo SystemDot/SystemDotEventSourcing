@@ -55,11 +55,11 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
                 return;
             }
 
-            IEnumerable<SynchronisableCommit> pullCommits = await response.ReadContentAsSynchronisableCommitsAsync();
+            CommitSynchronisation pullCommits = await response.ReadContentAsCommitSynchronisationAsync();
 
             DateTime lastPullCommitDate = criteria.PullCommitsFrom;
             
-            pullCommits.ForEach(commit =>
+            pullCommits.Commits.ForEach(commit =>
             {
                 synchronisableCommitSynchroniser.SynchroniseCommit(commit);
                 lastPullCommitDate = commit.CreatedOn;
@@ -69,14 +69,14 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
 
             try
             {
-                IEnumerable<SynchronisableCommit> pushCommits = synchronisableCommitBuilder.Build(
+                CommitSynchronisation pushCommits = synchronisableCommitBuilder.Build(
                     criteria.ClientId,
                     criteria.PullCommitsFrom,
                     commit => commit.OriginatesOnMachineNamed(localMachine.GetName()));
 
-                if (pushCommits.Any())
+                if (pushCommits.Commits.Any())
                 {
-                    lastPushCommitDate = pushCommits.Last().CreatedOn;
+                    lastPushCommitDate = pushCommits.Commits.Last().CreatedOn;
                 }
 
                 response = await synchronisationHttpClient.PostCommitsAsync(serverUriProvider.ServerUri, pushCommits.SerialiseToHttpContent());

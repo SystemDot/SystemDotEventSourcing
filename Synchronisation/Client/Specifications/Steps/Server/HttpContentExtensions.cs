@@ -7,9 +7,9 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
 
     public static class HttpContentExtensions
     {
-        public static IEnumerable<SynchronisableCommit> DeserialiseCommits(this HttpContent content)
+        public static CommitSynchronisation DeserialiseCommits(this HttpContent content)
         {
-            return JsonConvert.DeserializeObject<IEnumerable<SynchronisableCommit>>(content.ReadAsStringAsync().Result);
+            return JsonConvert.DeserializeObject<CommitSynchronisation>(content.ReadAsStringAsync().Result);
         }
     }
 }

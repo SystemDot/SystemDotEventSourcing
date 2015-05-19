@@ -38,7 +38,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
         [When(@"I use the first synchronisable commit posted")]
         public void WhenIUseTheFirstSynchronisableCommitPosted()
         {
-            synchronisableCommitContext.CommitInUse = context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().First();
+            synchronisableCommitContext.CommitInUse = context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().Commits.First();
         }
         
         [Then(@"the commits should have been posted to the server with the correct address")]
@@ -57,7 +57,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server
         [Then(@"No commits should be pushed")]
         public void ThenNoCommitsShouldBePushed()
         {
-            context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().Should().BeEmpty();
+            context.SynchronisationHttpClient.LastPostCommitsAsyncCallContent.DeserialiseCommits().Commits.Should().BeEmpty();
         }
     }
 }

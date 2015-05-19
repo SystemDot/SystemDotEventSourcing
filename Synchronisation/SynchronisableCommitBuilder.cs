@@ -1,8 +1,7 @@
 namespace SystemDot.EventSourcing.Synchronisation
 {
     using System;
-    using System.Collections.Generic;
-    using SystemDot.Environment;
+    using System.Linq;
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Sessions;
 
@@ -15,9 +14,14 @@ namespace SystemDot.EventSourcing.Synchronisation
             this.factory = factory;
         }
 
-        public IEnumerable<SynchronisableCommit> Build(string clientId, DateTime @from, Func<Commit, bool> commitsWhereClause)
+        public CommitSynchronisation Build(string clientId, DateTime @from, Func<Commit, bool> commitsWhereClause)
         {
-            return factory.Create().GetSynchronisableCommits(clientId, @from, commitsWhereClause);
+            return new CommitSynchronisation
+            {
+                Commits = factory.Create()
+                    .GetSynchronisableCommits(clientId, @from, commitsWhereClause)
+                    .ToList()
+            };
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
     using SystemDot.EventSourcing.Commits;
     using SystemDot.EventSourcing.Headers;
 
-    public class CommitQueryHandler : IAsyncQueryHandler<CommitQuery, IEnumerable<SynchronisableCommit>>
+    public class CommitQueryHandler : IAsyncQueryHandler<CommitQuery, CommitSynchronisation>
     {
         readonly SynchronisableCommitBuilder builder;
         readonly ILocalMachine localMachine;
@@ -21,7 +21,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
             this.localMachine = localMachine;
         }
 
-        public Task<IEnumerable<SynchronisableCommit>> Handle(CommitQuery message)
+        public Task<CommitSynchronisation> Handle(CommitQuery message)
         {
             if (message.From == DateTime.MinValue)
             {

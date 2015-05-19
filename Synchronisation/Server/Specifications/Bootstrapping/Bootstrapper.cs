@@ -1,56 +1,70 @@
-﻿using System;
-using SystemDot.Bootstrapping;
-using SystemDot.Core.Collections;
-using SystemDot.Domain;
-using SystemDot.Domain.Bootstrapping;
-using SystemDot.Domain.Commands;
-using SystemDot.Domain.Queries;
-using SystemDot.Environment;
-using SystemDot.EventSourcing.Bootstrapping;
-using SystemDot.EventSourcing.InMemory.Bootstrapping;
-using SystemDot.EventSourcing.Sessions;
-using SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping;
-using SystemDot.Ioc;
-using BoDi;
-using TechTalk.SpecFlow;
-
+﻿
 namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Bootstrapping
 {
+    using System.Web.Http;
+    using SystemDot.Bootstrapping;
+    using SystemDot.Domain;
+    using SystemDot.Domain.Bootstrapping;
+    using SystemDot.Environment;
+    using SystemDot.EventSourcing.Bootstrapping;
+    using SystemDot.EventSourcing.InMemory.Bootstrapping;
+    using SystemDot.EventSourcing.Sessions;
+    using SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping;
+    using SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps;
+    using SystemDot.Ioc;
+    using SystemDot.Web.WebApi.Caching;
+    using SystemDot.Web.WebApi.Ioc;
+    using SystemDot.Web.WebApi.ModelState;
+    using Microsoft.Owin.Testing;
+    using Owin;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public class Bootstrapper
     {
-        readonly IObjectContainer specFlowContainer;
-        static IIocContainer container;
+        readonly EventSessionContext eventSessionContext;
+        readonly SynchronisableCommitContext synchronisableCommitContext;
 
-        Bootstrapper(IObjectContainer specFlowContainer)
+        Bootstrapper(EventSessionContext eventSessionContext, SynchronisableCommitContext synchronisableCommitContext)
         {
-            this.specFlowContainer = specFlowContainer;
+            this.eventSessionContext = eventSessionContext;
+            this.synchronisableCommitContext = synchronisableCommitContext;
         }
 
         [BeforeScenario]
         public void OnBeforeScenario()
         {
-            Reset();
-            
-            Bootstrap.Application()
+            IIocContainer container = new IocContainer();
+
+             Bootstrap.Application()
                 .ResolveReferencesWith(container)
                 .UseEnvironment()
                 .UseDomain().DispatchEventsOnUiThread().WithSimpleMessaging()
                 .UseEventSourcing().WithSynchronisation().PersistToMemory()
                 .Initialise();
 
-            RegisterInSpecFlow<IEventSessionFactory>();
-            RegisterInSpecFlow<SynchronisationController>();
-        }
+            eventSessionContext.SessionFactory = container.Resolve<IEventSessionFactory>();
 
-        void RegisterInSpecFlow<T>() where T : class
-        {
-            specFlowContainer.RegisterInstanceAs<T>(container.Resolve<T>());
-        }
+            synchronisableCommitContext.TestServer = TestServer.Create(builder =>
+            {
+                var configuration = new HttpConfiguration
+                {
+                    DependencyResolver = new SystemDotDependencyResolver(container)
+                };
 
-        static void Reset()
-        {
-            container = new IocContainer();
+                configuration.MapHttpAttributeRoutes();
+                configuration.Filters.Add(new ModelStateContextFilterAttribute());
+                configuration.Filters.Add(new NoCacheFilterAttribute());
+
+                configuration.MapSynchronisationRoutes();
+
+                configuration.Routes.MapHttpRoute(
+                    "Default",
+                    "{controller}/{id}",
+                    new {id = RouteParameter.Optional});
+
+                builder.UseWebApi(configuration);
+            });
         }
     }
 }
