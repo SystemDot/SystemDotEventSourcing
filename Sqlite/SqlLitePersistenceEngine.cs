@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Commits(
 	CheckpointNumber INTEGER PRIMARY KEY,
     Headers BLOB NULL,
     Payload BLOB NOT NULL,
-    CommitStamp DATETIME DEFAULT CURRENT_TIMESTAMP)";
+    CommitStamp DATETIME NOT NULL)";
         }
 
         public void Commit(string bucketId, string streamId, Guid commitId, int sequence, IEnumerable<SourcedEvent> uncommittedEvents, IDictionary<string, object> uncommittedHeaders)
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Commits(
             using (var connection = GetConnection())
             {
                 connection.Execute(
-                    "insert into Commits(BucketId, StreamId, CommitId, CommitSequence, Headers, Payload) values(@BucketId, @StreamId, @CommitId, @CommitSequence, @Headers, @Payload)",
+                    "insert into Commits(BucketId, StreamId, CommitId, CommitSequence, Headers, Payload, CommitStamp) values(@BucketId, @StreamId, @CommitId, @CommitSequence, @Headers, @Payload, @CommitStamp)",
                     command =>
                     {
                         AddParameter(command.Parameters, "@BucketId", bucketId);
@@ -50,23 +50,24 @@ CREATE TABLE IF NOT EXISTS Commits(
                         AddParameter(command.Parameters, "@CommitSequence", sequence);
                         AddParameter(command.Parameters, "@Headers", uncommittedHeaders.SerialiseToBytes(serialiser));
                         AddParameter(command.Parameters, "@Payload", uncommittedEvents.SerialiseToBytes(serialiser));
+                        AddParameter(command.Parameters, "@CommitStamp", DateTime.Now.ToUniversalTime());
                     });
             }
         }
 
         public IEnumerable<Commit> GetCommits()
         {
-            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload from Commits order by BucketId ASC, StreamId ASC, CommitSequence ASC");
+            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload, CommitStamp from Commits order by BucketId ASC, StreamId ASC, CommitSequence ASC");
         }
 
         public IEnumerable<Commit> GetCommits(string bucketId, string id)
         {
-            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload from Commits where BucketId = '" + bucketId + "' and StreamId = '" + id + "' order by CommitSequence ASC");
+            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload, CommitStamp from Commits where BucketId = '" + bucketId + "' and StreamId = '" + id + "' order by CommitSequence ASC");
         }
 
         public IEnumerable<Commit> GetCommitsFrom(string bucketId, DateTime @from)
         {
-            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload from Commits where BucketId = '" + bucketId + "' and CommitStamp >= DATETIME('" + @from.ToSqliteFormat() + "') order by StreamId ASC, CommitSequence ASC");
+            return GetCommits("select BucketId, StreamId, CommitId, Headers, Payload, CommitStamp from Commits where BucketId = '" + bucketId + "' and CommitStamp >= DATETIME('" + @from.ToUniversalTime().ToSqliteFormat() + "') order by StreamId ASC, CommitSequence ASC");
         }
 
         IEnumerable<Commit> GetCommits(string sql)

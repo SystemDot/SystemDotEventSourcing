@@ -6,7 +6,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
     {
         public static string ToSqliteFormat(this DateTime datetime)
         {
-            return string.Format("{0}-{1}-{2} {3}:{4}:{5}.{6}", datetime.Year, datetime.Month, datetime.Day, datetime.Hour, datetime.Minute, datetime.Second, datetime.Millisecond);
+            return datetime.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }
