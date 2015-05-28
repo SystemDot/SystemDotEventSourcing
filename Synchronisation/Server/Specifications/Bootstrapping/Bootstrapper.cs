@@ -10,6 +10,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Bootstra
     using SystemDot.EventSourcing.InMemory.Bootstrapping;
     using SystemDot.EventSourcing.Sessions;
     using SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping;
+    using SystemDot.EventSourcing.Synchronisation.Server.Specifications.Handling;
     using SystemDot.EventSourcing.Synchronisation.Server.Specifications.Steps;
     using SystemDot.Ioc;
     using SystemDot.Web.WebApi.Caching;
@@ -24,17 +25,21 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Bootstra
     {
         readonly EventSessionContext eventSessionContext;
         readonly SynchronisableCommitContext synchronisableCommitContext;
+        readonly EventHandlerContext eventHandlerContext;
 
-        Bootstrapper(EventSessionContext eventSessionContext, SynchronisableCommitContext synchronisableCommitContext)
+        Bootstrapper(EventSessionContext eventSessionContext, SynchronisableCommitContext synchronisableCommitContext, EventHandlerContext eventHandlerContext)
         {
             this.eventSessionContext = eventSessionContext;
             this.synchronisableCommitContext = synchronisableCommitContext;
+            this.eventHandlerContext = eventHandlerContext;
         }
 
         [BeforeScenario]
         public void OnBeforeScenario()
         {
             IIocContainer container = new IocContainer();
+            container.RegisterInstance(() => eventHandlerContext);
+            container.RegisterInstance<TestEventHandler, TestEventHandler>();
 
              Bootstrap.Application()
                 .ResolveReferencesWith(container)

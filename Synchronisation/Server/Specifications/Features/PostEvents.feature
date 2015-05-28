@@ -21,6 +21,4 @@ Scenario: Updating server with events from commits from the client
 	Then the commit should be for a stream identified as '2157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9'
 	And the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277
 	And the commit should contain an event with an id of A261A67D-2C00-4854-A0FF-6DEFA84A4277
-
-	Scenario: Updating server with events from commits from the client 1
-	When I synchronise the server with the synchronisable commits
+	And none of the posted events should be dispatched

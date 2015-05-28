@@ -49,6 +49,7 @@
     <Compile Include="Headers\EventOriginHeader.cs" />
     <Compile Include="IDomainRepository.cs" />
     <Compile Include="MultiSiteIdExtensions.cs" />
+    <Compile Include="PreventCommitDispatchHeader.cs" />
     <Compile Include="Projections\DataLookup.cs" />
     <Compile Include="Projections\DataStore.cs" />
     <Compile Include="Projections\EventProjector.cs" />

@@ -17,6 +17,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>73c527ec</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,17 +54,23 @@
     <Compile Include="Http\GetEventsSynchronisationUri.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="DeviceInfo.Plugin">
+      <HintPath>..\packages\Xam.Plugin.DeviceInfo.1.0.0.2\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\DeviceInfo.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="DeviceInfo.Plugin.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.DeviceInfo.1.0.0.2\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\DeviceInfo.Plugin.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\portable-wp8+netcore45+net45+wp81+wpa81\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Primitives.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Bootstrapping">
       <HintPath>..\packages\SystemDotBootstrapping.1.0.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Bootstrapping.dll</HintPath>
@@ -75,16 +82,16 @@
       <HintPath>..\packages\SystemDotDomain.3.6.8\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment">
-      <HintPath>..\packages\SystemDotEnvironment.1.0.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\packages\SystemDotEnvironment.1.1.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing">
-      <HintPath>..\packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.7.4.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory">
-      <HintPath>..\packages\SystemDotEventSourcing.7.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>..\packages\SystemDotEventSourcing.7.4.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\packages\SystemDotIoc.1.3.1\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\packages\SystemDotIoc.1.3.2\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging">
       <HintPath>..\packages\SystemDotMessaging.2.1.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll</HintPath>
@@ -109,6 +116,9 @@
       <Name>SystemDot.EventSourcing.Synchronisation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DeviceInfoReadme.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -116,12 +126,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

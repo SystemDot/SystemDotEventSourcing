@@ -63,6 +63,15 @@ namespace SystemDot.EventSourcing.Sessions
             }
         }
 
+        public void CommitWithoutDispatching(Guid commitId)
+        {
+            foreach (var stream in streams)
+            {
+                stream.Value.UncommittedHeaders.Add(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
+                CommitStream(commitId, stream.Value);
+            }
+        }
+
         void CommitStream(Guid commitId, IEventStream toCommit)
         {
             try

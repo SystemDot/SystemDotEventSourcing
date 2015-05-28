@@ -66,8 +66,17 @@ namespace SystemDot.EventSourcing.Sql.Windows
             }
         }
 
-        NEventStore.IEventStream GetStream(EventStreamId streamId)
+        public void CommitWithoutDispatching(Guid commitId)
         {
+            foreach (var stream in streams)
+            {
+                stream.Value.UncommittedHeaders.Add(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
+                CommitStream(commitId, stream.Value);
+            }
+        }
+
+        NEventStore.IEventStream GetStream(EventStreamId streamId)
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             NEventStore.IEventStream stream;
 
             if (!streams.TryGetValue(streamId, out stream)) streams[streamId] = stream = eventStore.OpenStream(streamId.BucketId, streamId.Id, 0, int.MaxValue);

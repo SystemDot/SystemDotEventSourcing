@@ -130,20 +130,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 23
  testRunner.And("the commit should contain an event with an id of A261A67D-2C00-4854-A0FF-6DEFA84A" +
                     "4277", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Updating server with events from commits from the client 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "PostEvents")]
-        public virtual void UpdatingServerWithEventsFromCommitsFromTheClient1()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating server with events from commits from the client 1", ((string[])(null)));
-#line 25
- this.ScenarioSetup(scenarioInfo);
-#line 26
- testRunner.When("I synchronise the server with the synchronisable commits", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+ testRunner.And("none of the posted events should be dispatched", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

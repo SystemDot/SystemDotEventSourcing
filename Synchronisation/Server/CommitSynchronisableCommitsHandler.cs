@@ -1,7 +1,6 @@
 namespace SystemDot.EventSourcing.Synchronisation.Server
 {
     using System.Threading.Tasks;
-    using SystemDot.Core.Collections;
     using SystemDot.Domain.Commands;
 
     public class CommitSynchronisableCommitsHandler : IAsyncCommandHandler<CommitSynchronisableCommits>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>SystemDotEventSourcing.Sql.Windows</id>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <title>SystemDot.EventSourcing.Sql.Windows</title>
     <authors>Chris Sampson,James Goodenough</authors>
     <owners>Chris Sampson,James Goodenough</owners>
@@ -20,7 +20,7 @@
       <dependency id="SystemDotCore" version="3.1.2" />
       <dependency id="SystemDotMessaging" version="2.1.0" />
       <dependency id="SystemDotDomain" version="3.6.6" />
-      <dependency id="SystemDotEventSourcing" version="6.0.1" />
+      <dependency id="SystemDotEventSourcing" version="7.4.0" />
     </dependencies>
   </metadata>
   <files>

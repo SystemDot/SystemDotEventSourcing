@@ -59,7 +59,10 @@ namespace SystemDot.EventSourcing.Sqlite.Android
         public void CommitChanges(Guid commitId)
         {
             persistenceEngine.Commit(streamId.BucketId, streamId.Id, commitId, currentSequence, UncommittedEvents, UncommittedHeaders);
-            UncommittedEvents.ForEach(e => eventDispatcher.Dispatch(e.Body));
+            if (!UncommittedHeaders.ContainsKey(PreventCommitDispatchHeader.Key))
+            {
+                UncommittedEvents.ForEach(e => eventDispatcher.Dispatch(e.Body));
+            }
             PopulateStream();
         }
 

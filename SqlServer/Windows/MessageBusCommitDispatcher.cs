@@ -19,7 +19,11 @@ namespace SystemDot.EventSourcing.Sql.Windows
 
         public void Dispatch(ICommit commit)
         {
-           commit.Events.Select(m => m.Body).ForEach(e => innerDispatcher.Dispatch(e));
+            if (commit.Headers.ContainsKey(PreventCommitDispatchHeader.Key))
+            {
+                return;
+            }
+            commit.Events.Select(m => m.Body).ForEach(e => innerDispatcher.Dispatch(e));
         }
     }
 }

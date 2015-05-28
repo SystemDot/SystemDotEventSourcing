@@ -13,6 +13,8 @@ namespace SystemDot.EventSourcing.Sessions
 
         void Commit(Guid commitId);
 
+        void CommitWithoutDispatching(Guid commitId);
+
         IEnumerable<Commit> AllCommits();
 
         IEnumerable<Commit> AllCommitsFrom(string bucketId, DateTime from);

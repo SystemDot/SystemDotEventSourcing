@@ -42,8 +42,12 @@ namespace SystemDot.EventSourcing.InMemory
 
         void Commit(Commit commit)
         {
-             commits.Add(commit);
-             commit.Events.ForEach(e =>  eventDispatcher.Dispatch(e.Body));
+            commits.Add(commit);
+            if (commit.Headers.ContainsKey(PreventCommitDispatchHeader.Key))
+            {
+                return;
+            }
+            commit.Events.ForEach(e => eventDispatcher.Dispatch(e.Body));
         }
 
         List<SourcedEvent> GetEvents(EventStreamId streamId)

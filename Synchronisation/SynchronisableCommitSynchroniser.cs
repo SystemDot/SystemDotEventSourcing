@@ -19,7 +19,7 @@ namespace SystemDot.EventSourcing.Synchronisation
             {
                 toSynchronise.Events.ForEach(e => eventSession.StoreEvent(e.ToSourcedEvent(), toSynchronise.StreamId.ToEventStreamId()));
                 toSynchronise.Headers.ForEach(h => eventSession.StoreHeader(toSynchronise.StreamId.ToEventStreamId(), h.Key, h.Value.Deserialise()));
-                eventSession.Commit(toSynchronise.CommitId);
+                eventSession.CommitWithoutDispatching(toSynchronise.CommitId);
             }
         }
     }

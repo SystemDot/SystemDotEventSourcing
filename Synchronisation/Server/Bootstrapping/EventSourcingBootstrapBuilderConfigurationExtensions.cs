@@ -4,6 +4,7 @@ using SystemDot.EventSourcing.Bootstrapping;
 namespace SystemDot.EventSourcing.Synchronisation.Server.Bootstrapping
 {
     using SystemDot.Domain.Commands;
+    using SystemDot.Domain.Events.Dispatching;
 
     public static class EventSourcingBootstrapBuilderConfigurationExtensions
     {

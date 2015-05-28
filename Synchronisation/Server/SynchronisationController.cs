@@ -1,11 +1,9 @@
 namespace SystemDot.EventSourcing.Synchronisation.Server
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Http;
     using SystemDot.Domain.Commands;
-    using SystemDot.EventSourcing.Commits;
     using Domain.Queries;
 
     public class SynchronisationController : ApiController

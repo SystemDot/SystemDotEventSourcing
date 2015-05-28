@@ -48,7 +48,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
                 onError();
                 return;
             }
-            
+
             if (!response.IsSuccessStatusCode)
             {
                 onError();
@@ -58,7 +58,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Client
             CommitSynchronisation pullCommits = await response.ReadContentAsCommitSynchronisationAsync();
 
             DateTime lastPullCommitDate = criteria.PullCommitsFrom;
-            
+
             pullCommits.Commits.ForEach(commit =>
             {
                 synchronisableCommitSynchroniser.SynchroniseCommit(commit);

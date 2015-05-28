@@ -17,6 +17,15 @@
 		And the commit should contain an event with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4277
 		And the commit should contain an event with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4277
 		And the successful completion of the synchronisation should be signalled with the date of the last pull commit
+		And none of the pulled events should be dispatched
+
+	Scenario: local commits should get dispatched
+		Given I have created a new event session
+		And I add an event origin for the local machine as a header for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in the bucket identified as 'TestClient'
+		And I have created an event in the session with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in the bucket identified as 'TestClient'
+		And I have created an event in the session with an id of F261A67D-2C00-4854-A0FF-6DEFA84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in the bucket identified as 'TestClient'
+		And I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B
+		Then events should be dispatched
 
 	Scenario: Updating local device with two commits retreived from the server
 		Given I have created a synchronisable commit with an id of E261A67D-2C00-4854-A0FF-6DEFA84A4276 and stream identified as '1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9' and client identified as 'TestClient'

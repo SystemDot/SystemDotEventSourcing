@@ -5,7 +5,6 @@ using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;
 using SystemDot.EventSourcing.Synchronisation.Client.Bootstrapping;
-using SystemDot.EventSourcing.Synchronisation.Client.Retrieval;
 using SystemDot.Ioc;
 using TechTalk.SpecFlow;
 using SystemDot.Domain.Synchronisation.Client.Specifications.Steps;
@@ -15,6 +14,7 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Bootstrapping
     using System;
     using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Client;
     using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Commits;
+    using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Handling;
     using SystemDot.Domain.Synchronisation.Client.Specifications.Steps.Server;
     using SystemDot.EventSourcing.Synchronisation.Client;
     using SystemDot.EventSourcing.Synchronisation.Client.Http;
@@ -25,12 +25,14 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Bootstrapping
         readonly CommitContext commitContext;
         readonly CommitSynchroniserContext commitSynchroniserContext;
         readonly ServerContext serverContext;
+        readonly EventHandlerContext eventHandlerContext;
 
-        public Bootstrapper(CommitContext commitContext, CommitSynchroniserContext commitSynchroniserContext, ServerContext serverContext)
+        public Bootstrapper(CommitContext commitContext, CommitSynchroniserContext commitSynchroniserContext, ServerContext serverContext, EventHandlerContext eventHandlerContext)
         {
             this.commitContext = commitContext;
             this.commitSynchroniserContext = commitSynchroniserContext;
             this.serverContext = serverContext;
+            this.eventHandlerContext = eventHandlerContext;
         }
 
         [BeforeScenario]
@@ -41,6 +43,8 @@ namespace SystemDot.Domain.Synchronisation.Client.Specifications.Bootstrapping
             serverContext.ServerUri = new Uri("http://TestServer");
             serverContext.SynchronisationHttpClient = new TestSynchronisationHttpClient();
             container.RegisterInstance<ISynchronisationHttpClient>(() => serverContext.SynchronisationHttpClient);
+            container.RegisterInstance(() => eventHandlerContext);
+            container.RegisterInstance<TestEventHandler, TestEventHandler>();
             
             Bootstrap.Application()
                 .ResolveReferencesWith(container)
