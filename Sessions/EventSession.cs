@@ -88,7 +88,7 @@ namespace SystemDot.EventSourcing.Sessions
                 throw;
             }
         }
-
+        
         protected override void DisposeOfManagedResources()
         {
             streams.ForEach(s => s.Value.Dispose());

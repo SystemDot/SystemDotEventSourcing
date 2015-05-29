@@ -10,9 +10,9 @@ namespace SystemDot.EventSourcing.Sqlite.Android
 
     public class SqlLitePersistenceEngine
     {
-        readonly ISerialize serialiser;
+        readonly JsonSerializer serialiser;
 
-        public SqlLitePersistenceEngine(ISerialize serialiser)
+        public SqlLitePersistenceEngine(JsonSerializer serialiser)
         {
             this.serialiser = serialiser;
 

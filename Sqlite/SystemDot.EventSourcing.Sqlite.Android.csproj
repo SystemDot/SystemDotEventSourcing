@@ -115,7 +115,6 @@
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DbConnectionExtensions.cs" />
     <Compile Include="DbDataReaderExtensions.cs" />
-    <Compile Include="ISerialize.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

@@ -10,7 +10,6 @@ namespace SystemDot.EventSourcing.Sqlite.Android.Bootstrapping
         {
             container.RegisterInstance<IEventSessionFactory, EventSessionFactory>();
             container.RegisterInstance<IEventStore, SqlLiteEventStore>();
-            container.RegisterInstance<ISerialize, JsonSerializer>();
         }
     }
 }

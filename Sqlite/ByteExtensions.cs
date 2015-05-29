@@ -4,7 +4,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
 
     public static class ByteExtensions
     {
-        public static T DeserialiseTo<T>(this byte[] toDeserialise, ISerialize serializer)
+        public static T DeserialiseTo<T>(this byte[] toDeserialise, JsonSerializer serializer)
         {
             toDeserialise = toDeserialise ?? new byte[] { };
             if (toDeserialise.Length == 0)

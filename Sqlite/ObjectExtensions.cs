@@ -4,7 +4,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
 
     public static class ObjectExtensions
     {
-        public static byte[] SerialiseToBytes(this object toSerialise, ISerialize serializer)
+        public static byte[] SerialiseToBytes(this object toSerialise, JsonSerializer serializer)
         {
             using (var stream = new MemoryStream())
             {

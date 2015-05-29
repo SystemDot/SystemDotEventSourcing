@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SystemDotEventSourcing</id>
-        <version>7.4.0</version>
+        <version>7.5.0</version>
         <title>SystemDot.EventSourcing</title>
         <authors>Chris Sampson,James Goodenough</authors>
         <owners>Chris Sampson,James Goodenough</owners>
@@ -14,6 +14,7 @@
         <language>en-GB</language>
         <tags>Event Sourcing, Cross Platform</tags>
         <dependencies>
+          <dependency id="Newtonsoft.Json" version="6.0.8" />
           <dependency id="SystemDotCore" version="3.3.0" />
           <dependency id="SystemDotBootstrapping" version="1.0.5" />
           <dependency id="SystemDotIoc" version="1.3.1" />

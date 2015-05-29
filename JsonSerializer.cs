@@ -1,4 +1,4 @@
-namespace SystemDot.EventSourcing.Sqlite.Android
+namespace SystemDot.EventSourcing
 {
     using System;
     using System.Collections.Generic;

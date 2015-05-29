@@ -5,6 +5,7 @@ using SystemDot.Core;
 
 namespace SystemDot.EventSourcing.Commits
 {
+    using System.Text;
 
     public class Commit
     {
@@ -34,5 +35,17 @@ namespace SystemDot.EventSourcing.Commits
             CreatedOn = DateTime.Now;
             Headers = headers;
         }
+
+        public override string ToString()
+        {
+            return new StringBuilder()
+                .AppendDelimeted(CommitId)
+                .AppendDelimeted(StreamId)
+                .AppendDelimeted(BucketId)
+                .AppendDelimeted(CreatedOn)
+                .AppendDelimeted(Headers.SerialiseToString())
+                .Append(Events.SerialiseToString()).ToString();
+        }
+
     }
 }

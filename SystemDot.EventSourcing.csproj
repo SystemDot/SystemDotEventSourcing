@@ -43,11 +43,14 @@
     <Compile Include="Aggregation\SourcedEventHandler.cs" />
     <Compile Include="Bootstrapping\BootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
+    <Compile Include="Commits\ObjectExtensions.cs" />
+    <Compile Include="Commits\StringBuilderExtensions.cs" />
     <Compile Include="DomainRepository.cs" />
     <Compile Include="EventRetreiver.cs" />
     <Compile Include="Handlers\StoreAndCommitEventCommandHandler.cs" />
     <Compile Include="Headers\EventOriginHeader.cs" />
     <Compile Include="IDomainRepository.cs" />
+    <Compile Include="JsonSerializer.cs" />
     <Compile Include="MultiSiteIdExtensions.cs" />
     <Compile Include="PreventCommitDispatchHeader.cs" />
     <Compile Include="Projections\DataLookup.cs" />
@@ -74,11 +77,15 @@
     <Compile Include="Bootstrapping\IocContainerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streams\EventStreamId.cs" />
+    <Compile Include="Streams\IEventStoreExtensions.cs" />
     <Compile Include="Streams\SourcedEvent.cs" />
     <Compile Include="Streams\IEventStore.cs" />
     <Compile Include="Streams\IEventStream.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SystemDot.Bootstrapping">
       <HintPath>packages\SystemDotBootstrapping.1.0.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Bootstrapping.dll</HintPath>
     </Reference>
