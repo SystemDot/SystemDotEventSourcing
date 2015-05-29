@@ -80,11 +80,11 @@
     </Reference>
     <Reference Include="SystemDot.EventSourcing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\SystemDotEventSourcing.7.4.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.7.5.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.EventSourcing.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\SystemDotEventSourcing.7.4.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
+      <HintPath>packages\SystemDotEventSourcing.7.5.0\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.EventSourcing.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,7 +115,6 @@
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DbConnectionExtensions.cs" />
     <Compile Include="DbDataReaderExtensions.cs" />
-    <Compile Include="JsonSerializer.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
