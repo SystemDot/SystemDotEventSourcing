@@ -6,7 +6,7 @@ namespace SystemDot.EventSourcing.Streams
     {
         public static string Describe(this IEventStore store)
         {
-            return store.GetCommits().Select(c => c.ToString()).Aggregate((previous, next) => previous + ", " + next);
+            return store.GetCommits().Select(c => c.ToString()).Aggregate((previous, next) => previous + System.Environment.NewLine + next);
         }
     }
 }

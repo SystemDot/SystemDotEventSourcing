@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SystemDotEventSourcing.Sqlite</id>
-        <version>1.0.9</version>
+        <version>1.0.11</version>
         <title>SystemDot.EventSourcing.Sqlite</title>
         <authors>Chris Sampson,James Goodenough</authors>
         <owners>Chris Sampson,James Goodenough</owners>
@@ -15,7 +15,7 @@
         <tags>MvvmCross, Mobile development, Cross Platform</tags>
         <dependencies>
           <dependency id="Newtonsoft.Json" version="6.0.8" />
-          <dependency id="SystemDotEventSourcing" version="7.5.0" />
+          <dependency id="SystemDotEventSourcing" version="7.5.2" />
         </dependencies>
     </metadata>
     <files>

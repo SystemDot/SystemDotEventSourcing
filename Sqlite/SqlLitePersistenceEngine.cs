@@ -82,7 +82,8 @@ CREATE TABLE IF NOT EXISTS Commits(
                         reader.GetString(0),
                         reader.GetString(1),
                         reader.GetBytes(4).DeserialiseTo<IEnumerable<SourcedEvent>>(serialiser),
-                        reader.GetBytes(3).DeserialiseTo<IDictionary<String, object>>(serialiser))));
+                        reader.GetBytes(3).DeserialiseTo<IDictionary<String, object>>(serialiser),
+                        reader.GetDateTime(5))));
             }
 
             return commits;

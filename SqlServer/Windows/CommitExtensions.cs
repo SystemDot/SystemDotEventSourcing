@@ -12,8 +12,9 @@ namespace SystemDot.EventSourcing.Sql.Windows
                 commit.CommitId, 
                 commit.BucketId, 
                 commit.StreamId, 
-                commit.Events.Select(e => EventMessageExtensions.CreateSourcedEvent(e)).ToList(), 
-                commit.Headers);
+                commit.Events.Select(e => e.CreateSourcedEvent()).ToList(), 
+                commit.Headers,
+                commit.CommitStamp);
         }
     }
 }

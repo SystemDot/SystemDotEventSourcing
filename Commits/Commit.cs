@@ -26,13 +26,13 @@ namespace SystemDot.EventSourcing.Commits
             return Headers[key].As<T>();
         }
 
-        public Commit(Guid commitId, string bucketId, string streamId, IEnumerable<SourcedEvent> events, IDictionary<string, object> headers)
+        public Commit(Guid commitId, string bucketId, string streamId, IEnumerable<SourcedEvent> events, IDictionary<string, object> headers, DateTime createdOn)
         {
             CommitId = commitId;
             StreamId = streamId;
             BucketId = bucketId;
             Events = events;
-            CreatedOn = DateTime.Now;
+            CreatedOn = createdOn;
             Headers = headers;
         }
 

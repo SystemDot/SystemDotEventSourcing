@@ -49,7 +49,7 @@ namespace SystemDot.EventSourcing.InMemory
 
         public void CommitChanges(Guid commitId)
         {
-            addCommit(new Commit(commitId, streamId.BucketId, streamId.Id, uncommittedEvents.ToList(), uncommittedHeaders));
+            addCommit(new Commit(commitId, streamId.BucketId, streamId.Id, uncommittedEvents.ToList(), uncommittedHeaders, DateTime.Now));
             committedEvents.AddRange(uncommittedEvents);
             ClearChanges();
         }

@@ -38,6 +38,17 @@ namespace SystemDot.EventSourcing
             }
         }
 
+        public string SerialiseToString(object toSerialise)
+        {
+            var stringBuilder = new StringBuilder();
+
+            using (var stringWriter = new StringWriter(stringBuilder))
+            using (var textWriter = new JsonTextWriter(stringWriter))
+                typedSerializer.Serialize(textWriter, toSerialise);
+
+            return stringBuilder.ToString();
+        }
+
         public virtual T Deserialize<T>(Stream input)
         {
             using (var streamReader = new StreamReader(input, Encoding.UTF8))

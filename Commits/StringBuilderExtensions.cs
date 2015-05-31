@@ -6,7 +6,7 @@ namespace SystemDot.EventSourcing.Commits
     {
         public static StringBuilder AppendDelimeted(this StringBuilder builder, object value)
         {
-            return builder.Append(value).Append(", ");
+            return builder.Append(value).Append("|");
         }
     }
 }
