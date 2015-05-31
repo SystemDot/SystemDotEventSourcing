@@ -42,11 +42,18 @@ namespace SystemDot.EventSourcing.InMemory
 
         void Commit(Commit commit)
         {
+            if (commits.Any(c => c.CommitId == commit.CommitId))
+            {
+                throw new DuplicateCommitException();
+            }
+
             commits.Add(commit);
+            
             if (commit.Headers.ContainsKey(PreventCommitDispatchHeader.Key))
             {
                 return;
             }
+
             commit.Events.ForEach(e => eventDispatcher.Dispatch(e.Body));
         }
 
