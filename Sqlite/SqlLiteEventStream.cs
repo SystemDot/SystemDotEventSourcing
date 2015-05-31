@@ -16,6 +16,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
         readonly List<SourcedEvent> uncommittedEvents;
         readonly List<SourcedEvent> committedEvents;
         int currentSequence;
+        readonly List<Guid> commits;
 
         public SqlLiteEventStream(SqlLitePersistenceEngine persistenceEngine, EventStreamId streamId, IEventDispatcher eventDispatcher)
         {
@@ -26,7 +27,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
             uncommittedEvents = new List<SourcedEvent>();
             committedEvents = new List<SourcedEvent>();
             UncommittedHeaders = new Dictionary<string, object>();
-
+            commits = new List<Guid>();
             PopulateStream();
         }
 
@@ -38,6 +39,7 @@ namespace SystemDot.EventSourcing.Sqlite.Android
             {
                 committedEvents.AddRange(commit.Events);
                 currentSequence++;
+                commits.Add(commit.CommitId);
             }  
          
             ClearChanges();
@@ -58,11 +60,18 @@ namespace SystemDot.EventSourcing.Sqlite.Android
 
         public void CommitChanges(Guid commitId)
         {
+            if (commits.Contains(commitId))
+            {
+                throw new DuplicateCommitException();
+            }
+
             persistenceEngine.Commit(streamId.BucketId, streamId.Id, commitId, currentSequence, UncommittedEvents, UncommittedHeaders);
+            
             if (!UncommittedHeaders.ContainsKey(PreventCommitDispatchHeader.Key))
             {
                 UncommittedEvents.ForEach(e => eventDispatcher.Dispatch(e.Body));
             }
+
             PopulateStream();
         }
 
