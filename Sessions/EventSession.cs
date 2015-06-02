@@ -67,7 +67,7 @@ namespace SystemDot.EventSourcing.Sessions
         {
             foreach (var stream in streams)
             {
-                stream.Value.UncommittedHeaders.Add(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
+                stream.Value.AddHeaderIfNotPresent(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
                 CommitStream(commitId, stream.Value);
             }
         }

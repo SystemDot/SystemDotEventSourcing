@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streams\EventStreamId.cs" />
     <Compile Include="Streams\IEventStoreExtensions.cs" />
+    <Compile Include="Streams\IEventStreamExtensions.cs" />
     <Compile Include="Streams\SourcedEvent.cs" />
     <Compile Include="Streams\IEventStore.cs" />
     <Compile Include="Streams\IEventStream.cs" />
