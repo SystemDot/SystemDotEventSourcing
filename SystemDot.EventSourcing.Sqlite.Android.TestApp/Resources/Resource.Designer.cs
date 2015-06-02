@@ -26,8 +26,6 @@ namespace SystemDot.EventSourcing.Sqlite.Android.TestApp
 		
 		public static void UpdateIdValues()
 		{
-			global::SystemDot.EventSourcing.Sqlite.Android.Resource.String.ApplicationName = global::SystemDot.EventSourcing.Sqlite.Android.TestApp.Resource.String.ApplicationName;
-			global::SystemDot.EventSourcing.Sqlite.Android.Resource.String.Hello = global::SystemDot.EventSourcing.Sqlite.Android.TestApp.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -94,11 +92,8 @@ namespace SystemDot.EventSourcing.Sqlite.Android.TestApp
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int ApplicationName = 2130968577;
-			
 			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			public const int ApplicationName = 2130968576;
 			
 			static String()
 			{

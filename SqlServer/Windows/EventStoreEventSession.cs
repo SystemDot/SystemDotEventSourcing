@@ -70,7 +70,7 @@ namespace SystemDot.EventSourcing.Sql.Windows
         {
             foreach (var stream in streams)
             {
-                stream.Value.UncommittedHeaders.Add(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
+                stream.Value.UncommittedHeaders.AddIfNotPresent(PreventCommitDispatchHeader.Key, new PreventCommitDispatchHeader());
                 CommitStream(commitId, stream.Value);
             }
         }

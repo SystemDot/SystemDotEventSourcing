@@ -1,14 +1,16 @@
 namespace SystemDot.EventSourcing.Streams
 {
+    using System.Collections.Generic;
+
     public static class IEventStreamExtensions
     {
-        public static void AddHeaderIfNotPresent(this IEventStream stream, string key, object value)
+        public static void AddIfNotPresent(this IDictionary<string, object> dictionary, string key, object value)
         {
-            if (stream.UncommittedHeaders.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
             {
                 return;
             }
-            stream.UncommittedHeaders.Add(key, value);
+            dictionary.Add(key, value);
         }
     }
 }
