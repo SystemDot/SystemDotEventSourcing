@@ -38,7 +38,6 @@
     <Compile Include="Aggregation\AggregateEntity.cs" />
     <Compile Include="Aggregation\AggregateRoot.cs" />
     <Compile Include="Aggregation\ConventionEventToHandlerRouter.cs" />
-    <Compile Include="Aggregation\AggregateHeader.cs" />
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />
     <Compile Include="Aggregation\SourcedEventHandler.cs" />
     <Compile Include="Bootstrapping\BootstrapBuilderConfigurationExtensions.cs" />

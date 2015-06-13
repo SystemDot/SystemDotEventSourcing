@@ -46,7 +46,6 @@ namespace SystemDot.EventSourcing
 
                     eventSession.StoreEvent(@event, eventStreamId);
                     eventSession.StoreHeader(eventStreamId, EventOriginHeader.Key, EventOriginHeader.ForMachine(localMachine));
-                    eventSession.StoreHeader(eventStreamId, AggregateHeader.Key, AggregateHeader.FromType(aggregateRoot.GetType()));
                 }
 
                 eventSession.Commit(Guid.NewGuid());
