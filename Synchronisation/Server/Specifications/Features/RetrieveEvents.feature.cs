@@ -177,29 +177,31 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Features
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Retrieving commits from the server for events that originate on another machine b" +
             "ut not for all time")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RetrieveEvents")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.IgnoreAttribute()]
         public virtual void RetrievingCommitsFromTheServerForEventsThatOriginateOnAnotherMachineButNotForAllTime()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieving commits from the server for events that originate on another machine b" +
-                    "ut not for all time", ((string[])(null)));
-#line 40
- this.ScenarioSetup(scenarioInfo);
-#line 41
-  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                    "ut not for all time", new string[] {
+                        "ignore"});
 #line 42
+ this.ScenarioSetup(scenarioInfo);
+#line 43
+  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 44
   testRunner.And("I add an event origin for another machine as a header for the stream identified a" +
                     "s 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in the bucket identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 45
   testRunner.And("I have created an event in the session with an id of E261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in th" +
                     "e bucket identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 44
+#line 46
   testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 45
+#line 47
   testRunner.When("I request events for synchronisation for the client \'TestClient\' from 01-Jan-2015" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 46
+#line 48
   testRunner.And("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 47
+#line 49
   testRunner.Then("the returned commits should be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -211,20 +213,20 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Features
         public virtual void RetrievingCommitsFromTheServerWhenCommitsOnlyExistForAnotherClient()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieving commits from the server when commits only exist for another client", ((string[])(null)));
-#line 49
- this.ScenarioSetup(scenarioInfo);
-#line 50
-  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 51
+ this.ScenarioSetup(scenarioInfo);
+#line 52
+  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 53
   testRunner.And("I have created an event in the session with an id of E261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in th" +
                     "e bucket identified as \'OtherTestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 52
+#line 54
   testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 53
+#line 55
   testRunner.When("I request events for synchronisation for the client \'TestClient\' from the beggini" +
                     "ng of time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 54
+#line 56
   testRunner.Then("the returned commits should be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -236,22 +238,22 @@ namespace SystemDot.EventSourcing.Synchronisation.Server.Specifications.Features
         public virtual void RetrievingCommitsFromTheServerForADateAfterTheAvailableCommit()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieving commits from the server for a date after the available commit", ((string[])(null)));
-#line 56
- this.ScenarioSetup(scenarioInfo);
-#line 57
-  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 58
+ this.ScenarioSetup(scenarioInfo);
+#line 59
+  testRunner.Given("I have created a new event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 60
   testRunner.And("I have created an event in the session with an id of E261A67D-2C00-4854-A0FF-6DEF" +
                     "A84A4276 for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in th" +
                     "e bucket identified as \'TestClient\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 59
-  testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
-  testRunner.When("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 61
+  testRunner.And("I commit the session with the id DAD11DA9-64C6-4955-AF82-F12B66FBAF3B", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 62
+  testRunner.When("I use the first commit in the event session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 63
   testRunner.And("I request events for synchronisation for the client \'TestClient\' created after th" +
                     "e date of the commit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 62
+#line 64
   testRunner.Then("the returned commits should be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

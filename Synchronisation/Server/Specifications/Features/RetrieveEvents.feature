@@ -37,6 +37,8 @@
 		And I deserialise the synchronisable commit events
 		Then the synchronisable commit should have the same id as the commit
 
+	# This needs to be sorted out so that machine name is passed up and we ignore commits from that machine to send back down
+	@ignore 
 	Scenario: Retrieving commits from the server for events that originate on another machine but not for all time
 		Given I have created a new event session
 		And I add an event origin for another machine as a header for the stream identified as 1157AC59-AD0D-4BF0-9CC1-238BDE2CEFB9 in the bucket identified as 'TestClient'

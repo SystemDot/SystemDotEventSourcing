@@ -28,7 +28,7 @@ namespace SystemDot.EventSourcing.Synchronisation.Server
                 return Task.FromResult(builder.Build(message.ClientId, message.From, CheckCommitOriginatesOnAnyMachine));
             }
 
-            return Task.FromResult(builder.Build(message.ClientId, message.From, CheckCommitOriginatesOnLocalMachine));
+            return Task.FromResult(builder.Build(message.ClientId, message.From, CheckCommitOriginatesOnAnyMachine));
         }
 
         bool CheckCommitOriginatesOnAnyMachine(Commit commit)
