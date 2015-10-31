@@ -22,16 +22,16 @@ namespace SystemDot.EventSourcing
             this.localMachine = localMachine;
         }
 
-        public bool Exists(MultiSiteId aggregateRootId)
+        public bool Exists(MultiSiteId id)
         {
-            return GetEvents(aggregateRootId).Any();
+            return GetEvents(id).Any();
         }
 
-        public TAggregateRoot Get<TAggregateRoot>(MultiSiteId aggregateRootId)
-            where TAggregateRoot : AggregateRoot, new()
+        public TEventSourcedEntity Get<TEventSourcedEntity>(MultiSiteId id)
+            where TEventSourcedEntity : EventSourcedEntity, new()
         {
-            var aggregateRoot = new TAggregateRoot();
-            aggregateRoot.Rehydrate(aggregateRootId, GetEvents(aggregateRootId));
+            var aggregateRoot = new TEventSourcedEntity();
+            aggregateRoot.Rehydrate(id, GetEvents(id));
             return aggregateRoot;
         }
 

@@ -4,7 +4,7 @@ namespace SystemDot.EventSourcing.Specifications
 
     class TestCommandInvokedAggregateRoot : 
         AggregateRoot, 
-        IInvokeCommands<TestCommand>
+        IInvokeAggregate<TestCommand>
     {
         public void When(TestCommand command)
         {

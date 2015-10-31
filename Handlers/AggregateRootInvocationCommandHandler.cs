@@ -20,7 +20,7 @@ namespace SystemDot.EventSourcing.Handlers
         public Task Handle(TCommand message)
         {
             var aggregateRoot = domainRepository.Get<TAggregateRoot>(finder.GetIdFromCommandToFindAggregateWith(message));
-            aggregateRoot.As<IInvokeCommands<TCommand>>().When(message);
+            aggregateRoot.As<IInvokeAggregate<TCommand>>().When(message);
             domainRepository.Save(aggregateRoot);
             return Task.FromResult(false);
         }

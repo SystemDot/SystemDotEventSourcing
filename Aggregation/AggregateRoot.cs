@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using SystemDot.Core.Collections;
 using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing.Aggregation
@@ -11,6 +9,7 @@ namespace SystemDot.EventSourcing.Aggregation
     public abstract class AggregateRoot<TState> : AggregateRoot
     {
         ConventionEventToHandlerRouter stateEventRouter;
+
         protected TState State { get; private set; }
 
         protected AggregateRoot(MultiSiteId multiSiteId)
@@ -32,40 +31,30 @@ namespace SystemDot.EventSourcing.Aggregation
 
         protected abstract TState CreateState();
 
-        protected override void ReplayEvent(object toReplay)
+        protected override void ReplayEvent(object toReplay, int index)
         {
             stateEventRouter.RouteEventToHandlers(toReplay);
-            base.ReplayEvent(toReplay);
+            base.ReplayEvent(toReplay, index);
         }
     }
 
-    public abstract class AggregateRoot
+    public abstract class AggregateRoot : EventSourcedEntity
     {
-        readonly ConventionEventToHandlerRouter eventRouter;
-        public EventHandler<EventSourceEventArgs> EventReplayed;
-        MultiSiteId multiSiteId;
-
         internal List<SourcedEvent> EventsAdded { get; private set; }
 
-        internal EventStreamId GetEventStreamId()
-        {
-            return multiSiteId.ToEventStreamId();
-        }
-        
         protected AggregateRoot()
         {
             EventsAdded = new List<SourcedEvent>();
-            eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected AggregateRoot(MultiSiteId multiSiteId) : this()
+        protected AggregateRoot(MultiSiteId multiSiteId) : base(multiSiteId)
         {
-            this.multiSiteId = multiSiteId;
+            EventsAdded = new List<SourcedEvent>();
         }
 
         protected internal void Then<TEvent>(TEvent @event)
         {
-            ReplayEvent(@event);
+            ReplayEvent(@event, 0);
             StoreEvent(CreateSourcedEvent(@event));
         }
 
@@ -89,29 +78,6 @@ namespace SystemDot.EventSourcing.Aggregation
             };
 
             return sourcedEvent;
-        }
-
-        internal void Rehydrate(MultiSiteId id, IEnumerable<SourcedEvent> events)
-        {
-            multiSiteId = id;
-
-            events
-                .Select(e => e.Body)
-                .ForEach(ReplayEvent);
-        }
-
-        protected virtual void ReplayEvent(object toReplay)
-        {
-            eventRouter.RouteEventToHandlers(toReplay);
-            OnEventReplayed(toReplay);
-        }
-
-        void OnEventReplayed(object @event)
-        {
-            if (EventReplayed != null)
-            {
-                EventReplayed(this, new EventSourceEventArgs(@event));
-            }
         }
     }
 }

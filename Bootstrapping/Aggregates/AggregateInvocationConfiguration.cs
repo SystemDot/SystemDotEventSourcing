@@ -1,4 +1,4 @@
-namespace SystemDot.EventSourcing.Bootstrapping
+namespace SystemDot.EventSourcing.Bootstrapping.Aggregates
 {
     using SystemDot.Bootstrapping;
 

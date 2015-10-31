@@ -1,4 +1,4 @@
-namespace SystemDot.EventSourcing.Bootstrapping
+namespace SystemDot.EventSourcing.Bootstrapping.Aggregates
 {
     using SystemDot.Bootstrapping;
     using SystemDot.Domain.Commands;
@@ -13,7 +13,7 @@ namespace SystemDot.EventSourcing.Bootstrapping
         }
 
         public InvokeOnAggregateRootInvocationConfiguration<TCommand> InvokeOn<TAggregateRoot>()
-            where TAggregateRoot : AggregateRoot, IInvokeCommands<TCommand>, new()
+            where TAggregateRoot : AggregateRoot, IInvokeAggregate<TCommand>, new()
         {
             RegisterBuildAction(c => c.RegisterInstance<IAsyncCommandHandler<TCommand>, AggregateRootInvocationCommandHandler<TCommand, TAggregateRoot>>());
             return new InvokeOnAggregateRootInvocationConfiguration<TCommand>(this);

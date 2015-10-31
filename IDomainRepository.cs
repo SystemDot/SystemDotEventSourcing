@@ -1,5 +1,4 @@
 using SystemDot.EventSourcing.Aggregation;
-using SystemDot.EventSourcing.Streams;
 
 namespace SystemDot.EventSourcing
 {
@@ -7,10 +6,10 @@ namespace SystemDot.EventSourcing
 
     public interface IDomainRepository
     {
-        TAggregateRoot Get<TAggregateRoot>(MultiSiteId aggregateRootId) 
-            where TAggregateRoot : AggregateRoot, new();
+        TEventSourcedEntity Get<TEventSourcedEntity>(MultiSiteId id)
+            where TEventSourcedEntity : EventSourcedEntity, new();
 
-        bool Exists(MultiSiteId aggregateRootId);
+        bool Exists(MultiSiteId id);
 
         void Save<TAggregateRoot>(TAggregateRoot aggregateRoot)
             where TAggregateRoot : AggregateRoot;
