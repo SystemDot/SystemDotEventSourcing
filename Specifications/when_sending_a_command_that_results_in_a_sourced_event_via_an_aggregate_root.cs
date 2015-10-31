@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SystemDot.Bootstrapping;
 using SystemDot.Domain;
 using SystemDot.Domain.Bootstrapping;
 using SystemDot.Domain.Commands;
-using SystemDot.EventSourcing.Aggregation;
 using SystemDot.EventSourcing.Bootstrapping;
 using SystemDot.EventSourcing.InMemory.Bootstrapping;
 using SystemDot.EventSourcing.Sessions;

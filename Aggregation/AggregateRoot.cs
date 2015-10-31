@@ -8,6 +8,37 @@ namespace SystemDot.EventSourcing.Aggregation
 {
     using SystemDot.Domain;
 
+    public abstract class AggregateRoot<TState> : AggregateRoot
+    {
+        ConventionEventToHandlerRouter stateEventRouter;
+        protected TState State { get; private set; }
+
+        protected AggregateRoot(MultiSiteId multiSiteId)
+            : base(multiSiteId)
+        {
+            InitialseState();
+        }
+
+        protected AggregateRoot()
+        {
+            InitialseState();
+        }
+
+        void InitialseState()
+        {
+            State = CreateState();
+            stateEventRouter = new ConventionEventToHandlerRouter(State, "ApplyEvent");
+        }
+
+        protected abstract TState CreateState();
+
+        protected override void ReplayEvent(object toReplay)
+        {
+            stateEventRouter.RouteEventToHandlers(toReplay);
+            base.ReplayEvent(toReplay);
+        }
+    }
+
     public abstract class AggregateRoot
     {
         readonly ConventionEventToHandlerRouter eventRouter;
@@ -69,7 +100,7 @@ namespace SystemDot.EventSourcing.Aggregation
                 .ForEach(ReplayEvent);
         }
 
-        void ReplayEvent(object toReplay)
+        protected virtual void ReplayEvent(object toReplay)
         {
             eventRouter.RouteEventToHandlers(toReplay);
             OnEventReplayed(toReplay);

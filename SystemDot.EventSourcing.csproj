@@ -37,8 +37,15 @@
   <ItemGroup>
     <Compile Include="Aggregation\AggregateEntity.cs" />
     <Compile Include="Aggregation\AggregateRoot.cs" />
+    <Compile Include="Bootstrapping\AggregateInvocationConfiguration.cs" />
+    <Compile Include="Bootstrapping\EventSourcingBootstrapBuilderConfigurationExtensions.cs" />
+    <Compile Include="Bootstrapping\ForCommandAggregateInvocationConfiguration.cs" />
+    <Compile Include="Bootstrapping\InvokeOnAggregateRootInvocationConfiguration.cs" />
+    <Compile Include="Handlers\AggregateRootInvocationCommandHandler.cs" />
     <Compile Include="Aggregation\ConventionEventToHandlerRouter.cs" />
     <Compile Include="Aggregation\EventSourceEventArgs.cs" />
+    <Compile Include="Aggregation\IFindAggregates.cs" />
+    <Compile Include="Aggregation\IInvokeCommands.cs" />
     <Compile Include="Aggregation\SourcedEventHandler.cs" />
     <Compile Include="Bootstrapping\BootstrapBuilderConfigurationExtensions.cs" />
     <Compile Include="Bootstrapping\IEnumerableExtensions.cs" />
