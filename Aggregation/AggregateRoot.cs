@@ -27,18 +27,24 @@ namespace SystemDot.EventSourcing.Aggregation
             eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected AggregateRoot(MultiSiteId multiSiteId)
-            : this()
+        protected AggregateRoot(MultiSiteId multiSiteId) : this()
         {
             this.multiSiteId = multiSiteId;
         }
 
-        protected internal void AddEvent(object @event)
+        protected internal void Then<TEvent>(TEvent @event)
         {
             ReplayEvent(@event);
             StoreEvent(CreateSourcedEvent(@event));
         }
 
+        protected internal void Then<TEvent>(Action<TEvent> initaliseEvent) where TEvent : new()
+        {
+            var @event = new TEvent();
+            initaliseEvent(@event);
+            Then(@event);
+        }
+        
         void StoreEvent(SourcedEvent @event)
         {
             EventsAdded.Add(@event);
@@ -75,13 +81,6 @@ namespace SystemDot.EventSourcing.Aggregation
             {
                 EventReplayed(this, new EventSourceEventArgs(@event));
             }
-        }
-
-        protected internal void AddEvent<T>(Action<T> initaliseEvent) where T : new()
-        {
-            var @event = new T();
-            initaliseEvent(@event);
-            AddEvent(@event);
         }
     }
 }

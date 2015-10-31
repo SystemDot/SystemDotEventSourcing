@@ -17,7 +17,7 @@ namespace SystemDot.EventSourcing.Specifications
 
         TestAggregateRoot(MultiSiteId multiSiteId) : base(multiSiteId)
         {
-            AddEvent<TestAggregateRootCreatedEvent>(c =>
+            Then<TestAggregateRootCreatedEvent>(c =>
             {
                 c.Id = multiSiteId.Id;
                 c.SiteId = multiSiteId.SiteId;
@@ -30,7 +30,7 @@ namespace SystemDot.EventSourcing.Specifications
 
         public void SetSomeMoreStateResultingInEvent()
         {
-            AddEvent(new TestAggregateRootStateEvent());
+            Then(new TestAggregateRootStateEvent());
         }
 
         void ApplyEvent(TestAggregateRootCreatedEvent @event)

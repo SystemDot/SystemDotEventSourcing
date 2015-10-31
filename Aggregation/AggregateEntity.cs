@@ -15,19 +15,19 @@ namespace SystemDot.EventSourcing.Aggregation
             eventRouter = new ConventionEventToHandlerRouter(this, "ApplyEvent");
         }
 
-        protected void AddEvent(object @event)
+        protected void Then(object @event)
         {
-            Root.AddEvent(@event);
+            Root.Then(@event);
         }
 
-        protected void AddEvent<T>(Action<T> initaliseEvent) where T : new()
+        protected void Then<T>(Action<T> initaliseEvent) where T : new()
         {
-            Root.AddEvent(initaliseEvent);
+            Root.Then(initaliseEvent);
         }
 
         void OnAggregateRootEventAdded(object sender, EventSourceEventArgs e)
         {
-            this.eventRouter.RouteEventToHandlers(e.Event);
+            eventRouter.RouteEventToHandlers(e.Event);
         }
     }
 }
